@@ -1,0 +1,2208 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[british]{babel}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{pgfplots}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{luatex85}
+\usepackage[all]{xy}
+\usepackage{color}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{tikz}
+\usepackage{pst-plot}
+\usepackage{newpx}
+\usepackage{ytableau}
+\usepackage{microtype}
+\usepackage{listings}
+
+\geometry{a4paper,left=2cm,right=2cm,top=2cm,bottom=2cm}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+	backgroundcolor=\color{backcolour},
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{magenta},
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\ttfamily\footnotesize,
+	breakatwhitespace=false,
+	breaklines=true,
+	captionpos=b,
+	keepspaces=true,
+	numbers=left,
+	numbersep=5pt,
+	showspaces=false,
+	showstringspaces=false,
+	showtabs=false,            
+	tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\usetikzlibrary{decorations.pathreplacing}
+
+\usepgfplotslibrary{fillbetween} 
+
+\pgfplotsset{compat=1.18}
+
+\newcommand{\tikznode}[3][inner sep=0pt]{\tikz[remember
+picture,baseline=(#2.base)]{\node(#2)[#1]{$#3$};}}
+
+\ytableausetup{smalltableaux}
+
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{#1}}
+\makeatother
+\makeatletter
+\DeclareRobustCommand{\pns}{\mathrel{\text{$\m@th\proper@ideal$}}}
+\newcommand{\proper@ideal}{%
+  \ooalign{$\lneq$\cr\raise.22ex\hbox{$\lhd$}\cr}%
+}
+\makeatother
+
+\SelectTips{eu}{}
+\setlength{\fboxsep}{0pt}
+\setlength\parskip{0.3em}
+\setlength{\parindent}{0 pt}
+
+\newcommand{\la}{\left\langle}
+\newcommand{\ra}{\right\rangle}
+\newcommand{\p}{\mathbb{P}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\g}{\mathfrak{g}}
+\newcommand{\h}{\mathfrak{h}}
+\newcommand{\di}{\mathrm{d}}
+\newcommand{\id}{\operatorname{id}}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\Fun}{\operatorname{Fun}}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\op}{{\operatorname{op}}}
+\newcommand{\Mod}{\operatorname{mod}}
+\newcommand{\Frac}{\operatorname{Frac}}
+\newcommand{\lcm}{\operatorname{lcm}}
+\newcommand{\mult}{\operatorname{mult}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\GL}{\operatorname{GL}}
+\newcommand{\disc}{\operatorname{disc}}
+\newcommand{\Cl}{\operatorname{Cl}}
+\newcommand{\vol}{\operatorname{vol}}
+\newcommand{\covol}{\operatorname{covol}}
+\newcommand{\ca}{\mathcal{C}}
+\newcommand{\da}{\mathcal{D}}
+\newcommand{\ri}{\mathcal{O}}
+\newcommand{\ip}{\mathfrak{p}}
+\newcommand{\iq}{\mathfrak{q}}
+
+\theoremstyle{definition}
+
+\newtheorem{defn}{Definition}[subsection]
+\newtheorem{prop}[defn]{Proposition}
+\newtheorem{thm}[defn]{Theorem}
+\newtheorem{lemma}[defn]{Lemma}
+\newtheorem{coro}[defn]{Corollary}
+\newtheorem{example}[defn]{Example}
+\newtheorem{exe}[defn]{Exercise}
+\newtheorem{claim}[defn]{Claim}
+\newtheorem{remark}[defn]{Remark}
+\newtheorem{defnthm}[defn]{Definition/Theorem}
+\newtheorem*{notation}{Notation}
+
+\title{MATH70042 Algebraic number theory :: Lecture notes}
+\author{Lecturer: Margherita Pagano}
+\date{Last edited: \today}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+
+\tableofcontents
+\thispagestyle{empty}
+\newpage
+\setcounter{page}{1}
+
+\begin{flushright}
+\textit{Week 2, lecture 1, 13th January}
+\end{flushright}
+
+\subsection*{Motivation}
+One of the goal of number theory is to solve Diophantine equations: given $p(x_1,\ldots,x_n)\in\Z[x_1,\ldots,x_n]$, we want to describe the set $\{(a_1,\ldots,a_n)\in\Z^n:p(a_1,\ldots,a_n)=0\}$.
+
+\begin{thm}[Fermat's last, Wile 1994]
+If $x^n+y^n=z^n$ for $x,y,z\in\Z$ and $n\geq 3$, then $xyz=0$.
+\end{thm}
+
+The case $n=2$ is much easier, and such $x,y,z\in\Z$ are called a Pythagoras triple.
+
+\begin{itemize}
+\item Reduction 1: observe that to describe these triples, one can assume $x,y,z>0$ since if one of them is zero, the solutions are of the form $(0,\pm a,\pm a)$ or $(\pm a,0,\pm a)$, and if $(x,y,z)$ is a solution, then $(\pm x,\pm y,\pm z)$ is a solution.
+\item Reduction 2: one can also assume that $x,y,z$ are pairwise coprime. first note that if $p\mid x,y,z$ and $(x,y,z)$ is a solution, then $\left(\frac{x}{p},\frac{y}{p},\frac{z}{p}\right)$ is a solution. Now if a prime $p$ divides two of $x,y,z$ then it divides also the third one. Suppose $p\mid x,y$, then $z^2=x^2+y^2=p^2a^2+p^2b^2$, so $p\mid z$.
+\item Reduction 3: one can further assume that only one of $x$ and $y$ is odd. Suppose both are, then $x^2=y^2\equiv 1\Mod 4$, so $z^2\equiv 2\Mod 4$, which is not a square, a contradiction. Hence $z$ is also odd. Suppose WLOG that $x$ is even.
+\end{itemize}
+
+Now rewrite $x^2+y^2=z^2$ as $y^2=z^2-x^2=(z-x)(z+x)$. Note that:
+
+\begin{itemize}
+\item $\gcd(z-x,z+x)=1$. If $p\mid z-x$ and $p\mid z+x$, then $p\mid z-x+z+x=2z$ and $p\mid -z+x+z+x=2x$, but $\gcd(x,z)=1$, so $p=2$, but $z-x$ is odd by reduction 3, a contradiction.
+\item $\exists\alpha,\beta\in\Z:z-x=\alpha^2,z+x=\beta^2$. Write $y$ as its unique prime factorisation $\prod_{i=1}^n p_i^{a_i}$ where $p_i$ are primes and $a_i>0$. But then $y^2=\prod_{i=1}^n p_i^{2a_i}=(z-x)(z+x)$ and by the above observation, $p_i\mid z-x\implies p_i^{2a_i}\mid z-x$.
+\item Now, rewrite
+\[
+\begin{aligned}
+x&=\frac{z+x-(z-x)}{2}=\frac{\beta^2-\alpha^2}{2}\\
+y&=\alpha^2\beta^2\\
+z&=\frac{z+x+z-x}{2}=\frac{\beta^2+\alpha^2}{2}
+\end{aligned}
+\]
+where $\alpha,\beta$ are both odd and coprime. This parameterises all Pythagoras triples.
+\end{itemize}
+
+\begin{remark}
+A crucial step that we used is called ``separating powers'' for $n=2$ over $\Z$.
+
+\begin{lemma}
+Let $a,b,c\in\Z\backslash\{0\}$ and $n>0$ such that $a^n=bc$. If $\gcd(b,c)=1$, then $\exists b_1,c_1\in\Z:b=\pm b_1^n, c=\pm c_1^n$.
+\end{lemma}
+\begin{proof}
+The proof is similar to the argument above, using the fact that $\Z$ is a unique factorisation domain.
+\end{proof}
+
+Now let's consider the case $n=p$ where $p$ is an odd prime. Then one can write
+\[
+x^p+y^p=(x+y)(x+\xi_p p)\cdots (x+\xi_p^{p-1}y)
+\]
+where $\xi_p$ is the $p$th root of unity. What happens now is the factors are not the usual integers, but in the larger ring $\Z[\xi_p]=\left\{\sum_{i=0}^{p-1}a_i\xi_p^i:a_i\in\Z\right\}\subset\C$. Does $\Z[\xi_p]$ have unique factorisation? Does the analogue of the lemma above work then? How does it help us solving Diophantine equations? These are the questions we will strive to answer in this course.
+\end{remark}
+
+\begin{flushright}
+\textit{Week 2, lecture 2, 14th January}
+\end{flushright}
+
+We will see that for a certain class of primes (regular primes), $\Z[\xi_p]$ has the separating power property for $n=p$ and we will show how to use this to prove Fermat's last theorem for these primes.
+
+Another example: suppose $x,y\in\Z$ satisfy $y^2=x^3+16$. If $x=0$ then $y^2=16$ so $y=\pm 4$. We claim these are all the solutions.
+
+\begin{itemize}
+\item Case 1: $x\neq 0$ and $y$ is odd. Write $(y-4)(y+4)=y^2-16=x^3$. Then $\gcd(y-4,y+4)=1$, since if $p\mid y-4,y+4$, then $p\mid y+4-y+4=8$, so $p=2$, but $y$ is odd so $y-4,y+4$ are odd. This implies both $y-4,y+4$ are cubes, i.e. $y-4=\alpha^3,y+4=\beta^3$ for some $\alpha,\beta\in\Z$, but then $8=\beta^3-\alpha^3$, and there are no two cubes different by 8.
+\item Case 2: $x\neq 0$ and $y$ is even. (Similar)
+\end{itemize}
+
+In general, these $y^2=x^3+k$ where $k\in\Z$ are called Mordell equations, and we study the solutions by looking into rings $\Z\left[\sqrt k\right]$.
+
+\section{Introduction}
+All rings are commutative with unit.
+\subsection{Unique factorisation domains}
+\begin{defn}
+A ring $R$ is an \textit{integral domain} if $x,y\in R,xy=0\implies x=0$ or $y=0$.
+\end{defn}
+
+\begin{defn}
+The group of \textit{units} of $R$ is $R^\times=\{a\in R:\exists b\in R:ab=1\}$, which is indeed a group with respect to multiplication.
+\end{defn}
+
+\begin{defn}
+For $a,b\in R$, we say $a$ \textit{divides} $b$, or write $a\mid b$, if $\exists c\in R:ac=b$.
+\end{defn}
+
+\begin{defn}
+$a\in R\backslash\{0\}$ is \textit{irreducible} if $a\notin R^\times$ and for every $b,c\in R:a=bc$, either $b$ or $c$ is a unit.
+\end{defn}
+
+\begin{defn}
+$a\in R\backslash\{0\}$ is \textit{prime} if $a\notin R^\times$ and $b,c\in R,a\mid bc\implies a\mid b$ or $a\mid c$.
+\end{defn}
+
+\begin{lemma}
+\label{lemma:primeisirred}
+If $a\in R$ is prime where $R$ is a domain, then $a$ is irreducible.
+\end{lemma}
+\begin{proof}
+Let $a$ be prime and $b,c\in R:a=bc$. Then $a\mid bc$, so WLOG $a\mid b$, i.e. $\exists u\in R:b=au$, so $a=bc=auc$, i.e. $uc=1$ since $R$ is a domain, in particular $c$ is a unit.
+\end{proof}
+
+\begin{defn}
+A domain $R$ is a \textit{unique factorisation domain} (UFD) if every $a\in R\backslash\{0\}$ has a factorisation $a=up_1\cdots p_n$ where $u\in R^\times$ and $p_i\in R$ are irreducible. Moreover, if there is another factorisation $a=vq_1\cdots q_m$ with $v\in R^\times,q_i\in R$ irreducible, then $n=m$ and after reordering $p_i\sim q_i$ (i.e. $\exists u_i\in R^\times:p_i=uq_i$).
+\end{defn}
+
+\begin{lemma}
+In a UFD, every irreducible element is prime.
+\end{lemma}
+\begin{proof}
+Let $a$ be irreducible and $b,c\in R:a\mid bc$, i.e. $\exists d\in R:ad=bc$. Write $d=up_1\cdots p_m,b=vq_1\cdots q_n,c=wr_1\cdots r_t$ where $u,v,w\in R^\times,p_i,q_j,r_s$ are irreducible. Then
+\[
+uap_1\cdots p_m=vwq_1\cdots q_nr_1\cdots r_t\implies a\sim q_i\text{ or }a\sim r_s\text{ for some }i\text{ or }s\implies a\mid b\text{ or }a\mid c
+\]
+as desired.
+\end{proof}
+
+\begin{defn}
+A domain $R$ is a \textit{principal ideal domain} (PID) if every ideal of $R$ is principal.
+\end{defn}
+
+\begin{thm}
+\label{thm:PIDisUFD}
+Every PID is a UFD.
+\end{thm}
+
+\begin{example}
+The ring $\Z\left[i\sqrt{3}\right]$ is not a UFD: note that $4=2\times 2=\left(1+i\sqrt 3\right)\left(1-i\sqrt 3\right)$. But how do we know $2$ and $1\pm i\sqrt 3$ are irreducible and the two factorisations are indeed not equivalent? The idea is to introduce the norm map to use properties of the integers, which we are familiar with, to study unfamiliar ring of integers.
+\end{example}
+
+\begin{defn}
+Define \textit{norm} to be the map
+\[
+N:\Z\left[i\sqrt k\right]\rightarrow\Z_{\geq 0}:a+i\sqrt kb\mapsto a^2+kb^2=\left(a+i\sqrt kb\right)\left(a-i\sqrt kb\right).
+\]
+\end{defn}
+
+\begin{prop}
+The norm map satisfies $N(\alpha)=0\iff\alpha=0$, $N(\alpha\beta)=N(\alpha)N(\beta)$ and $N(\alpha)=1\iff\alpha\in\Z\left[i\sqrt k\right]^\times$.
+\end{prop}
+\begin{proof}
+The first two are clear since $N(\alpha)=\alpha\overline\alpha$. Now if $N(\alpha)=1$ then $\alpha^{-1}=\overline\alpha N(\alpha)^{-1}=\overline\alpha$, and if $\alpha\in\Z\left[i\sqrt k\right]^\times$ then $N(\alpha\alpha^{-1})=1=N(\alpha)N(\alpha^{-1})$, so $N(\alpha)\in\Z^\times=\{\pm 1\}$, hence $N(\alpha)=1$.
+\end{proof}
+
+\begin{lemma}
+$\alpha\in\Z\left[i\sqrt 3\right]$ cannot have norm 2.
+\end{lemma}
+\begin{proof}
+Indeed, $N\left(a+i\sqrt 3b\right)=a^2+3b^2=2$ has no solutions.
+\end{proof}
+
+\begin{example}
+Continuing the last example, the three elements are indeed irreducible: if $2=\alpha\beta$ then $N(2)=N(\alpha)N(\beta)=4$, so by the lemma above one has WLOG $N(\alpha)=1$ so $\alpha\in\Z\left[i\sqrt 3\right]^\times$. Similar for $1\pm i\sqrt 3$. And note that $2\nmid 1\pm i\sqrt 3$.
+\end{example}
+
+\begin{flushright}
+\textit{Week 2, lecture 3, 15th January}
+\end{flushright}
+
+\subsection{Euclidean domains}
+\begin{defn}
+A domain $R$ is an \textit{Euclidean domain} if there is a map $\phi:R\backslash\{0\}\rightarrow\Z_{>0}$ such that $\forall a,b\in R\backslash\{0\}$:
+\begin{enumerate}
+\item $\phi(a)\leq\phi(ab)$
+\item $\exists q,r\in R$ such that $b=qa+r$ with either $r=0$ pr $\phi(r)<\phi(a)$.
+\end{enumerate}
+\end{defn}
+
+\begin{remark}
+\begin{itemize}
+\item Sometimes in the definition of Euclidean domains, $\phi$ is allowed to have value 0, but given such a $\phi$, we have $\widetilde\phi=n^\phi$ for any $n>1$ satisfying our definition.
+\item Technically, the first condition was not necessary, since given $\phi$ satisfying the second, $\widetilde\phi$ given by $a\mapsto\min_{b\in R\backslash\{0\}}\phi(ab)$ satisfies the first by construction.
+\end{itemize}
+\end{remark}
+
+\begin{example}
+\begin{enumerate}
+\item $\Z$ is a Euclidean domain with $\phi$ given by the absolute value
+\item For any field $k$, the polynomial ring $k[x]$ is a Euclidean domain: fix $n>1$ and define $\phi=n^{\deg}$ where $\deg$ is the usual degree
+\end{enumerate}
+\end{example}
+
+\begin{defn}
+The \textit{Gaussian integers} are $\Z[i]=\{a+ib:a,b\in\Z\}$ which is a subring of $\C$.
+\end{defn}
+
+\begin{thm}
+\label{thm:ZiisED}
+The norm $N$ gives a $\phi$ satisfying the above definition, so $\Z[i]$ is a Euclidean domain.
+\end{thm}
+\begin{proof}
+For $a,b\in\Z[i]$, write $z=\frac{b}{a}$. Then $\exists q\in\Z[i]:|z-q|\leq\frac{\sqrt 2}{2}$. (Think of the lattice). Now let $r=b-qa$, then $N(r)=N(b-qa)=N(a)N(z-q)<N(a)$.
+\end{proof}
+
+\begin{thm}
+Every Euclidean domain is a PID (hence a UFD).
+\end{thm}
+\begin{proof}
+Let $I\subset R$ be an ideal of a Euclidean domain $R$. If $I=0$ then we're done. If $I\neq 0$, take $a\in I$ such that $\phi(a)$ is minimal. For a contradiction, suppose $\exists b\in I\backslash (a)$, then in particular $a\nmid b$, so $\exists q,r\in R:b=qa+r$ with $\phi(r)<\phi(a)$, but $r=b-qa\in I$.
+\end{proof}
+
+\begin{remark}
+Note that the proof of \ref{thm:ZiisED} relies on the lattice of $\Z[i]$, which makes sure that any point in the ambient complex plane is close enough (to be precise, distance is less than 1) to a point on $\Z[i]$. The maximal such distance on the lattice $\Z\left[i\sqrt k\right]$ is $\sqrt{\left(\frac12\right)^2+\left(\frac{\sqrt k}{2}\right)^2}=\frac{\sqrt{1+k}}{2}$, hence by the same proof, $\Z\left[i\sqrt k\right]$ is a Euclidean domain for $k<3$.
+\end{remark}
+
+\begin{defn}
+Let $R$ be a domain with field of fractions $K$. We say $R$ is \textit{integrally closed} if for every monic $f\in R[x]$ and $\frac{a}{b}\in K$, we have $f\left(\frac{a}{b}\right)=0\implies \frac{a}{b}\in R$.
+\end{defn}
+
+\begin{lemma}
+\label{lemma:UFDisintclosed}
+Every UFD is integrally closed.
+\end{lemma}
+\begin{proof}
+Let $R$ be a UFD with field of fractions $K$. Take $\frac{a}{b}\in K$ such that
+\[
+\exists a_0,\ldots,a_{n-1}\in R:\left(\frac{a}{b}\right)^n+a_{n-1}\left(\frac{a}{b}\right)^{n-1}+\cdots+a_0=0,
+\]
+and (up to unit) $a$ and $b$ have no common factor (we can do this since $R$ is a UFD). Then we have
+\[
+a^n=-b(a_{n-1}a^{n-1}+\cdots+a_0b^{n-1}),
+\]
+so $b\mid a^n$, hence our assumption forces $b\in R^\times$, so $\frac{a}{b}\in R$ as desired.
+\end{proof}
+
+\begin{coro}
+$\Z\left[i\sqrt k\right]$ is not an Euclidean domain for $k>0$ with $k\equiv 3\Mod 4$.
+\end{coro}
+\begin{proof}
+We show that such $\Z\left[i\sqrt k\right]$ is not integrally closed, hence not a UFD, so not an Euclidean domain: take $\sqrt{1+i\sqrt k}{2}\notin\Z\left[i\sqrt k\right]$, which is a root of $x^2-x+\frac{1+k}{4}\in\Z\left[i\sqrt k\right][x]$.
+\end{proof}
+
+\begin{flushright}
+\textit{Week 3, lecture 1, 20th January}
+\end{flushright}
+
+\section{Algebraic integers}
+\begin{lemma}[Gauss]
+\label{lemma:Gauss}
+If $g,h\in\Q[x]$ are monic polynomials with $gh\in\Z[x]$, then $gh\in\Z[x]$.
+\end{lemma}
+
+\begin{defn}
+$\alpha\in\C$ is \textit{algebraic} if $\exists f\neq 0\in\Q[x]:f(\alpha)=0$.
+
+$\alpha$ is an \textit{algebraic integer} if $\exists$ monic $f\neq 0\in\Z[x]:f(x)=0$.
+\end{defn}
+
+\begin{defn}
+\label{defn:minpol}
+Given an algebraic element $\alpha$, consider $I=\{f\in\Q[x]:f(\alpha)=0\}\subset\Q[x]$. Clearly this is is an ideal, and since $\Q[x]$ is a PID, write $I=(m_\alpha)$ where $m_\alpha$ is monic and called the \textit{minimal polynomial} of $\alpha$.
+\end{defn}
+
+\begin{prop}
+Let $\alpha\in\C$ be an algebraic element with minimal (monic) polynomial $m_\alpha\in\Q[x]$. Then $\alpha$ is an algebraic integer iff $m_\alpha\in\Z[x]$.
+\end{prop}
+\begin{proof}
+The $\impliedby$ follows immediately from definition.
+
+Conversely, suppose $\alpha$ is an algebraic integer and let $f\in\Z[x]$ be monic with $f(\alpha)=0$. By definition of minimal polynomial, $\exists g\in\Q[x]:f=gm_\alpha$. Since $f,m_\alpha$ are monic, $g$ is monic, so by \href{lemma:Gauss}{Gauss lemma}, $g,m_\alpha\in\Z[x]$.
+\end{proof}
+
+\begin{example}
+Let $\alpha\in\Q$, then $m_\alpha(x)=x-\alpha$, so $\alpha$ is an algebraic integer iff $\alpha\in\Z$, i.e. the algebraic integers of rationals are exactly the (usual) integers.
+\end{example}
+
+\subsection{Quadratic numbers}
+\begin{defn}
+$\alpha\in\C$ is a \textit{quadratic integer} if $m_\alpha\in\Z[x]$ and has degree 2.
+
+Any quadratic integer lies in a quadratic field $\Q\left(\sqrt d\right)=\left\{a+b\sqrt d:a,b\in\Q\right\}$.
+\end{defn}
+
+Recall that if $d\in\Z,d\neq 0,1,-1$ is square free, then $\Q\left(\sqrt d\right)\supsetneq \Q$ and if $d_1\neq d_2$ satisfy the same conditions, then $\Q\left(\sqrt d_1\right)\neq\Q\left(\sqrt d_2\right)$. We now want to understand algebraic integers in $\Q\left(\sqrt d\right)$.
+
+\begin{defn}
+Define the \textit{trace} function by $\tr:\Q\left(\sqrt d\right)\rightarrow \Q:\alpha\mapsto\alpha+\overline\alpha$.
+\end{defn}
+
+Note that if $\alpha\in\Q\left(\sqrt d\right)$, then $p(x)=x^2-\tr(\alpha)x+N(\alpha)\in\Q[x]$ is a polynomial that vanishes at $\alpha$. If $\alpha\notin\Q$, then $p(x)=m_\alpha(x)$, hence $\alpha$ is an algebraic integer iff $\tr(\alpha),N(\alpha)\in\Z$, i.e. if one writes $\alpha=a+\sqrt d b$, then the conditio nis $2a,a^2-db^2\in\Z$.
+
+Write $a'=2a,b'=2b$. Then $a'\in\Z$, and $a'^2-db'^2=4a^2-d4b^2\in 4\Z$. But then in particular $db'^2\in\Z$, and since $d$ is squarefree, $b'\in\Z$. Modulo 4 we have $a'^2\equiv db'^2\Mod 4$, so:
+\begin{enumerate}
+\item If $a'$ is even then $db'\equiv 0\Mod 4$, but $d$ is squarefree, so $b'$ is even as well, hence $a,b\in\Z$, then $\alpha$ is an algebraic integer;
+\item or, if $a'$ is odd, then $db'\equiv 1\Mod 4$ hence $b'$ can't be even, so $b'$ is odd as well and $b'2\equiv 1\Mod 4$, hence $d\equiv 1\Mod 4$.
+\end{enumerate}
+
+We therefore found that algebraic integers of $\Q\left(\sqrt d\right)$ are
+\[
+\ri_d=\left\{
+\begin{aligned}
+\left\{a+b\sqrt d:a,b\in\Z\right\}=\Z\left[\sqrt d\right] \qquad&\text{if }d\neq 1\Mod 4 \\
+\left\{\frac{a'+b'\sqrt d}{2}:a',b'\in\Z,a'\equiv b'\Mod 2\right\}=\Z\left[\frac{1+\sqrt d}{2}\right]\qquad&\text{if }d=1\Mod 4
+\end{aligned}
+\right.
+\]
+
+\subsection{Algebraic integers in $\C$ form a ring}
+\begin{prop}
+\label{prop:intstab}
+Let $\alpha\in\C$. The following are equivalent.
+\begin{enumerate}
+\item $\alpha$ is an algebraic integer
+\item $\Z[\alpha]$ is finitely generated as an additive abelian group
+\item $\exists$ a nonzero, finitely generated subgroup $M\subset\C:\alpha\cdot M\subset M$.
+\end{enumerate}
+\end{prop}
+
+\begin{remark}
+\begin{enumerate}
+\item We usually say $\Z[\alpha]$ is defined to be the smallest subring of $\C$ containing $\Z$ and $\alpha$, but it can also be formally described as $\{f(\alpha):f\in\Z[x]\}$, or the image of the evaluation map $\Z[x]\rightarrow\C:x\mapsto\alpha$.
+\item An abelian group $M$ is finitely generated if $\exists m_1,\ldots,m_n\in M:\forall m\in M,m=\lambda_1m_1+\cdots+\lambda_nm_n,\lambda_i\in\Z$.
+\end{enumerate}
+\end{remark}
+
+\begin{proof}[Proof of \ref{prop:intstab}]
+1$\implies$2: let $a_0,\ldots,a_{n-1}\in\Z$ such that
+\[
+\tag{\ast}
+\alpha^n+a_{n-1}\alpha^{n-1}+\cdots+a_0=0.
+\]
+We want to show that $\{1,\alpha,\ldots,\alpha^{n-1}\}$ generates $\Z[\alpha]$ as an abelian group. We know $\{\alpha^k:k\in\N\}$ surely generates $\Z[\alpha]$. It now suffices to show $\alpha^K$ can be expressed as a $\Z$-linear combination of $\{1,\ldots,\alpha^{n-1}\}$ if $k\geq n$. We prove this by induction on $k$. If $k=n$ then the desired is immediate from $(\ast)$. Now suppose $\alpha^k=\sum_{i=0}^{n-1}c_i \alpha^i,c_i\in\Z$. Then
+\[
+\alpha^{k+1}=\sum_{i=0}^{n-2}c_i\alpha^{i+1}+c_{n-1}\alpha^n=\sum_{i=0}^{n-2}c_i\alpha^{i+1}+c_{n-1}(-a_{n-1}\alpha^{n-1}-\cdots-a_0).
+\]
+
+2$\implies$3: One has $\alpha\Z[\alpha]\subset\Z[\alpha]$.
+
+3$\implies$1: let $m_1,\ldots,m_n$ be generators of $M$ and $\alpha M\subset M$. Then $\alpha m_i=\sum_{j=1}^na_{ij}m_j,a_{ij}\in\Z$. Let $A=(a_{ij})\in M_{n\times n}(\Z)$. Then there is a surjective ring morphism $p:\Z^n\rightarrow M:\begin{pmatrix}
+a_1\\ \vdots \\ a_n
+\end{pmatrix}\mapsto\sum_i a_im_i$ and for every $a\in\Z^n$ we have $\alpha p(a)=\alpha\left(\sum_{i=0}^n am_i\right)p(Aa)$.
+
+We claim that $\forall f\in\Z[x]$, one has $f(\alpha)p(a)=p(f(\alpha)a)$.
+
+Consider the characteristic (monic) polynomial $\chi_A(x)=\det(xI-A)\in\Z[x]$ of $A$. By Cayley--Hamilton, $\chi_A(A)=0$, then $\chi_A(\alpha) M=0$ since each $m\in M$ is some $p(a)$, so (if we believe the claim) $\chi_A(\alpha)p(a)=p(\chi_A(\alpha)a)=0$. But since $M\neq 0$, it must be $\chi_A(\alpha)=0$, so $\alpha$ is an algebraic integer.
+
+\begin{flushright}
+\textit{Week 3, lecture 2, 21st January}
+\end{flushright}
+
+It remains to prove the claim. Note that we do have
+\[
+\alpha p(b)=\sum_{i=1}^n \alpha m_ib_i=\sum_{i,j=1}^n a_{ij}m_j b_i=\sum_{j=1}^n\left(\sum_{i=1}^k a_{ij}b_i\right)m_j=p(Ab).
+\]
+Since $p$ is a ring morphism, we have $\lambda p(b)=p(\lambda b) \forall\lambda\in\Z$, and for any $n\in\Z_{>0}$, we have $\alpha^np(b)=\alpha^{n-1}\alpha p(b)=\alpha^{n-1}p(Ab)=\cdots=p(A^nb)$, hence the claim is proved.
+\end{proof}
+
+\begin{thm}
+\label{thm:algintformring}
+\begin{enumerate}
+\item If $\alpha,\beta$ are algebraic integers, then so are $\alpha+\beta,\alpha-\beta,\alpha\beta$.
+\item If $f(x)=x^n+a_{n-1}x^{n-1}+\cdots+a_0$ with $a_i\in\C$ algebraic integers, then every root of $f$ is an algebraic integer.
+\end{enumerate}
+\end{thm}
+\begin{remark}
+\begin{enumerate}
+\item Denote the set of algebraic integers of $\C$ by $\overline\Z$. 1 is telling us that $\overline\Z$ is a ring.
+\item 2 is telling us that we don't get anything new if we consider roots of monic polynomials whose coefficients are algebraic integers.
+\end{enumerate}
+\end{remark}
+\begin{proof}[Proof of \ref{thm:algintformring}]
+\begin{enumerate}
+\item Consider $\Z[\alpha,\beta]=\left\{\sum a_{ij}\alpha^i\beta^j:a_{ij}\in\Z\right\}$, which is generated as an abelian group by $\left\{\alpha^i,\beta^j:i,j\geq 0\right\}$. If $\alpha$ satisfies a monic polynomial with integer coefficients of degree $n$ and $\beta$ of $m$, then $\left\{\alpha^i\beta^j:0\leq i\leq n,0\leq j\leq m\right\}$ generates $\Z[\alpha,\beta]$ by the same argument in the proof of \ref{prop:intstab}. Now for any $\gamma\in\Z\left[\alpha,\beta\right]$, we have $\gamma\Z\left[\alpha,\beta\right]\subset\Z\left[\alpha,\beta\right]$, so $\gamma$ is an algebraic integer, so in particular $\alpha+\beta,\alpha-\beta,\alpha\beta\in\Z\left[\alpha,\beta\right]$ are algebraic integers.
+\item Let $\alpha\in\C$ such that $\exists a_{n-1},\ldots,a_0\in\C$ algebraic integers such that $\alpha^n+a_{n-1}\alpha^{n-1}+\cdots+a_0=0$. Consider $\Z[a_0,\ldots,a_{n-1},\alpha]$, which is again finitely generated by our familiar argument. Clearly $\alpha\Z[a_0,\ldots,a_{n-1},\alpha]\subset\Z[a_0,\ldots,a_{n-1},\alpha]$, so $\alpha$ is an algebraic integer.
+\end{enumerate}
+\end{proof}
+
+\subsection{Number fields}
+\begin{defn}
+By \textit{number field}, we mean a subfield $K\subset\C$ which is finitely dimensional as a $\Q$-vector space. This dimension is called the \textit{degree} of $K$ and denoted by $[K:\Q]$.
+\end{defn}
+\begin{example}
+Given an algebraic integer $\alpha\in\C$ we have the number field $\Q(\alpha)$, the smallest subfield of $\C$ containing $\Q$ and $\alpha$. If $m_\alpha$ has a degree $n$, then $\{1,\alpha,\ldots,\alpha^{n-1}\}$ is a basis of $K$ as a $\Q$-vector space, and hence $[K:\Q]=n$. This together with primitive element theorem (see Galois theory) makes things easier.
+\end{example}
+
+\begin{defn}
+Given a number field $K$, we denote the set of algebraic integers in $K$ by $\ri_K$ ($=\overline \Z\cap K$) and call it the \textit{ring of integers} of $K$.
+\end{defn}
+
+\begin{remark}
+Note that the field of fractions of $\ri_K$ is precisely $K$. It's enough to show that $\forall\alpha\in K,\ \exists\lambda\in\Z:\lambda\alpha\in\ri_K$. This implies $\Frac(\ri_K)\supset\ri_K$, and the other inclusion is trivial.
+
+Let $\alpha\in K$. Then $\exists a_0,\ldots,a_{n-1}\in\Q:\alpha^n+a_{n-1}\alpha^{n-1}+\cdots+a_0=0$. Let $\lambda=\lcm(a_{n-1},a_0)$, then $p(x)=x^b+\lambda(a_{n-1}x^{n-1}+\cdots+a_0)\in\Z[x]$ and $p(\lambda\alpha)=0$, so $\lambda\alpha$ is an algebraic integer.
+\end{remark}
+
+\begin{prop}
+If $K$ is a number field, then $\ri_K$ is integrally closed.
+\end{prop}
+\begin{proof}
+This follows immediately from \ref{thm:algintformring}.2.
+\end{proof}
+
+\begin{coro}
+Let $K$ be a number field $\ri\subset\ri_K$ any subring with $\Frac(\ri)=K$. Then $\ri\subsetneq\ri_K$ is not integrally closed.
+\end{coro}
+\begin{proof}
+Take $\alpha\in\ri_K\backslash\ri$, then it satisfies a monic $f\in\Z[x]\subset\ri[x]$.
+\end{proof}
+
+\begin{defn}[Formal definition of norm and trace]
+Let $K$ be a number field. For $\alpha\in K$, consider the map $\mult_\alpha:K\rightarrow K:x\mapsto\alpha x$ as an endomorphism of $\Q$-vector spaces. Define $N_K(\alpha)=\det\mult_\alpha$ and $\tr_K(\alpha)=\tr\mult_\alpha$.
+
+This doesn't depend on choice of basis of $K$.
+\end{defn}
+
+\begin{remark}[Properties of norm and trace that follow from definition]
+\begin{enumerate}
+\item $\forall\lambda\in\Q,\ \tr_K(\lambda a)=\lambda\tr_K(a)$
+\item $\forall\alpha,\beta\in K,\ \tr_K(\alpha+\beta)=\tr_K(\alpha)+\tr_K(\beta)$
+\item $\forall\alpha,\beta\in K,\ N_K(\alpha\beta)=N_K(\alpha)N_K(\beta)$
+\end{enumerate}
+\end{remark}
+
+\begin{exe}
+Verify that this formal definition matches the definitions we gave earlier for $K=\Q\left(\sqrt d\right)$.
+\end{exe}
+
+\begin{example}
+Let $K=\Q\left(\sqrt[3]2\right)$. Compute $\tr_K\left(\sqrt[3]2\right)$ and $N_K\left(\sqrt[3]2\right)$.
+
+Let $1,\sqrt[3]2,\sqrt[3]4$ be a basis of $K$. Then $\mult_{\sqrt[3]2}$ corresponds to the matrix $\begin{pmatrix}
+0 & 0 & 2\\
+1 & 0 & 0\\
+0 & 1 & 0
+\end{pmatrix}$ with trace 0 and determinant 2.
+\end{example}
+
+\begin{prop}
+Let $\alpha\in\C$ be an algebraic number with $m_\alpha(x)=x^n+a_{n-1}x^{n-1}+\cdots+a_0$. Then $\tr_{\Q(\alpha)}(\alpha)=-a_{n-1}$ and $N_{\Q(\alpha)}(\alpha)=(-1)^na_0$.
+\end{prop}
+\begin{proof}
+Take the basis $1,\alpha,\ldots,\alpha^{n-1}$ for $\Q(\alpha)$ and write $\alpha^n+a_{n-1}\alpha^{n-1}+\cdots+a_0=0$. Then $\mult_\alpha$ corresponds to the matrix $\begin{pmatrix}
+0 & 0 & 0 & 0 & -a_0 \\
+1 & 0 & 0 & 0 & -a_1\\
+0 & 1 & 0 & 0 & -a_2\\
+0 & & \ddots & 0 & \vdots \\
+0 & 0 & \cdots & 1 & -a_{n-1}
+\end{pmatrix}$, from which we can read off the desired result.
+\end{proof}
+
+\begin{remark}
+\label{remark:inthasinttrN}
+If $\alpha$ is an algebraic integer, then $m_\alpha\in\Z[x]$ so in particular $\tr_{\Q(\alpha)}(\alpha),N_{\Q(\alpha)}(\alpha)\in\Z$.
+\end{remark}
+
+\begin{flushright}
+\textit{Week 3, lecture 3, 22nd January}
+\end{flushright}
+
+\begin{lemma}[Tower law]
+Let $K\subset L\subset M$ be inclusion of fields and suppose $[M:L],[L:K]$ are finite. Then $[M:K]=[M:L][L:K]$. More precisely, if $\alpha_1,\ldots,\alpha_n$ is a basis for $L$ as a $K$-vector space and $\beta_1,\ldots,\beta_m$ a basis for $M$ as a $L$-vector space, then $\alpha_i\beta_j:1\leq i\leq n,1\leq j\leq m$ is a basis for $M$ as a $K$-vector space.
+\end{lemma}
+\begin{proof}
+Omitted.
+\end{proof}
+
+\begin{prop}
+Let $K$ be a number field. For $\alpha\in K$, we have $\tr_K(\alpha)=|K:\Q(\alpha)|\tr_{\Q(\alpha)}(\alpha)$ and $N_K(\alpha)=N_{Q(\alpha)}(\alpha)^{|K:\Q(\alpha)|}$.
+\end{prop}
+\begin{proof}
+Write $n=\deg m_\alpha=[\Q(\alpha):\Q]$ and $m=[K:\Q(\alpha)]$. Let $\beta_1,\ldots,\beta_m$ be a basis of $K$ as a $\Q(\alpha)$-vector space. By the tower law,
+\[
+\beta_1,\alpha\beta_1,\ldots,\alpha^{n-1}\beta_1,\beta_2,\ldots,\ldots,\alpha^{n-1}\beta_m
+\]
+is a basis of $K$ as a $\Q$-vector space. Then $\forall i=1,\ldots,m$, the subspace spanned by $\beta_i,\alpha\beta_i,\ldots,\alpha^{n-1}\beta_i$ is closed under $\mult_\alpha$, moreover, on these subspaces, the matrix again has the form $\begin{pmatrix}
+0 & 0 & 0 & 0 & -a_0 \\
+1 & 0 & 0 & 0 & -a_1\\
+0 & 1 & 0 & 0 & -a_2\\
+0 & & \ddots & 0 & \vdots \\
+0 & 0 & \cdots & 1 & -a_{n-1}
+\end{pmatrix}$, and so the matrix of $\mult_\alpha$ on the whole $K$ has a block diagonal form with $m$ blocks.
+\end{proof}
+
+Recall that an abelian group can be alternatively thought as a $\Z$-module, and we say $\Z$-module is free of rank $n$ if it's isomorphic (as $\Z$-modules, or as abelian groups) to $\Z^n$.
+
+\begin{thm}[Structure theorem, weak form]
+\label{thm:structureweak}
+Let $M$ be a free $\Z$-module of rank $n$ and $M'\subset M$ a submodule. Then $M'$ is free of rank $q\leq n$.
+\end{thm}
+\begin{proof}
+We prove by induction on $n$. By assumption $M\cong\Z^n$, so WLOG suppose $M=\Z^n$. For every $i$, define $p_i:\Z^n\rightarrow\Z$ to be the projection into the $i$th coordinate. If $M'=0$ then we are done, so suppose $M'\neq 0$, then $\exists i:p_i(M')\neq 0$, so $\exists\beta\in\Z:p_i(M')=\beta$. This means $\exists b\in M':(\beta)=(p_i(b))$. Write $N=\ker p_i$. We claim $M'=b\Z\oplus M'\cap N$. Note that $M'\cap N\subset N\cong\Z^{n-1}$, so by inductive hypothesis $M'\cap N$ is free of rank $\leq n-1$. Clearly $b\Z$ is free of rank 1, so it remains to prove the direct sum.
+
+First observe that $b\Z\cap(M'\cap N)=\{0\}$. Indeed, if $m\in b\Z$ then $m=bk$ for $k\in\Z$, but $m\in N$, so $p_i(m)=p_i(bk)=kp_i(b)=0$, but we assumed $p_i(b)\neq 0$, so $k=0$ and $m=0$.
+
+Now let $m\in M'$. Then $p_i(m)\in p_i(M')=(p_i(b))$, so $p_i(m)=kp(b)$ for some $k\in\Z$. Hence $p_i(m-kb)=0$, i.e. $m-kb\in M'\cap N$.
+\end{proof}
+
+\begin{thm}[Structure theorem, strong form]
+\label{thm:structurestrong}
+Let $M$ be a free $\Z$-module of rank $n$ and let $M'\subset M$ be a submodule. If $M'$ is not zero, then there is a basis $\{e_1,\ldots,e_n\}$ of $M$ and $a_1,\ldots,a_q\in\Z\backslash\{0\}$ with $q\leq n$ such that $\{a_1e_1,\ldots,a_qe_q\}$ is a basis for $M'$ as $\Z$-module and $a_1\mid a_2\mid\cdots\mid a_q$.
+\end{thm}
+
+\begin{thm}[Smith normal form]
+Let $A$ be a nonzero $m\times n$ matrix with coefficients in $\Z$. Then $\exists S\in\GL_m(\Z),T\in\GL_n(\Z),r,d_1,\ldots,d_r\in\Z_{>0}$ such that $SAT=\begin{pmatrix}
+\diag(d_1,\ldots,d_r) & 0 \\ 0 & 0
+\end{pmatrix}$ with $d_1\mid\cdots\mid d_r$.
+\end{thm}
+
+\begin{lemma}
+\label{lemma:trMatisinv}
+Let $\alpha_1,\ldots,\alpha_n\in K$ be a basis of $K$ as a $\Q$-vector space. Then $\det A\neq 0$ where $A$ is the matrix $\left(\tr_K(\alpha_i\alpha_j)_{ij}\right)$.
+\end{lemma}
+\begin{proof}
+Consider the linear transformation $A:\Q^n\rightarrow\Q^n$ associated to the matrix $A$. It's enough to show that $A$ is injective by the rank--nullity theorem. Let $c=\begin{pmatrix}
+c_1 \\ \vdots \\ c_n
+\end{pmatrix}\in\ker A$, i.e. $Ac=0$. The $i$th entry of $Ac$ is
+\[
+\sum_{j=1}^n \tr_K(\alpha_i\alpha_j)c_j=\sum_{j=1}^n \tr_K(\alpha_i\alpha_jc_j)=\tr_K\left(\sum_{j=1}^n c_j \alpha_i\alpha_j\right)=0 \quad \forall i=1,\ldots,n
+\]
+Denote $\sum_{j=1}^nc_j\alpha_j$ by $\alpha$, then the above is $\tr_K(\alpha\alpha_i)=0$. Let $\beta\in K$, then $\beta=d_1\alpha_1+\cdots+d_n\alpha_n$, so $\tr_K(\alpha\beta)=\sum_{i=1}^n d_i\tr(\alpha\alpha_i)=0$. But now take $\beta=\alpha^{-1}$, then $\tr_K(\alpha\beta)=\tr_K(1)=n$, a contradiction. So $\alpha=0$ and hence $c_j=0 \ \forall j=1,\ldots,n$ since $\alpha_j$ is linearly independent, i.e. $c=0$.
+\end{proof}
+
+\begin{thm}
+\label{thm:ringofintisafreegrp}
+Let $K$ be a number field. Then as a group under addition, $\ri_K$ is free of rank $[K:\Q]$.
+\end{thm}
+\begin{proof}
+Let $\alpha_1,\ldots,\alpha_n\in\ri_K$ be a basis of $K$ as a $\Q$-vector space. (We can do this by $\Frac(\ri_K)=K$ so we can keep multiplying a basis of $K$ by integers to make them in $\ri_K$). Then every element $\alpha\in\ri_K$ can be written as $c_1\alpha_1+\cdots+c_n\alpha_n$ for some $c_i\in \Q$. We want to bound denominators of $c_i$'s. If we can do it then
+\[
+\Z^n\subset\Z\alpha_1\oplus\cdots\oplus\Z\alpha_n\subset\ri_K\subset \Z\frac{\alpha_1}{d}\oplus\cdots\oplus\Z\frac{\alpha_n}{d}\cong\Z^n,
+\]
+so by the \href{thm:structureweak}{weak form of structure theorem}, $\ri_K$ is free of rank $\geq n$ and $\leq n$, so $n$.
+
+By \ref{lemma:trMatisinv}, $A=(\tr_K(\alpha_i\alpha_j)_{ij})$ is invertible, hence write $A\begin{pmatrix}
+c_1\\ \vdots \\ c_n
+\end{pmatrix}=\begin{pmatrix}
+m_1 \\ \vdots \\ m_n
+\end{pmatrix}$, i.e. $\begin{pmatrix}
+c_1\\ \vdots \\ c_n
+\end{pmatrix}=A^{-1}\begin{pmatrix}
+m_1 \\ \vdots \\ m_n
+\end{pmatrix}$. Pick $d\in\Z$ such that $dA^{-1}\in M_n(\Z)$.
+\end{proof}
+
+\begin{flushright}
+\textit{Week 4, lecture 1, 27th January: problem class (sheet 1)}
+\end{flushright}
+
+\begin{exe}
+\begin{enumerate}
+\item Find all irreducible elements of $\Z\left[i\sqrt 2\right]$. Characterise all integers $n$ of the form $n=a^2+2b^2$.
+
+\textit{Solution}. We know that $\Z\left[i\sqrt 2\right]$ is a Euclidean domain, so primes are precisely irreducibles. The main idea is to use the norm function $N:\Z\left[i\sqrt 2\right]\rightarrow\Z_{\geq 0}$.
+
+Recall that $\Z\left[i\sqrt 2\right]^\times=\left\{\alpha\in\Z\left[i\sqrt 2\right]:N(\alpha)=1\right\}=\left\{a+i\sqrt 2 b:a,b\in\Z,a^2+2b^2=1\right\}=\{\pm 1\}$, and that $N$ is multiplicative. We claim that (a) if $\alpha\in\Z\left[i\sqrt 2\right]$ has $N(\alpha)=p$ for some prime $p$, then $\alpha$ is irreducible, and (b) $p\in\Z$ prime is reducible in $\Z\left[i\sqrt 2\right]\iff\exists\alpha\in\Z\left[i\sqrt 2\right]:N(\alpha)=p$.
+
+(a): Write $\alpha=\beta\gamma$ where $\beta,\gamma\in\Z\left[i\sqrt 2\right]$, then $p=N(\alpha)=N(\beta)N(\gamma)\in\Z$, so either $N(\beta)$ or $N(\gamma)=1$, hence either $\beta$ or $\gamma$ is a unit, i.e. $\alpha$ is irreducible.
+
+(b): Suppose $p$ is reducible, then write $p=\beta\gamma$ where $N(\beta),N(\gamma)\neq 1$, but then $p^2=N(p)=N(\beta)N(\gamma)$, so $N(\beta)=N(\gamma)=p$. Now suppose $N(\alpha)=p$, then $p=\alpha\overline{\alpha}$ where $N(\overline\alpha)=N(\alpha)=p$, hence $p$ is reducible.
+
+Now $\exists\alpha:N(\alpha)=p\iff\exists a,b\in\Z:a^2+2b^2=p$. Note that $p$ cannot divide $a$ and $b$ both since if so then $p^2\mid a^2+2b^2=p$, a contradiction, hence we have $a^2+2b^2\equiv 0\Mod p$, i.e. $-2\equiv \left(\frac{a}{b}\right)^2\Mod p$. This only happens if $p\equiv 1,3\Mod 8$. Conversely, suppose $p\equiv 1,3\Mod 8$, then $-2$ is a square mod $p$, i.e. $\exists x\in\Z:-2\equiv x^2\Mod p$, so $x^2+2\equiv 0\Mod p$, hence $p\mid x^2+2=\left(x+i\sqrt 2\right)\left(x-i\sqrt 2\right)$, and clearly $p\nmid x\pm i\sqrt 2$ since $\frac{x+i\sqrt 2}{p}\notin\Z\left[i\sqrt 2\right]$, so $p$ is not prime, thus $p$ is reducible.
+
+From the above we can make a list of irreducibles of $\Z\left[i\sqrt 2\right]$:
+\begin{itemize}
+\item $p=2$, then $p=N(i\sqrt 2)$, so $i\sqrt 2$ is irreducible
+\item $p$ is an odd prime and $p\equiv 5,7\Mod 8$, then $p$ is irreducible
+\item $p$ is an odd prime and $p\equiv 1,3\Mod 8$, then $\exists\alpha\in\Z\left[i\sqrt 2\right]:N(\alpha)=N(\overline\alpha)=p=\alpha\overline\alpha$, so $\alpha,\overline\alpha$ are irreducible
+\end{itemize}
+We just proved that an odd prime $p$ can be written as $p=a^2+2b^2$ iff $p=\equiv 1,3\Mod 8$, and if $p\equiv 5,7\Mod 8$ then $p^2$ can be written in the same form. But using that the norm is multiplicative, we conclude that $n$ can be written in the same form iff $\forall p\mid n$ with $p\equiv 5,7\Mod 8$, we have $p^2\mid n$.
+\item Show that $\ri=\Z\left[\frac{1+i\sqrt{19}}{2}\right]$ is not Euclidean by these steps:
+\begin{enumerate}
+\item Assume that a Euclidean norm $\lambda:\ri\backslash\{0\}\rightarrow\Z_{>0}$ such that $\lambda(a)\leq\lambda(ab) \ \forall a,b\in\ri$ exists. Describe the set of elements in $\ri\backslash\{0\}$ for which $\lambda$ is minimal.
+\item Compute $\ri^\times$.
+\item Show that 2 and 3 are irreducible.
+\item For $a\in\ri\backslash\{0\}$ such that $\lambda(a)$ is the second smallest value, describe $\ri/a\ri$.
+\item Deduce $a\mid 2$ or $a\mid 3$ a reach a contradiction.
+\end{enumerate}
+
+\textit{Solution}.
+\begin{enumerate}
+\item We claim this is precisely $\ri^\times$. Note that $1a=a$, so $\lambda(1)\leq\lambda(a) \ \forall a\in\ri$, and $\lambda(1)=1$, but $\lambda(u)=1\iff u\in\ri^\times$.
+\item One has
+\[
+\ri^\times=\{\alpha\in\ri:N(\alpha)=1\}=\left\{\frac{a+bi\sqrt{19}}{2}:a,b\in\Z,\frac{a^2+19b^2}{4}=1\right\}=\{\pm 1\}.
+\]
+\item If 2 is not irreducible, then $\exists\alpha\in\ri :N(\alpha)=2$, but $a^2+19b^2=2$ has no integer solutions. Same for 3.
+\item Take $b\in\ri$ and write $b=aq+r$ with the condition: either $r=0$ or $\lambda(r)<\lambda(a)$ (possible by definition of Euclidean norm), but then by definition of $a$ we have $\lambda(r)=1$, so $\ri/a\ri=\{0,\pm 1\}$, hence $\ri/a\ri$ is either $\Z/2\Z$ or $\Z/3\Z$.
+\item If $\ri/a\ri=\Z/2\Z$, then $2\mid a$, and if $\ri/a\ri=\Z/3\Z$ then $3\mid a$. But we claim $\ri/2\ri$ has 4 elements, contradicting that $\ri/a\ri\twoheadrightarrow\ri/2\ri$ surjectively. Consider $\ri$ as $\Z[x]/(x^2-x-5)$. But then $\ri/2\ri=\Z[x]/(x^2-x-5,2)=\Z[x]/(x^2+x+1,2)=\{c+dx:c,d\in\Z/2\Z\}$, which has 4 elements as claimed. Same for $\ri/3\ri$.
+\end{enumerate}
+\end{enumerate}
+\end{exe}
+
+\begin{flushright}
+\textit{Week 4, lecture 2, 28th January}
+\end{flushright}
+
+\begin{defn}
+Let $K$ be a number field. An \textit{embedding} of $K$ is a ring homomorphism $\tau:K\rightarrow\C$. Write $\Sigma_K$ for the set of embeddings of $K$.
+\end{defn}
+
+\begin{remark}
+\begin{enumerate}
+\item Recall that homomorphisms of fields are automatically injective.
+\item We defined number fields as subfields $K\subset\C$ finitely generated over $\Q$. Hence $\operatorname{incl}:K\hookrightarrow\C$ is an embedding.
+\end{enumerate}
+\end{remark}
+
+\begin{prop}
+\label{prop:embsofsimpext}
+Let $\alpha$ be algebraic with $m_\alpha(x)$ of degree $n$. Then $\left|\sum_{\Q(\alpha)}\right|=n=\left[\Q(\alpha):\Q\right]$. Moreover, for each distinct roots $\alpha_1,\ldots,\alpha_n$ of $m_\alpha(x)$, there is an embedding $\tau_i:\Q(\alpha)\rightarrow\C:\alpha\mapsto\alpha_i$.
+\end{prop}
+\begin{proof}
+Recall that $\Q(\alpha)\cong\Q[x]/(m_\alpha(x))$, and since $m_\alpha$ is by definition irreducible, it's separable, i.e. it has $\deg m_\alpha=n$ distinct roots.
+
+To give a ring homomorphism from $\Q(\alpha)$ to $\C$ is precisely giving the image of $x$ of the map $\Q[x]/(m_\alpha(x)) \xrightarrow{\phi} \C$ (since it must map 1 to 1, it's identity on $\Q$). But since $\ker\phi=(m_\alpha(x))$, it follows that $\phi(m_\alpha(x))$, and since $\phi$ is a homomorphism, $m_(\alpha)(\phi(x))=0$, hence $\phi(x)$ can only be one of the $n$ roots of $m_\alpha$.
+\end{proof}
+
+\begin{example}
+If $K=\Q\left(\sqrt d\right)$, then $m_{\sqrt d}(x)=x^2-d$ which has roots $\pm\sqrt d$, hence
+\[
+\Sigma_{\Q\left(\sqrt d\right)}=\left\{\tau_1:\Q\left(\sqrt d\right)\rightarrow\C:\sqrt{d}\mapsto\sqrt{d},\quad\tau_2:\Q\left(\sqrt d\right)\rightarrow\C:\sqrt d\mapsto -\sqrt d\right\}.
+\]
+\end{example}
+
+\begin{remark}
+Recall that if $m_\alpha(x)=x^n+a_{n-1}x^{n-1}+\cdots+a_0$, then $\tr_{\Q(\alpha)}(\alpha)=-a_{n-1}$ and $N_{\Q(\alpha)}(\alpha)=(-1)^n a_0$, but if we factorise $m_\alpha(x)$ and write it as $\prod_{i=1}^n(x-\alpha_i)$, then
+\[
+\tr_{\Q(\alpha)}(\alpha)=\sum_{i=1}^n\alpha_i=\sum_{i=1}^n\tau_i(\alpha),\quad N_{\Q(\alpha)}(\alpha)=\prod_{i=1}^n\alpha_i=\prod_{i=1}^n\tau_i(\alpha).
+\]
+We now want to do this for a general number field $K$ instead of $\Q(\alpha)$.
+\end{remark}
+
+\begin{lemma}
+\label{lemma:genextembs}
+Let $K$ be a number field and fix an embedding $\tau_0:K\rightarrow\C$. Let $\alpha$ be algebraic, then there are $[K(\alpha):K]$ embeddings $\tau:K(\alpha)\rightarrow\C$ that restrict to $\tau_0$.
+\end{lemma}
+\begin{proof}
+Omitted; very similar to proof of \ref{prop:embsofsimpext}.
+\end{proof}
+
+\begin{coro}
+Let $K\subset L$ be number fields and $\tau_0:K\rightarrow\C$ be an embedding. Then there are $|L:K|$ embeddings $\tau:L\rightarrow\C$ that restrict to $\tau_0$.
+\end{coro}
+\begin{proof}
+We prove by induction on $[L:K]|$. If $[L:K]=1$ then $L=K$ and there's nothing to prove. Now if $[L:K]>1$, pick $\alpha\in L\backslash K$, then $K\subsetneq K(\alpha)\subset L$ and by the tower law, $[L:K(\alpha)]<[L:K]$. Then $\tau_0$ extends to $[K(\alpha):K]$ embeddings $\tau_1:K(\alpha))\rightarrow\C$ by \ref{lemma:genextembs}, each of which extends to $[L:K(\alpha)]$ embeddings by the inductive hypothesis.
+\end{proof}
+
+\begin{thm}
+\label{thm:trissumofembandnmisprod}
+Let $K$ be a number field. Then for $\alpha\in K$ we have
+\[
+\tr_K(\alpha)=\sum_{\tau\in\Sigma_K}\tau(\alpha),\quad N_K(\alpha)=\prod_{\tau\in\Sigma_K}\tau(\alpha).
+\]
+\end{thm}
+\begin{proof}
+We already have $\tr_K(\alpha)=[K:\Q(\alpha)]\tr_{\Q(\alpha)}(\alpha)$, so
+\[
+\tr_K(\alpha)=[K:\Q(\alpha)]\sum_{\tau_0\in\Sigma_{\Q(\alpha)}}\tau_0(\alpha)=\sum_{\tau\in\Sigma_K}\sigma(\alpha)
+\]
+since each $\tau_0\in\Sigma_{\Q(\alpha)}$ extends to $[K:\Q(\alpha)]$ embeddings that agree with $\tau_0$ on $\Q(\alpha)$, in particular on $\alpha$, and $K$ does have $[K:\Q(\alpha)]\left|\Sigma_{\Q(\alpha)}\right|$ by the primitive element theorem, tower law and \ref{prop:embsofsimpext}.
+
+Similarly for the norm.
+\end{proof}
+
+\begin{prop}
+Let $K$ be a number field and $\alpha\in\ri_K$. Then $\alpha\in\ri_K^\times\iff N(\alpha)\in\Z^\times=\{\pm 1\}$.
+\end{prop}
+\begin{proof}
+If $\alpha\in\ri_K^\times,\ \exists\beta\in\ri_K:\alpha\beta=1$, so $N(\alpha)N(\beta)=1$ where $N(\alpha)\in\Z$ by \ref{remark:inthasinttrN}, so $N(\alpha)=\pm 1$. (We didn't need the embeddings for this direction.)
+
+Now if $N(\alpha)=\pm 1$, then
+\[
+\prod_{\tau\in\Sigma_K}\tau(\alpha)=\alpha\prod_{\tau\in\Sigma_K\backslash\{\id\}}\tau(\alpha).
+\]
+Now define $\beta=N(\alpha)\prod_{\tau\in\Sigma_K\backslash\{\id\}}\tau(\alpha)\in\ri_K$ (since $\tau(\alpha)$ satisfy the minimal polynomial of $\alpha$, which is an algebraic integer), then $\alpha\beta=N(\alpha)^1=1$.
+\end{proof}
+
+\begin{flushright}
+\textit{Week 4, lecture 3, 29th January}
+\end{flushright}
+
+\subsection{Discriminant and basis}
+
+\begin{defn}
+Let $K$ be a number field of degree $n=[K:\Q]$. Define the \textit{discriminant} of $\alpha_1,\ldots,\alpha_n\in K$ as
+\[
+\disc(\alpha_1,\ldots,\alpha_n)=\det (\tr_K(\alpha_i\alpha_j)_{ij})\in\Q.
+\]
+\end{defn}
+
+\begin{example}
+Consider $K=\Q\left(\sqrt d\right)$ with $d\nequiv 1\Mod 4$. We calculate the discriminant of integral basis $\{1,\sqrt d\}$ of $\Z\left[\sqrt d\right]$:
+\[
+\disc\left(1,\sqrt d\right)=\begin{pmatrix}
+2 & 0 \\ 0 & 2d
+\end{pmatrix}=4d.
+\]
+Now $\ri_K=\Z\left[\frac{1+\sqrt d}{2}\right]$ has integral basis $1,\frac{1+\sqrt d}{2}$. We calculate
+\[
+\disc\left(1,\frac{1+\sqrt d}{2}\right)=\det\begin{pmatrix}
+2 & 1 \\ 1 & \frac{1+d}{2}
+\end{pmatrix}=d.
+\]
+\end{example}
+
+\begin{remark}
+We have seen (\ref{lemma:trMatisinv}) that if $\alpha_1,\ldots,\alpha_n$ is a $\Q$-basis of a number field $K$ then $\disc(\alpha_1,\ldots,\alpha_n)$, and clearly if $\alpha_1,\ldots,\alpha_n\in\ri_K$ then $\disc(\alpha_1,\ldots,\alpha_n)\in\Z$.
+\end{remark}
+
+\begin{lemma}
+Suppose $\alpha_1,\ldots,\alpha_n,\beta_1,\ldots,\beta_n\in K$ such that
+\[
+\begin{pmatrix}
+\beta_1 \\ \vdots \\ \beta_n
+\end{pmatrix}=S\begin{pmatrix}
+\alpha_1 \\ \vdots \\ \alpha_n
+\end{pmatrix},\quad S\in M_n(\Q),
+\]
+then $\disc(\beta_1,\ldots,\beta_n)=(\det S)^2\disc(\alpha_1,\ldots,\alpha_n)$.
+\end{lemma}
+\begin{proof}
+Write $A=(\tr_K(\alpha_i\alpha_j)_{ij}),\ B=(\tr_K(\beta_i\beta_j)_{ij})$ and $S=(s_ij)$, then
+\[
+\tr_K(\beta_i\beta_j)=\sum_{k,l=1}^n s_{ik}\tr_K(\alpha_k\alpha_l)s_{jl},
+\]
+i.e. $B=SAS^t$, so taking determinants on both sides gives the desired.
+\end{proof}
+
+\begin{coro}
+\label{coro:diffbassamedisc}
+If $\alpha_1,\ldots,\alpha_n\in\ri_K$ and $\beta_1,\ldots,\beta_n\in\ri_K$ are $\Z$-basis of $\ri_K$ as an abelian group, then $\disc(\alpha_1,\ldots,\alpha_n)=\disc(\beta_1,\ldots,\beta_n)$.
+\end{coro}
+\begin{proof}
+In this case, the change of basis matrix $S\in\GL_n(\Z)$, so $\det S=\pm 1$.
+\end{proof}
+
+\begin{defn}
+Define the \textit{discriminant} of a number field $K$ to be $D_K=\disc(\alpha_1,\ldots,\alpha_n)$ where $\alpha_1,\ldots,\alpha_n$ is any $\Z$-basis of $\ri_K$. More generally, for a free abelian subgroup $G$ of $\ri_K$, define $\disc(G)$ to be the discriminant of any of $G$'s $\Z$-basis (allowed by \ref{thm:structurestrong}).
+\end{defn}
+
+\begin{prop}
+\label{prop:discratioofsbgrp}
+Suppose $M\subset N$ are free abelian subgroups of $\ri_K$ of rank $n$. Then
+\[
+\disc(M)=[N:M]^2\disc(N).
+\]
+(Note that $[N:M]$ denotes the index of $M$ as a subgroup of $N$, and not degree of field extension).
+\end{prop}
+\begin{proof}
+Let $\alpha_1,\ldots,\alpha_n$ be a basis of $N$ and $d_1\alpha_1,\ldots,\d_n\alpha_n$ be a basis of $M$ where $d_1,\ldots,d_n\in\Z$. Then
+\[
+\disc(M)=\det (\tr_K(d_i\alpha_i d_j\alpha_j))_{ij}=(d_i\cdots d_n)^2\disc (N),
+\]
+and since
+\[
+N/M=\frac{\Z\alpha_1\oplus\cdots\oplus\Z\alpha_n}{\Z d_1\alpha_1\oplus\cdots\oplus\Z d_n\alpha_n}\cong \Z/d_n\Z\oplus\cdots\oplus\Z/d_n\Z,
+\]
+one has $[N:M]=d_1\cdots d_n$.
+\end{proof}
+
+\begin{remark}
+In particular, if $M\subset\ri_K$ is free of rank $n$, then $D_K\mid\disc(M)$. Also, if $p\mid [\ri_K:M]$, then $p^2\mid\disc(M)$. Most importantly, if $\disc(M)$ is squarefree, then $M=\ri_K$. Hence, if $\alpha_1,\ldots,\alpha_n\in\ri_K$ satisfies that $\disc(\alpha_1,\ldots,\alpha_n)$ is squareefree, then it is a $\Z$-basis of $\ri_K$.
+
+For example, we know that $1,\sqrt d$ is not a $\Z$-basis of $\Z\left[\sqrt d\right]$ if $d\equiv 3\Mod 4$, and indeed as calculated before, $\disc\left(1,\sqrt d\right)=4d$ is not squarefree.
+\end{remark}
+
+\begin{prop}
+\label{prop:discinemb}
+Let $K$ be a number field with $\Sigma_K=\{\tau_1,\ldots,\tau_n\}$. Then for $\alpha_1,\ldots,\alpha_n\in K$,
+\[
+\disc(\alpha_1,\ldots,\alpha_n)=\det (\tau_i(\alpha_j)_{ij})^2.
+\]
+\end{prop}
+\begin{proof}
+Let $A=(\tr_K(\alpha_i\alpha_j)_{ij})$ and $T=(\tau_i(\alpha_j)_{ij})$. We have 
+\[
+\tr_K(\alpha_i\alpha_j)=\sum_{l=1}^n\tau_l(\alpha_i\alpha_j)=\sum_{l=1}^n\tau_l(\alpha_i)\tau_l(\alpha_j),
+\]
+which is the $i,j$th entry of $T^tT$.
+\end{proof}
+
+\begin{remark}
+Consider $K=\Q(\alpha)$ with $m_\alpha(x)=(x-\alpha_1)\cdots(x-\alpha_n)$. Take $1,\alpha,\ldots,\alpha^{n-1}$ to be a $\Q$-basis of $K$. Then $\tau_1,\ldots,\tau_n$ satisfy $\tau_i(\alpha)=\alpha_i$. Now suppose $\alpha=\alpha_1$, then
+\[
+\disc(1,\alpha,\ldots,\alpha^{n-1})=\det\begin{pmatrix}
+1 & \alpha_1 & \cdots & \alpha_1^{n-1} \\
+1 & \alpha_2 & \cdots & \alpha_2^{n-1} \\
+\vdots & \vdots & \ddots & \vdots \\
+1 & \alpha_n & \cdots & \alpha_n^{n-1}
+\end{pmatrix}^2=\prod_{1\leq i,j\leq n}(\alpha_i-\alpha_j)^2,
+\]
+(recall the Vandermonde matrix).
+\end{remark}
+
+\begin{prop}
+\label{prop:discandnormofderi}
+\[
+\disc(1,\alpha,\ldots,\alpha^{n-1})=(-1)^{\frac{n(n-1)}{2}}N_{\Q(\alpha)}(m_\alpha'(\alpha)).
+\]
+\end{prop}
+\begin{proof}
+Note that
+\[
+N_{\Q(\alpha)}(m_\alpha'(\alpha))=\prod_{i=1}^n\tau_i(m_\alpha'(\alpha))=\prod_{i=1}^n m_\alpha'(\tau_i(\alpha))=\prod_{i=1}^n m_\alpha'(\alpha_i),
+\]
+and the desired is clear if we write $m_\alpha(x)=(x-\alpha_1)\cdots(x-\alpha_n)$.
+\end{proof}
+
+\section{Unique ideal factorisation}
+\subsection{Prime ideals in $\ri_K$}
+\begin{defn}
+Let $R$ be a ring. A subgroup under addition $I\subset R$ is an \textit{ideal} if $ra\in I \ \forall r\in R,a\in I$.
+\end{defn}
+
+\begin{remark}
+Given an ideal $I\subset R$ we can form the quotient ring $R/I$. Denote the coset $r+I$ by $[r]$.
+\end{remark}
+
+\begin{defn}
+Given $S\subset R$, denote by $(S)$ the smallest ideal containing $S$, or the ideal \textit{generated} by $S$. Explicitly,
+\[
+(S)=\left\{\sum_i r_is_i:r_i\in R,s_i\in S\right\}.
+\]
+An ideal $I$ is \textit{principal} if one can write $I=(S)$ where $|S|=1$.
+\end{defn}
+
+\begin{defn}
+Given $I,J\in R$ ideals, define $I+J=\{a+b:a\in I,b\in J\}$ and $IJ=\left\{\sum_i a_ib_i:a_i\in I,b_i\in J\right\}=\left(\left\{ab:a\in I,b\in J\right\}\right)$. These two with $I\cap J$ are all ideals. 
+\end{defn}
+
+\begin{defn}
+An ideal $I\subset R$ is \textit{prime} if $ab\in I\implies a$ or $b\in I$.
+\end{defn}
+
+\begin{prop}
+An ideal $I\subset R$ is prime $\iff R/I$ is a domain.
+\end{prop}
+
+\begin{example}
+Recall that $R=\Z\left[\sqrt{-5}\right]$ is not a UFD since $6=2\times 3=\left(1+\sqrt{-5}\right)\left(1-\sqrt{-5}\right)$. Now let $\ip_2=\left(2,1+\sqrt{-5}\right),\ \ip_3=\left(3,1+\sqrt{-5}\right),\ \overline{\ip_3}=\left(3,1-\sqrt{-5}\right)$. We will see that $\ip_2^2=(2)$ and $\ip_3\overline{\ip_3}=(3)$, and $\ip_2$ is a prime ideal. Also, $\ip_2$ is not principal; indeed, assume $\ip_2=(\alpha)$ where $\alpha\in\Z\left[\sqrt{-5}\right]$, but then $\ip_2^2=(\alpha^2)=(2)$, so $N(\alpha)^2=N(2)=4$, hence $N(\alpha)=2$, but $a^2+5b^2=2$ has no $\Z$ solutions.
+
+$\ip_2$ is prime: consider $\Z\left[\sqrt{-5}\right]$ as $\Z[t]/(t^2+5)$ by $\sqrt{-5}\rightarrow t$, then $\ip_2$ is $(2,1+t)$ and so $\Z\left[\sqrt{-5}\right]/\ip_2$ is
+\[
+\Z[t]/(t^2+5,2,1+t)=\Z/2\Z[t]/(t^2-1,t+1)=\Z/2\Z[t]/(t+1)=\Z/2\Z,
+\]
+which is a domain.
+
+$\ip_3\overline{\ip_3}=(3)$: we prove the equality
+\[
+\left(9,3-3\sqrt 5,3+3\sqrt 6\right)=(3).
+\]
+Clearly $\left(9,3-3\sqrt 5,3+3\sqrt 6\right)\subset (3)$ since $9,3-3\sqrt 5,3+3\sqrt 6\in (3)$, and since $9-6=3$ we also have the other inclusion.
+\end{example}
+
+\begin{flushright}
+\textit{Week 5, lecture 1, 3rd February}
+\end{flushright}
+
+\begin{remark}
+Denote the ideal generated by $a_1,\ldots,a_n\in R$ by $(a_1,\ldots,a_n)\subset R$. Then note that
+\[
+(a_1,\ldots,a_n)+(b_1,\ldots,b_m)=(a_1,\ldots,a_n,b_1,\ldots,b_m)
+\]
+and
+\[
+(a_1,\ldots,a_n)(b_1,\ldots,b_m)=\left(\left\{a_ib_j\right\}:i=1,\ldots,n,b=1,\ldots,m\right).
+\]
+\end{remark}
+
+\subsection{Dedekind domains}
+\begin{defn}
+A domain $R$ is a \textit{Dedekind domain} if
+\begin{enumerate}
+\item $R$ is integrally closed;
+\item Every nonzero prime ideal is maximal;
+\item $R$ is noetherian.
+\end{enumerate}
+\end{defn}
+
+\begin{lemma}
+Let $I\subset\ri_K$ be a nonzero ideal. Then $I$ has finite index in $\ri_K$, i.e. $\left[\ri_K:I\right]=\left|\ri_K/I\right|$ is finite.
+\end{lemma}
+\begin{proof}
+Let $0\neq\alpha\in I$. Then $\left(N_K(\alpha)\right)\subset(\alpha)\subset I$. Indeed, we have $N_K(\alpha)=\alpha\prod_{\tau\neq\id}\tau(\alpha)$, so it suffices to show $\beta:=\prod_{\tau\neq\id}\tau(\alpha)\in\ri_K$, i.e. $\beta\in K$ and it's an algebraic integer. But this is clear since $\beta=\frac{N_K(\alpha)}{\alpha}\in K$ and it's a product of algebraic integers (homomorphisms preserve algebraic integers).
+
+In particular, we now have $\left[\ri_K:I\right]\leq \left[\ri_K:(N_K(\alpha))\right]$. It suffices to show $\ri_K/N$ is finite for any $N\neq 0\in\Z$, but by \ref{thm:ringofintisafreegrp} one has $\ri_K\cong\Z^n$ so $\ri_K/N\cong\Z^n/N\cong(\Z/N\Z)^n$ which has size $N^n$, in particular finite.
+\end{proof}
+
+\begin{prop}
+\label{prop:risarededekind}
+If $K$ is a number field, then $\ri_K$ is a Dedekind domain.
+\end{prop}
+\begin{proof}
+\begin{enumerate}
+\item This follows immediately from definition of ring of integers: it's precisely roots of monic integer polynomials.
+\item If $\ip\subset\ri_K$ be a nonzero prime ideal, then $\ri_K/\ip$ is a finite domain, hence a field, thus $\ip$ is maximal.
+\item Let $I_1\subsetneq I_2\subsetneq \cdots$ be an ascending chain of ideals in $\ri_K$. Then $\left[\ri_K:I_1\right]> \left[\ri_K:I_2\right]>\cdots$, where all $\left[\ri_K:I_i\right]$ by previous lemma are positive integers, hence there is a least $\left[\ri_K:I_i\right]$ by well-ordering principle, so the chain stabilises at $I_i$.
+\end{enumerate}
+\end{proof}
+
+\begin{prop}
+Every PID is a Dedekind domain.
+\end{prop}
+\begin{proof}
+\begin{enumerate}
+\item This follows from \ref{thm:PIDisUFD} and \ref{lemma:UFDisintclosed}.
+\item Let $(a)\subset R$ be a nonzero prime ideal, then $a$ is prime, so by \ref{lemma:primeisirred} $a$ is irreducible, so $(a)$ is maximal; indeed, assume $(a)\subset (c)\subset R$, then $a=cb$ for some $b\in R$, so $c$ is either a unit (then $(c)=R$) or $c\sim a$ (then $(c)=(a)$).
+\item Every ideal is generated by one element, in particular by finite number of elements.
+\end{enumerate}
+\end{proof}
+
+\begin{remark}
+Dedekind domains also arise from algebraic geometry: the coordinate ring (ring of regular functions) of smooth affine curves are Dedekind domains, e.g. $\C[x,y]/(x^n+y^n-1)$. On the other hand, $\C[x,y]/(y^2-x^3)$ where the curve $y^2-x^3$ is singular is not integrally closed, which is analogous to that $\Z\left[\sqrt d\right]$ where $d\equiv 1\Mod 4$ is not integrally closed.
+\end{remark}
+
+\begin{flushright}
+\textit{Week 5, lecture 2, 4th February}
+\end{flushright}
+
+\begin{thm}
+\label{thm:uniquefactinDD}
+Let $R$ be a Dedekind domain. Then any nonzero ideal $I\subsetneq R$ can be written in the form $I=\ip_1\cdots\ip_r$ where $\ip_i\subset R$ are prime ideals. Moreover, this decomposition is unique up to permutation.
+\end{thm}
+\begin{proof}
+We prepare the proof by three lemmas for a Dedekind domain $R$ which we will prove later:
+\begin{enumerate}
+\item If $\ip$ is a prime ideal and $I,J\subset R$ are ideals, then $IJ\subset\ip\implies I\subset\ip$ or $J\subset\ip$.
+\item If $I,J,K\subset R$ are nonzero ideals, then $IK=JK\implies I=J$.
+\item If $I,J\subset R$ are nonzero ideals, then $I\subset J\iff\exists K\subset R:I=JK$.
+\end{enumerate}
+Now the proof of theorem has two parts:
+\begin{enumerate}
+\item \textit{Existence of factorisation}. Let $S$ be the set of ideals which are not products of prime ideals. For a contradiction, suppose $S\neq\varnothing$. Since $R$ is noetherian, let $I$ be a maximal element of $S$. Pick $\ip$ to be a maximal ideal of $R$ such that $I\subsetneq\ip$ (if $I=\ip$ then $I$ is maximal so prime so in particular a product of prime ideals, then $I\notin S$). By lemma 3, $\exists J\in R:I=\ip J$. Then $I\subset J$, but $I\neq J$ since if $I=J$ then $\ip=R$. This implies $J\notin S$, so $J$ is a product of prime ideals, but then $I=\ip J$ is too.
+\item \textit{Uniqueness}. If $\ip_1\cdots\ip_r=\iq_1\cdots\iq_s$ where $\ip_i,\iq_i$'s are prime, then we can prove by induction that $r=s$ and $\ip=\iq$ up to reordering. Indeed, we have $\iq_1\cdots\iq_s=\ip_1\cdots\ip_r\subset\ip_1$, so by lemma 1 and after necessary reordering we have $\iq_1\subset\ip_1$. But they are both prime, so both maximal, hence $\iq_1=\ip_1$. Cancel them from the equation by lemma 2 and proceed inductively.
+\end{enumerate}
+\end{proof}
+
+\begin{lemma}
+\label{lemma:aIinIimpliesainR}
+Let $I\subset R$ be an ideal of a Dedekind domain $R$ and $\alpha\in\Frac(R)$. If $\alpha I\subset I$ then $\alpha\in R$.
+\end{lemma}
+\begin{proof}
+Since $R$ is Noetherian, write $I=(a_1,\ldots,a_n)$ where $a_i\in R$. Then $\alpha a_j=\sum_{i=1}^n c_{ij} a_i$ where $c_ij\in R$. Consider the matrix $A=(c_{ij})$ and its characteristic polynomial $\chi_A(t)\in R[t]$. Then $\chi_A(\alpha)I=\chi_A(A)I=0$, so $\chi_A(\alpha)=0$. Finally, since $\chi_A$ is monic and $R$ is integrally closed, we have $\alpha\in R$.
+\end{proof}
+
+\begin{lemma}
+\label{lemma:almostfact}
+Let $I\subset R$ be a nonzero ideal of a Dedekind domain $R$. Then there are nonzero prime ideals $\ip_1,\ldots,\ip_r\subset R$ such that $\ip_1\cdots\ip_r\subset I$.
+\end{lemma}
+\begin{proof}
+Let $S$ be the set of nonzero ideals such that the statement of the lemma fails. Again, for a contradiction, suppose $S\neq\varnothing$ and let $I\in S$ be a maximal element. $I$ is not prime by construction, so let $a,b\in R$ satisfy that $ab\in I$ and $a,b\notin I$. Then $I\subsetneq (a)+I$ and $I\subsetneq (b)+I$, so the lemma applies to $(a)+I$ and $(b)+I$. Write $\ip_1\cdots\ip_n\subset(a)+I$ and $\iq_1\cdots\iq_m\subset(b)+I$ where $\ip_i,\iq_i$'s are nonzero and prime. But then
+\[
+\ip_1\cdots\ip_n\iq_1\cdots\iq_m\subset((a)+I)((b)+I)=(ab)+(a)I+(b)I+I^2\subset I,
+\]
+a contradiction.
+\end{proof}
+
+\begin{lemma}
+Lemma 1 in proof of \ref{thm:uniquefactinDD}.
+\end{lemma}
+\begin{proof}
+Suppose $I\nsubset\ip$, i.e. $\exists a\in I:a\notin\ip$. Then $ab\in IJ\subset\ip \ \forall b\in J$, so $b\in\ip \ \forall b\in J$ since $\ip$ is prime and $a\notin\ip$, i.e. $J\subset\ip$.
+\end{proof}
+
+\begin{lemma}
+Let $I\subsetneq R$ be a nonzero proper ideal of a Dedekind domain $R$. Then $\exists x\in\Frac(R):x\notin R$ and $xI\subset R$.
+\end{lemma}
+\begin{proof}
+Let $0\neq\alpha\in I$. Then by \ref{lemma:almostfact}, one can write $\ip_1\cdots\ip_r\subset(\alpha)$ where $\ip_i$'s are nonzero and prime and $r$ is minimal (i.e. if we remove one $\ip_i$ then the inclusion fails). Let $\mathfrak m$ be a maximal ideal such that $(\alpha)\subset I\subset\mathfrak m$. Then by previous lemma, WLOG $\ip_1\subset\mathfrak m$, but $\ip_1$ is prime so it's maximal as well, hence $\ip_1=\mathfrak m$. Since $r$ is minimal, $\ip_2\cdots\ip_r\nsubset (\alpha)$, so let $b\in\ip_2\cdots\ip_r\backslash(\alpha)$, then $bI\subset b\mathfrak m=b\ip_1\subset\ip_1\cdots\ip_r\subset(\alpha)$, so $\frac{b}{\alpha}I\subset R$, where $\frac{b}{\alpha}$ is the desired $x$. Indeed $\frac{b}{\alpha}\notin R$ since $b\in(\alpha)$ by construction.
+\end{proof}
+
+\begin{lemma}
+\label{lemma:principaliseIdeals}
+Let $I\subset R$ be a nonzero ideal and $0\neq a\in I$. Then $\exists$ ideal $J\subset R:IJ=(a)$.
+\end{lemma}
+\begin{proof}
+We claim $J=\{b\in R:bI\subset(a)\}$ is the ideal we want. First this is indeed an ideal since $(a)$ is. Also by construction $IJ\subset (a)$, so it remains to see $(a)\subset IJ$. For a contradiction, suppose $IJ\subsetneq (a)$, then $K=\frac{1}{a}IJ\subsetneq R$ is a nonzero proper ideal. By previous lemma, let $x\in\Frac(R)\backslash R$ satisfy $xK\subset R$, so $xIJ=xaK\subset (a)$. Now since $a\in I$, we have $aJ\subset IJ$, so $J\subset K$ and $xJ\subset xK\subset R$. Let $b\in J$. Then $xb\in R$ and $xbI\subset xJI\subset (a)$, so $xb\in J$ by definition of $J$. This implies $xJ\subset J$, so by \ref{lemma:aIinIimpliesainR} $x\in R$, a contradiction.
+\end{proof}
+
+\begin{lemma}
+\label{lemma:uniquefactinDDlemma2}
+Lemma 2 in proof of \ref{thm:uniquefactinDD}.
+\end{lemma}
+\begin{proof}
+By \ref{lemma:principaliseIdeals}, let $K'$ be an ideal such that $KK'=(a)$ for some $a\in K$. Then $I(a)=IKK'=JKK'=J(a)$, so $I=J$ by the usual cancellation since $R$ is a domain.
+\end{proof}
+
+\begin{coro}
+\label{coro:uniquefactinDDlemma3}
+Lemma 3 in proof of \ref{thm:uniquefactinDD}.
+\end{coro}
+\begin{proof}
+\begin{itemize}
+\item[$\impliedby$] Clearly $I=JK\subset J$.
+\item[$\implies$] By \ref{lemma:principaliseIdeals}, write $JJ'=(b)$ where $b\in J$, so $IJ'\subset JJ'=(b)$, then take $K=b^{-1}IJ'$, and indeed $JK=b^{-1}JJ'I=I$.
+\end{itemize}
+\end{proof}
+
+\begin{flushright}
+\textit{Week 5, lecture 3, 5th February}
+\end{flushright}
+
+\subsection{Class groups, or how far is my Dedekind domain from a UFD?}
+\begin{defn}
+Let $R$ be a Dedekind domain. Two nonzero ideals $I,J\subset R$ are in the same \textit{class}, denoted by $I\sim J$, if $\exists\alpha\in\Frac(R)^\times:\alpha I=J$. The set of equivalences classes of ideals of $R$, denoted by $\Cl(R)$, is called the \textit{class group} of $R$, and the class of $I\subset R$ is denoted by $[I]$.
+\end{defn}
+
+\begin{remark}
+\begin{itemize}
+\item By definition $[I]=[R]\iff I=\alpha R\iff I$ is principal, so all principal ideals are in the same class (as the whole ring).
+\item Define an operation on $\Cl(K)$ by $[I]\cdot [J]=[IJ]$. Check this is well-defined, commutative and associative.
+\end{itemize}
+\end{remark}
+
+\begin{prop}
+The class group is indeed a group (and an abelian one too).
+\end{prop}
+\begin{proof}
+Note that the class $[R]$ serves as the identity: $[I][R]=[IR]=[I]$. Then inverses exists by \ref{lemma:principaliseIdeals}.
+\end{proof}
+
+\begin{example}
+\label{example:p2p3isprincipal}
+Let $\ip_2=\left(2,1+\sqrt{-5}\right)$ and $\ip_3=\left(3,1+\sqrt{-5}\right)$ again be ideals of $\Z\left[\sqrt{-5}\right]$. Then
+\[
+\ip_3\ip_2=\left(6,3+3\sqrt{-5},2+2\sqrt{-5},\left(1+\sqrt{-5}\right)^2\right)=\left(1+\sqrt{-5}\right)
+\](since $6=\left(1+\sqrt{-5}\right)\left(1-\sqrt{-5}\right)$. In particular $[\ip_2\ip_3]=1$, i.e. $[\ip_2]=[\ip_3]$. Similarly $\ip_2^2=(2)$ is principal, so $[\ip_2]$ has order 2 in $\Cl(R)$. We will eventually see that this is the whole group: $\Cl(R)=\{1,[\p_2]\}\cong\Z/2\Z$.
+\end{example}
+
+\begin{prop}
+\label{prop:DDUFDiffclgrptriv}
+Let $R$ be a Dedekind domain. The following are equivalent:
+\begin{enumerate}
+\item $\Cl(R)=\{1\}$.
+\item $R$ is a PID.
+\item $R$ is a UFD.
+\end{enumerate}
+\end{prop}
+\begin{proof}
+Clearly 1$\iff$2.
+
+2$\implies$3 is \ref{thm:PIDisUFD}.
+
+It remains to show 3$\implies$2. To prove $R$ is a PID, it suffices to show that every prime ideal is principal since then every ideal is a product of prime ideals and hence principal as well. Let $\ip\subset R$ be a nonzero ideal ad $0\neq\alpha\in\ip$. Since $R$ is a UFD, write $\alpha=i\pi_1\cdots\pi_r$ where $u\in R^\times$ and $\pi_i$'s are irreducible/prime. Then some $(\pi_i)\subset\ip$, but both are maximal so $(\pi_i)=\ip$, in particular $\ip$ is principal.
+\end{proof}
+
+\begin{prop}[Computations with ideals]
+\label{prop:computationswithideals}
+Let $R$ be a Dedekind domain and $I,J\subset R$ nonzero ideals. Write $I=\ip_1^{a_1}\cdots\ip_r^{a_r}$ and $J=\ip_1^{b_1}\cdots\ip_r^{b_r}$ where $a_i,b_i$'s could be 0 and $\ip_i$'s are distinct prime ideals. Then
+\begin{enumerate}
+\item $IJ=\ip_1^{a_1+b_1}\cdots\ip_r^{a_r+b_r}$
+\item $I\subset J\iff a_i\geq b_i \ \forall i$
+\item $I+J=\ip_1^{\min\{a_i,b_i\}}\cdots\ip_r^{\min\{a_r,b_r\}}$
+\item $I\cap J=\ip_1^{\max\{a_i,b_i\}}\cdots\ip_r^{\max\{a_r,b_r\}}$
+\end{enumerate}
+\end{prop}
+\begin{proof}
+\begin{enumerate}
+\item This follows from commutativity and $\ip^a\ip^b=\ip^{a+b}$.
+\item Recall that $I\subset J\iff\exists$ ideal $K\subset R:I=JK$. Write $K=\ip_1^{e_1}\cdots\ip_r^{e_r}K'$ for some ideal $K'\subset R$. Using unique factorisation, $a_i=b_i+e_i \ \forall i$ and $K'=R$.
+\item Write $I+J=\ip_1^{c_1}\cdots\ip_r^{c_r}$. Then $I,J\subset I+J$, so $c_i\leq a_i,b_i$, i.e. $c_i\leq\min\{a_i,b_i\}$, hence $\ip_1^{\min\{a_i,b_i\}}\cdots\ip_r^{\min\{a_r,b_r\}}\subset I+J$ by 2. But $I,J\subset\ip_1^{\min\{a_i,b_i\}}\cdots\ip_r^{\min\{a_r,b_r\}}$ again by 2 so $I+J\subset\ip_1^{\min\{a_i,b_i\}}\cdots\ip_r^{\min\{a_r,b_r\}}$, hence equality.
+\item Again write $I+J=\ip_1^{c_1}\cdots\ip_r^{c_r}$. Since $I\cap J\subset I,J$, by 2 $a_i,b_i\leq c_i$, in particular $c_i\geq\max\{a_i,b_i\}$, hence $I\cap J\subset \ip_1^{\max\{a_i,b_i\}}\cdots\ip_r^{\max\{a_r,b_r\}}$. But $\ip_1^{\max\{a_i,b_i\}}\cdots\ip_r^{\max\{a_r,b_r\}}\subset I,J$, so $\ip_1^{\max\{a_i,b_i\}}\cdots\ip_r^{\max\{a_r,b_r\}}\subset I\cap J$.
+\end{enumerate}
+\end{proof}
+
+\begin{thm}[Chinese remainder theorem]
+Let $R$ be a commutative ring and $I,J\subset R$ ideals. If $I+J=R$ then $I\cap J=IJ$ and there is an isomorphism of rings $R/IJ\rightarrow R/I\times R/J$ via $a+IJ\mapsto (a+I,a+J)$.
+\end{thm}
+In general if ideals $I_1,\ldots,I_r\subset R$ satisfy $I_i+I_j=R \ \forall i,j$ then $\bigcap I_i=\prod I_i$ and $R/I_1\cdots I_r\cong R/I_1\times\cdots\times R/I_r$.
+
+In particular on Dedekind domains, if $\ip_1,\ip_2$ are distinct prime ideals then necessarily $\ip_1^{a_1}+\ip_2^{a_2}=R$ for all $a_1,a_2\geq 0$ by \ref{prop:computationswithideals}. It follows that for a Dedekind domain $R$,
+\[
+R/\ip_1^{a_1}\cdots\ip_r^{a_r}\cong R/\ip_1^{a_1}\times\cdots\times R/\ip_r^{a_r}
+\]
+for any collection $\ip_1,\ldots\ip_r$ of distinct prime ideals. We will most often use particularly surjection; namely the system of equations
+\[
+\left\{
+\begin{aligned}
+x&\equiv x_1\Mod \ip_1^{a_1} \\
+&\vdots \\
+x&\equiv x_r\Mod \ip_r^{a_r}
+\end{aligned}
+\right.
+\]
+is solvable.
+
+\begin{prop}
+Let $R$ be a Dedekind domain and $I\subset R$ a nonzero ideal with $0\neq\alpha\in I$. Then $\exists\beta\in I:I=(\alpha,\beta)$. In particular, every ideal in $R$ can be generated by two elements.
+\end{prop}
+\begin{proof}
+Write the prime factorisation $I=\ip_1^{a_1}\cdots\ip_r^{a_r}$. Then $(a)=\ip_1^{b_1}\cdots\ip_r^{b_r}\iq_1^{c_1}\cdots\iq_s^{c_s}$ for some distinct prime ideals $q_j$'s. Since $(a)\subset I$ we have $b_i\geq a_i$. For $i=1,\ldots,r$ clearly $\ip_i^{a_i+1}\subsetneq\ip_i^{a_i}$, so let $x_i\in\ip_i^{a_i}\backslash\ip_i^{a_i+1}$. And since $\iq_j\subsetneq R$, let $x_j\in R\backslash\iq_j$. Now use CRT to find $\beta\in R$ such that
+\[
+\left\{
+\begin{aligned}
+\beta&\equiv x_i\Mod \ip_i^{a_i+1} \\
+&\vdots \\
+\beta&\equiv x_j\Mod \iq_j,
+\end{aligned}
+\right.
+\]
+in particular $\beta\notin\ip_i^{a_i+1},\ \beta\in\ip_i^{a_i}$ and $\beta\notin\iq_j$. This implies in the prime factorisation of $(\beta)$ we won't see $\iq_j$'s and $\ip_i$'s are of order exactly $a_i$, i.e. $(\beta)=\ip_1^{a_1}\cdots\ip_r^{a_r}\tau_1^{d_1}\cdots\tau_l^{d_k}$ where $\tau_j$'s are different from $\ip_i$'s and $\iq_j$'s. Then $(\alpha,\beta)=(\alpha)+(\beta)=\ip_1^{\min\{a_i,b_i\}}\cdots\ip_r^{\min\{a_r,b_r\}}=\ip_1^{a_1}\cdots\ip_r^{a_r}=I$.
+\end{proof}
+
+\begin{flushright}
+\textit{Week 6, lecture 1, 10th February: problem class (sheet 2)}
+\end{flushright}
+
+\begin{exe}
+\begin{enumerate}
+\setcounter{enumi}{2}
+\item Let $\ri_{-5}=\Z\left[\sqrt 5\right],\ \ip_2=\left(2,1+\sqrt{-5}\right),\ \ip_3=\left(3,1+\sqrt{-5}\right)$ and $\overline{\ip_3}=\left(3,1-\sqrt{-5}\right)$.
+\begin{enumerate}
+\item[(b)] Check $(2)=\ip_2^2,\ (3)=\ip_3\overline{\ip_3}$.
+\item[(c)] Show that $\ip_3^2$ is principal and find a generator. 
+\item[(d)] What is $\ri_{-5}/\ip_2$?
+\item[(e)] Prove that $(7)$ is not prime.
+\end{enumerate}
+
+\textit{Solution}. \begin{enumerate}
+\item[(b)] Showed in class.
+\item[(c)] We can do this by hand by multiplying generators, but there is a trick. We already know $\ip_2\ip_3=\left(1+\sqrt{-5}\right)$ by \ref{example:p2p3isprincipal}. Write $2\ip_3^2=\ip_2^2\ip_3^2=(\ip_2\ip_3)^2=\left(1+\sqrt{-5}\right)^2=\left(-4+2\sqrt{5}\right)=(2)\left(-2+\sqrt{-5}\right)$. The trick is useful when we have enough information of other ideals in the class group.
+\item[(d)] Similarly to before, write $\ri_{-5}=\Z[t]/(t^2+5)$ and hence $\ri_{-5}/\ip_2=\Z[t]/(t^2+5,2,1+t)=\Z/2\Z[t]/(t^2-1,1+t)=\Z/2\Z[t]/(1+t)=\Z/2\Z$.
+\item[(e)] We can prove this in two ways.
+\begin{enumerate}
+\item Again, write $\ri_{-5}/(7)=\Z[t]/(t^2+5,7)=\Z/7\Z[t]/(t^2+5)=\Z/7\Z[t]/((t-3)(t+3))$, which is not a domain.
+\item $21=\left(4+\sqrt{-5}\right)\left(4-\sqrt{-5}\right)\in (7)$ but $\left(4+\sqrt{-5}\right),\left(4-\sqrt{-5}\right)\notin (7)$. We can get these two elements by mapping $t-3,t+3$ back to $\ri_{-5}$.
+\end{enumerate}
+\end{enumerate}
+\item Give examples of a ring that has two of the following properties but not third one: Noetherian, integrally closed, and every nonzero prime ideal is maximal (i.e. definition of a Dedekind domain).
+
+\textit{Solution}. \begin{enumerate}
+\item $\Z[x]$ is Noetherian by Hilbert, it's a UFD by Gauss hence integrally closed by \ref{lemma:UFDisintclosed}, but $(x)$ is prime and not maximal ($(x)\subsetneq (x,2)$ for example).
+\item $\Z\left[\sqrt{-3}\right]$ is Noetherian since it's a quotient of $\Z[x]$. For the third property, the argument used in proof of \ref{prop:risarededekind} still applies. But it's not integrally closed since $\frac{1+\sqrt{-3}}{2}$ is a solution of $x^2-x+1$.
+\item $\overline\Z$, the set of all algebraic integers in $\C$, is clearly integrally closed. For the third property, we need the following lemma.
+\begin{lemma}
+\label{lemma:preimofprimeisprime}
+Let $\phi:A\rightarrow B$ be a ring morphism. Then $\forall$ prime ideals $\ip\subset B$, $\phi^{-1}\ip=\{a\in A:\phi(a)\in\ip\}$ is prime. In particular if $\phi$ is an embedding, denote $\ip\cap A=\phi^{-1}(\ip)$.
+\end{lemma}
+Now take $\ip\subset\overline\Z$ be a nonzero prime ideal and assume $\ip\subsetneq\iq$ for some other prime ideal $\iq\subset\overline\Z$. Then $\ip\cap\Z,\iq\cap\Z$ are both nonzero prime ideals, so $\ip\cap\Z,\iq\cap\Z$ are maximal hence equal to some $(p)$ with $p$ prime. Now take $\beta\in\iq\backslash\ip$, then $\exists b_{n-1},\ldots,b_0\in\Z:\beta^n+b_{n-1}\beta^{n-1}+\cdots+\beta_0=0$. Assume $j$ is the minimal integer such that $b_j\notin (p)$. Then $\beta^{n-j}(\beta^j+\cdots+b_j)=-\left(b_{j+1}\beta^{j+1}+\cdots+b_0\right)\in (p)$, so $\beta^j+\cdots+b_j\in (p)\subset\iq$, hence $\beta_j\in\iq$, a contradiction. Hence $\ip=\iq$ and $\ip$ is maximal.
+
+But $\overline\Z$ is not Noetherian: the chain
+\[
+(2)\subsetneq \left(\sqrt{2}\right)\subsetneq \left(\sqrt[4]{2}\right)\subsetneq\cdots\subsetneq \left(2^{\frac{1}{2n}}\right)\subsetneq\cdots
+\]
+doesn't stabilise.
+\end{enumerate}
+\end{enumerate}
+\end{exe}
+
+\begin{flushright}
+\textit{Week 6, lecture 2, 11th February}
+\end{flushright}
+
+\begin{proof}[Proof of \ref{lemma:preimofprimeisprime}]
+It's clear that $\phi^{-1}(\ip)$ is indeed an ideal. Now $ab\in\phi^{-1}(\ip)\implies \phi(ab)=\phi(a)\phi(b)\in\ip\implies\phi(a)$ or $\phi(b)\in\ip\implies a$ or $b\in\phi^{-1}(\ip)$. 
+\end{proof}
+
+In particular, given a number field $K$ we always have a natural inclusion $\iota:\Z\hookrightarrow\ri_K$, so given a prime ideal $\ip\subset\ri_K$ we have $\ip\cap\Z=\iota^{-1}(\ip)\subset\Z$ is a prime ideal.
+
+\begin{lemma}
+Let $K$ be a number field and $\ip\subset\ri_K$ a nonzero prime ideal. Then there is a unique prime number $p\in\Z$ such that $p\in\ip$.
+\end{lemma}
+\begin{proof}
+Two ways to see  this:
+\begin{enumerate}
+\item We have just seen that $\ip\cap\Z$ is a prime ideal, so since $\Z$ is a PID, if we can prove this is nonzero we are done. Take $0\neq\alpha\in\ip$. Then $N_K(\alpha)=\alpha\prod_{\tau\neq\id}\tau(\alpha)\ip$. Also $N_K(\alpha)\in\Z$ since $\alpha\in\overline\Z$. Hence $N_K(\alpha)\in\ip\cap\Z$.
+\item We know $\ri_K/\ip$ is finite, so $\ri_K/\ip$ is a field of characteristic $p>0$, so $p=0$ in $\ri_K/\ip$, hence $p\in\ip$.
+\end{enumerate}
+\end{proof}
+
+\subsection{Factorisation of prime ideals into Dedekind domain prime factors}
+
+\begin{defn}
+A nonzero prime ideal $\ip\subset\ri_K$ \textit{lies above} the prime $p\in\Z$ if $p\in\ip$ (or equivalently $\ip\cap\Z=(p)$.)
+\end{defn}
+
+\begin{prop}
+\label{prop:lsprimeidslieabovep}
+Let $p\in\Z$ be prime and suppose $\ri_K\supset(p)=\ip_1^{a_1}\cdots\ip_r^{a_r}$ with $\ip_1,\ldots,\ip_r$ distinct prime ideals using \ref{thm:uniquefactinDD}. Then they are exactly the prime ideals that lie above $p$.
+\end{prop}
+\begin{proof}
+$(p)=\ip_1^{a_1}\cdots\ip_r^{a_r}\subset\ip_i \ \forall i$, so $p\in\ip_i \ \forall i$. Conversely, if $\ip\subset\ri_K$ and $p\in\ip$, then $(p)\subset\ip$, so $\exists$ ideal $I\subset\ri_K$ such that $(p)=\ip I$, The desired then follows from \ref{thm:uniquefactinDD}.
+\end{proof}
+
+\begin{example}
+$K=\Q(i),\ \ri_K=\Z[i]$. First note that $\Z[i]$ is a Euclidean domain, so every prime ideal $\ip$ is generated by a irreducible element.
+\begin{itemize}
+\item If $p\equiv 3\Mod 4$, then $p$ is irreducible, so $(p)$ is prime.
+\item If $p\equiv 1\Mod 4$ then $p=\pi_p\overline{\pi_p}$ for some irreducible $\pi_p$, and $N_{\Q(i)}(\pi_p)=N_{\Q(i)}\left(\overline{\pi_p}\right)=p.$ Hence $(p)=(\pi_p)\left(\overline{\pi_p}\right)=:\ip_1\ip_2$. Moreover, $\ip_1\neq\ip_2$; if $\ip_1=\ip_2$ then $\exists u\in\Z[i]^\times:\pi_p=u\overline{\pi_p}$. But we know $\Z[i]^\times=\{\pm 1,\pm i\}$, and if we write $\pi_p=x+iy$ with $N_{\Q(i)}(x+iy)=x^2+y^2=p$, we now that $x,y\neq 0$ and $x\neq y\Mod 2$. Now no $u$ satisfies these two conditions, so a contradiction.
+\item If $p=2$ then $p=(1+i)(1-i)$ where $1+i,1-i$ are irreducible, so $(2)=(1+i)(1-i)$, but $1+i=i(1-i)$, so $(2)=\ip^2$ for a prime ideal $\ip$.
+\end{itemize}
+\end{example}
+
+\begin{defn}
+Let $K$ be a number field and $\ip\subset\ri_K$ a nonzero prime ideal lying above $p$. The \textit{ramification index} $e(\ip)$ of $\ip$ is the multiplicity with which $\ip$ occurs in the factorisation of $(p)$.
+\end{defn}
+For example, in the above example, $(1+i)$ has ramification index 2, but $\pi_p$ has ramification index 1.
+
+\begin{defn}
+The \textit{inertia degree} of a prime ideal $\ip\subset\ri_K$ is $f(\ip)=\left[\ri_K/\ip:\F_p\right]=\dim_{\F_p}\left(\ri_K/\ip\right)$. 
+\end{defn}
+
+\begin{example}
+$K=\Q\left(\sqrt{-5}\right),\ \ri_K=\Z\left[\sqrt{-5}\right]$ with $\ip_2$ being as usual. Then $(2)=\ip_2^2$ so $e(\ip_2)=2$, and $(3)=\ip_3\overline{\ip_3}$ so $e(\ip_3)=1$. Clearly $(5)=\left(\sqrt{-5}\right)^2:=\ip_5^2$ so $e(\ip_5)=2$. One can check that $(7)=\left(7,3+\sqrt{-5}\right)\left(7,3-\sqrt{-5}\right)$.
+\end{example}
+
+\begin{thm}
+\label{thm:ramineanddeg}
+Let $K$ be a number field fix $p\in\Z$ prime. Then
+\[
+\sum_{\ip\subset\ri_K,p\in\ip} e(\ip)f(\ip)=\deg_\Q(K).
+\]
+\end{thm}
+\begin{remark}
+\label{remark:ramineinquadext}
+What is the theorem saying above $K=\Q\left(\sqrt d\right)$? One of the following 3 possibilities happen:
+\begin{enumerate}
+\item There is just one prime $\ip\subset\ri_K$ lying above $p\in\Z$ with $e(p)=2$ and $f(p)=1$.
+\item There is just one prime $\ip\subset\ri_K$ lying above $p\in\Z$ with $e(p)=1$ and $f(p)=2$. 
+\item There are two distinct prime $\ip_1\neq\ip_2$ with $e(\ip_1)=e(\ip_2)=1$ and $f(\ip_1)=f(\ip_2)=1$.
+\end{enumerate}
+\end{remark}
+
+The main we are using to prove the theorem is the following notion.
+
+\begin{defn}
+Let $I\subset\ri_K$ be a nonzero ideal. The \textit{norm} of $I$, denoted by $N_K(I)$, is the index $[\ri_K:I]$.
+\end{defn}
+
+\begin{remark}
+\label{remark:normofideal}
+\begin{enumerate}
+\item If $p\subset\ri_K$ is a prime ideal, then $[\ri_K:\ip]=p^{f(p)}$.
+\item If $n\in\Z$ and $N_K((n))=|n|^{\deg_\Q(K)}=|N_K(n)|$ (we will see that $\forall\alpha\in\ri_K$ we have $N_K(\alpha\ri_K)=|N_K(\alpha)|$); indeed, recall (after fixing an integral basis of $\ri_K$) that $\ri_K\cong\Z^{\deg_\Q^K}$, so $\ri_K/n\ri_K\cong(\Z/n\Z)^{\deg_\Q K}$.
+\end{enumerate}
+\end{remark}
+
+\begin{flushright}
+\textit{Week 6, lecture 3, 12th February}
+\end{flushright}
+
+\begin{prop}
+\label{prop:normofprodisprodofnorm}
+If $I,J$ are nonzero ideals of $\ri_K$, then $N_K(IJ)=N_K(I)N_K(J)$.
+\end{prop}
+\begin{proof}
+By \ref{thm:uniquefactinDD}, it suffices to show $N_K(\ip_1^{a_1}\cdots\ip_r^{a_r})=N_K(\ip_1)^{a_r}\cdots N_K(\ip_r)^{a_r}$ where $\ip_i$ are prime ideals. Chinese remainder theorem says, $\ri_K/\ip_1^{a_1}\cdots\ip_r^{a_r}\cong\ri_K/\ip_1^{a_1}\times\cdots\times\ri_K/\ip_r^{a_r}$, so it remains to see $N_K(\ip^a)=N_K(\ip)^a$ for a prime ideal $\ip$. We prove it by induction on $a$. The base case $a=1$ is tautological. Now by Lagrange and 3rd isomorphism theorem (in particular for abelian groups $A\subset B\subset C$, we have $[C:A]=[B:A][(C/A):(B/A)]=[B:A][C:B]$), 
+\[
+N_K(\ip^{a+1})=[\ri_K:\ip^{a+1}]=[\ri_K:\ip^a][\ip^a:\ip^{a+1}]=N_K(\ip)^a[\ip^a:\ip^{a+1}],
+\]
+now it suffices to show $[\ip^a:\ip^{a+1}]=N_K(\ip)$. We build a isomorphism of abelian groups $\ri_K/\ip\rightarrow\ip^a/\ip^{a+1}$. Take $b\in\ip^a\backslash\ip^{a+1}$ and define the map by $y+\ip\mapsto yb+\ip^{a+1}$. The map is
+\begin{enumerate}
+\item well-defined: suppose $y'-y\in\ip$, i.e. $y'=y+x$ for some $x\in\ip$. Then $y'+\ip\mapsto y'b+\ip^{a+1}=yb+xb+\ip^{a+1}$, but $x\in\ip,b\in\ip^a\implies xb\in\ip^{a+1}$;
+\item injective: recall that in Dedekind domains every nonzero prime ideal is maximal, so $\ip$ is maximal, so for any nonzero $x\notin\ip$ we have $\ip+(x)=\ri_K$. Hence $1=y+xx'$ for some $y\in\ip$ and $x'\in\ri_K$. If $x+\ip\mapsto 0$, then $xb\in\ip^{a+1}$. Write $b=b(y+xx')=by+bxx'$ Then $b\in\ip^a,y\in\ip\implies by\in\ip^{a+1},\ xb\in\ip^{a+1}\implies bxx'\in\ip^{a+1}$, so $b\in\ip^{a+1}$, contradicting our assumption of $b$;
+\item surjective: note that $(b)=\ip^aI$ with $I$ coprime to $\ip$ by \ref{thm:uniquefactinDD} since $b\notin\ip^{a+1}$. Then $(b)+\ip^{a+1}=\ip^a$ by \ref{prop:computationswithideals}.3. Now let $x\in\ip^a$ write $x=yb+y'$ where $y\in\ri_K,\ y'\in\ip^{a+1}$. Then $y+\ip\mapsto yb+\ip^{p+1}=yb+y'+\ip^{a+1}$.
+\end{enumerate}
+\end{proof}
+
+\begin{proof}[Proof of \ref{thm:ramineanddeg}]
+By definition, $p\ri_K=\ip_1^{e(\ip_1)}\cdots\ip_r^{e(\ip_r)}$, and $N_K=p^{\deg_\Q K}=N_K(\ip_1)^{e(\ip_1)}\cdots N_K(\ip_r)^{e(\ip_r)}$ by \ref{prop:normofprodisprodofnorm}. But by definition $N_K(\ip_i)=[\ri_K:\ip_i]=p^{f(\ip_i)}$, hence $p^{\deg_\Q K}=p^{e(\ip_1)f(\ip_1)}\cdots p^{e(\ip_r)f(\ip_r)}$, giving us the desired.
+\end{proof}
+
+\begin{remark}
+An implication is if $I\subset\ri_K$ is an ideal and $N_K(I)=p\in\Z$ is prime, then $I$ is a prime ideal.
+\end{remark}
+
+\begin{prop}
+Let $0\neq\alpha\in\ri_K$, then $N_K(\alpha\ri_K)=|N_K(\alpha)|$.
+\end{prop}
+\begin{proof}
+Recall that $N_K(\alpha)=\det A$ where $A$ is the matrix associated to $\mult_\alpha:\ri_K\rightarrow\ri_K$. But then $[\ri_K:\alpha\ri_K]=[\Z^n:A\Z^n]=|\det A|$ by \ref{thm:ringofintisafreegrp} and linear algebra (in particular Smith normal form).
+\end{proof}
+
+\begin{remark}
+If $\alpha\in\ri_K$ and $N_K(\alpha)=p$, then $N_K(\alpha\ri_K)=p$ by above so $\alpha\ri_K$ is a prime ideal, hence $\alpha$ is a prime element. But before introducing norm of ideals, we only know that $N_K(\alpha)=\pm p\implies\alpha$ is irreducible.
+\end{remark}
+
+\begin{thm}
+\label{thm:quadramoddp}
+Let $d\neq 0,1$ be a squarefree integer and $p\in\Z$ an odd prime. Then $p\ri_K$ splits in $\ri_{\Q\left(\sqrt d\right)}=\ri_K$ as follows.
+\begin{enumerate}
+\item If $p\mid d$ then $p$ ramifies as $p\ri_K=\left(p,\sqrt d\right)^2$.
+\item If $p\nmid d$ and $\exists a\in\Z:a^2\equiv d\Mod p$, then $p\ri_K=\left(p,a+\sqrt d\right)\left(p,a-\sqrt d\right)$.
+\item If $p\nmid d$ and $\nexists a\in\Z:a^2\equiv d\Mod p$, then $p\ri_K$ is a prime ideal.
+\end{enumerate}
+\end{thm}
+\begin{proof}
+\begin{enumerate}
+\item One has $\left(p,\sqrt d\right)^2=\left(p^2,p\sqrt d,d\right)\subset (p)$. But then $p^2,d\in\left(p^2,p\sqrt d,d\right)$ and $\gcd (p^2,d)=p$ so by Bézout $p\in \left(p^2,p\sqrt d,d\right)$. It remains to show $\left(p,\sqrt d\right):=\ip$ is prime. Indeed, $N_K(p\ri_K)=|p|^{\deg_\Q\Q\left(\sqrt d\right)}=p^2$, so $N_K(\ip)=p$.
+\item One has
+\[
+\left(p,a+\sqrt d\right)\left(p,a-\sqrt d\right)=\left(p^2,p\left(a+\sqrt d\right),p\left(a-\sqrt d\right),a^2-d\right)\subset(p)
+\]
+since $p\mid a^2-d$. Now $p\left(a+\sqrt d\right)+p\left(a-\sqrt d\right)=2pa\in\left(p^2,p\left(a+\sqrt d\right),p\left(a-\sqrt d\right),a^2-d\right)$ and $\gcd(2pa,p^2)=p$ ($p\nmid a$ since $a^2\equiv d\Mod p$ and $p\nmid d$), so one has equality.
+
+\begin{flushright}
+\textit{Week 7, lecture 1, 17th February}
+\end{flushright}
+
+\item Suppose for a contradiction that $p\ri_K$ is not prime, then $\exists\ip\subset\ri_K$ prime such that $p\ri_K\subsetneq\ip$. Then $N_K(\ip)=p$; indeed, $N_K(\ip)\mid N_K(p\ri_K)=p^2$, so $N_K(\ip)=1,p$ or $p^2$. But $\ip$ is prime so not 1, and the inclusion is strict so not $p^2$. This means $\ri_K/\ip\cong\F_p$. Moreover, $\left(\sqrt d+\ip\right)^2=d+\ip\in\ri_K/\ip$, but this is saying $d$ is a quadratic residue modulo $p$, a contradiction.
+\end{enumerate}
+\end{proof}
+
+\begin{thm}
+\label{thm:quadrampis2}
+If $p=2$, then
+\begin{enumerate}
+\item If $d\nequiv 1\Mod 4$ then 2 ramifies in $\ri_K$ as follows:
+\begin{enumerate}
+\item If $2\mid d$ then $(2)=\left(2,\sqrt{d}\right)^2$
+\item If $2\nmid d$, then $d\equiv 3\Mod 4$ and $(2)=\left(2,\sqrt{d}+1\right)^2$
+\end{enumerate}
+\item If $d\equiv 1\Mod 4$, then
+\begin{enumerate}
+\item If $d\equiv 1\Mod 8$, then
+\[
+(2)=\left(2,\frac{1+\sqrt d}{2}\right)\left(2,\frac{1-\sqrt d}{2}\right).
+\]
+\item If $d\equiv 5\Mod 8$ then $(2)$ is prime.
+\end{enumerate}
+\end{enumerate}
+\end{thm}
+\begin{proof}
+Let's see the proof of 2(a). If $d\equiv 1\Mod 8$ then in particular $d\equiv 1\Mod 4$ so $\ri_K=\Z\left[\frac{1+\sqrt d}{2}\right]$. Write $\ip_1=\left(2,\frac{1+\sqrt d}{2}\right)$ and $\ip_2=\left(2,\frac{1-\sqrt d}{2}\right)$. Then
+\[
+\ip_1\ip_2=\left(4,1+\sqrt d,1-\sqrt d,\frac{1-d}{4}\right)\subset (2)
+\]
+since $d$ is assumed to be 1 mod 8. The other inclusion follows from
+\[
+2\left(\frac{1+\sqrt d}{2}\right)+2\left(\frac{1-\sqrt d}{2}\right)=2.
+\]
+To see $\ip_1,\ip_2$ are prime, note that $N_K(\ip_1\ip_2)=N_K(2)=4=N_K(\ip_1)N_K(\ip_2)$, but $\ip_1,\ip_2$ are both proper so don't have norm 1, hence $N_K(\ip_1)=N_K(\ip_2)=2$, so prime.
+
+It remains to see $\ip_1\neq\ip_2$. Suppose $\ip_1=\ip_2$, then $\frac{1+\sqrt d}{2}\in\ip_2$, so $\frac{1+\sqrt d}{2}+\frac{1-\sqrt d}{2}=1\in\ip_2$, i.e. $\ip_2=\ri_K$, a contradiction.
+
+Proofs for other cases employ similar strategies and are omitted.
+\end{proof}
+
+We have seen that the discriminant $D_{\Q\left(\sqrt d\right)}$ of $\Q\left(\sqrt d\right)$ is $4d$ if $d\equiv 1\Mod 4$ and $d$ if $d\equiv 1\Mod 4$. With the theorems above this gives
+
+\begin{coro}
+A prime $p$ ramifies in $\ri_{\Q\left(\sqrt d\right)}\iff p\mid D_{\Q\left(\sqrt d\right)}$.
+\end{coro}
+
+We now take inspiration from this and investigate ramification more generally.
+
+\begin{defn}
+We say a prime $p\in\Z$ \textit{ramifies} in a number field $K$ if in the factorisation of $p\ri_K$ there is at least one repeated factor, i.e. for $p\ri_K=\ip_1^{e_1}\cdots\ip_r^{e_r}$ with $\ip_i$ distinct prime ideals, $\exists i:e_i>1$.
+\end{defn}
+
+The aim of this week is to partially prove the following theorem for $K=\Q(\alpha)$. By primitive element theorem from Galois theory, this is actually for all number fields.
+
+\begin{thm}
+\label{thm:pramiffpdivdisc}
+Let $K$ be a number field. Then a prime number $p\in\Z$ ramifies in $\ri_K\iff p\mid D_K$.
+\end{thm}
+
+We used several times that $\Z\left[\sqrt d\right]=\Z[t]/\left(t^2-d\right)$. In general,
+
+\begin{lemma}
+Let $\alpha\in\C$ be a nonzero algebraic integer and $m_\alpha\in\Z[x]$ be its minimal polynomial. Then there is an isomorphism $\Z[\alpha]\rightarrow\Z[x]/(m_\alpha)$.
+\end{lemma}
+\begin{proof}
+We see that $\phi:\Z[x]\rightarrow\Z[\alpha]:x\mapsto\alpha$ is a surjective morphism (by definition of $\Z[\alpha]$) with kernel $(m_\alpha)$; this is a bit subtle since we can't just use Definition \ref{defn:minpol}. Clearly $(m_\alpha)\subset\ker\phi$. If $f\in\Z[x]:\phi(f)=f(\alpha)=0$, write $f(x)=g(x)m_\alpha(x)$, which is only true over $\Q[x]$. If $\deg f<\deg m_\alpha$ then $f=0$ and $f\in (m_\alpha)$ trivially. If $\deg f\geq \deg m_\alpha$, write
+\[
+f(x)=a_nx^n+\cdots+a_0=a_nx^{n-\deg m_\alpha}m\alpha+h
+\]
+where $h$ is some polynomial with $\deg h<\deg f$. Moreover, $f(\alpha)\implies h(\alpha)$, so by induction we are done.
+\end{proof}
+
+Moreover, if an ideal $I\subset\Z[x]$ is generated by $f_1,\ldots,f_r$ then $\Z[\alpha]/I=\Z[x]/(m_\alpha,f_1,\ldots,f_r)$.
+
+\begin{flushright}
+\textit{Week 7, lecture 2, 18th February}
+\end{flushright}
+
+\begin{thm}[Dedekind's factorisation criteria]
+\label{thm:DedekindKummer}
+Let $K=\Q(\alpha)$ where $\alpha\in\C$ is a nonzero algebraic integer with minimal polynomial $m_\alpha$. Let $p$ be a prime number such that $p\nmid [\ri_K:\Z[\alpha]]$. If $\overline{m_\alpha}=\overline{g_1}^{e_1}\cdots\overline{g_r}^{e_r}$ is the factorisation of $m_\alpha$ modulo $p$ with $g_i$'s being distinct monic irreducible polynomials, then $p\ri_K=\ip_1^{e_1}\cdots\ip_r^{e_r}$ where $\ip_i=(p,g_i(\alpha))$ with $g_i$ being any lift in $\Z[x]$ at $\overline{g_i}\in\F_p[x]$. Moreover, $\ip_i$'s are distinct prime ideals of $\ri_K$ and $f(\ip_i)=\deg\left(\overline{g_i}\right)$.
+\end{thm}
+
+\begin{remark}
+$\ip_i$ indeed doesn't depend on choice of the lift: let $g_i,\widetilde{g_i}\in\Z[x]$ be two different lifts of $\overline{g_i}\in\F_p[x]$. Then $g_i-\widetilde{g_i}\in (p)$, so $(p,g_i(\alpha))=(p,\widetilde{g_i}(\alpha))$.
+\end{remark}
+
+\begin{example}
+Let's convince ourselves that the theorem is true using the previous two theorems. Consider the quadratic case $K=\Q\left(\sqrt d\right)$ with $d\nequiv 1\Mod 4$ so $\ri_K=\Z\left[\sqrt d\right]$. Now $\overline{m_\alpha}(x)=x^2-\overline d\in\F_p[x]$. We have following possibilities:
+\begin{enumerate}
+\item If $\overline{m_\alpha}(x)=(x-a)(x-b)$ for some $a,b\in\F_p$ and $a\neq b$, then $p\nmid d$ and $a$ is a root of $\overline{m_\alpha}$ so $d$ is a quadratic residue, so we are in case 2 of \ref{thm:quadramoddp}, hence $p\ri_K=\left(p,a-\sqrt d\right)\left(p,a+\sqrt d\right)$ which is indeed $\left(p,g_1\left(\sqrt d\right)\right)\left(p,g_2\left(\sqrt d\right)\right)$; we only need to see that $b=-a$, but this is forced by $(x-a)(x-b)=x^2-(a+b)x+ab=x^2-d$. Also note that
+\[
+\ri_K/p\ri_K = \Z[x]/(p,x^2-d) = \F_p[x]/(x^2-\overline d)=\F_p[x]/(x-a)(x-b)=\F_p[x]/(x-a) \times \F_p[x]/(x-b).
+\]
+\item If $\overline{m_\alpha}(x)=(x-a)^2$ for some $a\in\F_p$, then if $p\neq 2$, $x^2-\overline d=(x-a)^2\implies 2a=0\implies a=0$, and $\overline{m_\alpha}(x)=x^2$. If $p=2$ then $a$ can be either 0 or 1, i.e. $\overline{m_\alpha}(x)$ is either $x^2$ or $(x-1)^2$.
+\begin{enumerate}
+\item If $p\neq 2$ then $a=0\implies \overline d=0\implies p\nmid d$, so we are in case 1 of \ref{thm:quadramoddp}, i.e. $p\ri_K=\left(p,\sqrt d\right)^2$ which is indeed $\left(p,g_1\left(\sqrt d\right)\right)^2$.
+\item If $p=2$ then we are either in case 1(a) or 2(b) of \ref{thm:quadrampis2}, and the rest reasoning is similar.
+\end{enumerate}
+\end{enumerate}
+\end{example}
+
+\begin{example}
+Let's now observe how the theorem applies to a higher degree case. Let $K=\Q(\alpha)$ where $\alpha=\sqrt[3]2$ with $m_\alpha(x)=x^3-2$. From coursework 1 we know $\disc(\Z[\alpha])=-27\cdot 4$, so Dedekind can be applied for any $p\neq 2,3$ (since $\disc(\Z[\alpha])=[\ri_K:\Z[\alpha]]^2 D_K$). Take $p=5$. Then $x^3-\overline 2=(x-3)(x^2+3x-1)$ which tells us $5\ri_K=\left(5,\sqrt[3]2-3\right)\left(5,\left(\sqrt[3]2\right)^2+3\sqrt[3]2-1\right)$. If $p=7$ then $x^3-2$ is irreducible (check there's no roots), so $7\ri_K$ is prime. 
+\end{example}
+
+\begin{lemma}
+If $p\nmid [\ri_K:\Z[\alpha]]$, then the map $\Z[\alpha]/p\Z[\alpha]\rightarrow\ri_K/p\ri_K$ induced by the inclusion $\Z[\alpha]\hookrightarrow\ri_K$ is an isomorphism.
+\end{lemma}
+\begin{proof}
+Surjectivity: by Lagrange, $[\ri_K:\Z[\alpha]]\ri_K\subset\Z[\alpha]$. Moreover, $p\nmid[\ri_K:\Z[\alpha]]$ implies that $\exists a,b\in\Z:a[\ri_K:\Z[\alpha]]+bp=1$. Take $x\in\ri_K$. Then
+\[
+x+p\ri_K=(a[\ri_K:\Z[\alpha]]+bp)x+p\ri_K=a[\ri_K:\Z[\alpha]]x+p\ri_K
+\]
+where $a[\ri_K:\Z[\alpha]]x\in\Z[\alpha]$.
+
+Injectivity is proved similarly.
+\end{proof}
+
+\begin{proof}[Proof of \ref{thm:DedekindKummer}]
+From $\Z[\alpha]=\Z[x]/(m_\alpha)$ and previous lemma we have
+\[
+\ri_K/p\ri_K=\Z[\alpha]/p\Z[\alpha]=\Z[x]/(p,m_\alpha)=\F_p[]x]/(\overline{m_\alpha}).
+\]
+Suppose $\overline{m_\alpha}(x)=\overline{g_1}(x)^{e_1}\cdots\overline{g_r}(x)^{e_r}$ where $\overline{g_i}$'s are monic, irreducible and distinct. We first show that $\ip_i=(p,g_i(\alpha))$ is prime by showing $\ri_K/\ip_i$ is a field. By above this is $\F_p[x]/(\overline{m_\alpha},\overline{g_i})$ but $g_i\mid\overline{m_\alpha}$ so it's $\F_p[x]/(\overline{g_i})$ which is a field since $\overline{g_i}$ is assumed to be irreducible. Moreover, $p^{f(\ip_i)}=|\ri_K/\ip_i|=|\F_p[x]/(\overline{g_i})|=p^{\deg\overline{g_i}}$, so $f(\ip_i)=\deg\overline{g_i}$.
+
+We now show that $\ip_i$'s are pairwise distinct. Indeed, for $i\neq j$,
+\[
+\ri_K(\ip_i+\ip_j)=\ri_K/(p,g_i,g_j)=\F_p[x](\overline{g_i},\overline{g_j})=0
+\]
+since $\overline{g_i},\overline{g_j}$ are monic, irreducible and distinct.
+
+Finally it remains to show $p\ri_K=\ip_1^{e_1}\cdots\ip_r^{e_r}$. Clearly $\ip_1^{e_1}\cdots\ip_r^{e_r}\subset (p,g_1^{e_1},\ldots,g_r^{e_r})$, and by construction $g_1^{e_1}\cdots g_r^{e_r}\equiv m_\alpha\Mod p$, hence
+\[
+g_1^{e_1}\cdots g_r^{e_r}(\alpha)=\underbrace{m_\alpha(\alpha)}_0+\underbrace{(g_1^{e_1}\cdots g_r^{e_r}-m_\alpha)(\alpha)}_{\in p\ri_K}\in p\ri_K,
+\]
+in particular $\ip_1^{e_1}\cdots\ip_r^{e_r}\subset p\ri_K$. But $N_K(\ip_1^{e_1}\cdots\ip_r^{e_r})=p^{\deg\overline{g_1}}\cdots p^{\deg\overline{g_r}}=p^{\deg m_\alpha}=N_K(p\ri_K)$, so we have equality.
+\end{proof}
+
+\begin{flushright}
+\textit{Week 7, lecture 3, 19th February}
+\end{flushright}
+
+\begin{remark}
+Note that an immediate consequence of \ref{thm:pramiffpdivdisc} is that only finitely many primes ramify. By partially, we mean we are going to show:
+\begin{enumerate}
+\item If $K=\Q(\alpha)$ then finitely many primes ramify.
+\item If a prime $p$ ramifies, then $p\mid D_K$.
+\end{enumerate}
+\end{remark}
+
+\begin{prop}
+Let $f\in\Z[x]$ be irreducible and monic. Then for all but finitely many primes $p$, $\overline f\in\F_p[x]$ has no repeated irreducible factors.
+\end{prop}
+\begin{proof}
+Note that if $F$ is any field and $h\in F[x]$ has $g^2\mid h$ for $g\in F[x]$, then $g\mid h'$ since if we write $h=g^2h_1$ then $h'=2gg'h_1+g^2h_1'$. This means if $\gcd (h,h')=1$, i.e. if $(h)+(h')=F[x]$, then $h$ cannot have any repeated factors.
+
+In our setting, since $f\in\Z[x]$ is irreducible, $(f)+(f')=\Q[x]$, i.e. $\exists g_1,g_2\in\Q[x]:g_1f+g_2f'=1$. Clear denominators and write $dg_1f+dg_2f'=d$ for some $d\in\Z$ and we have $dg_1,dg_2\in\Z[x]$. But now for all primes $p$ with $p\nmid d$, one has $\overline{dg_1}\overline{f}+\overline{dg_2}\overline{f}=\overline{d}\in\F_p^\times$, hence $(\overline f)+(\overline f')=\F_p[x]$, i.e. $\overline f$ has no repeated irreducible factors.
+\end{proof}
+Taking $d$ to be the discriminant of $f$ with \ref{thm:DedekindKummer}, we have proved the first claim in previous remark.
+
+For the second claim, we give a sketch of proof. Suppose $p$ ramifies, i.e. $p\ri_K=\ip^1\ip_1\cdots\ip_r$ for some prime ideal $\ip$. Note that $\ip_i$'s are not necessarily distinct. Take $x\in\ip\ip_1\cdots\ip_r\backslash p\ri_K$. Then $[x]$ in $\ri_K/p\ri_K$ is nilpotent, since $x^2\in\ip^2\ip_1^2\cdots\ip_r^2\subset p\ri_K$. Take an integral basis $\alpha_1,\ldots,\alpha_n$ of $\ri_K$ such that $[\alpha_1]$ is nilpotent. But then each $\alpha_1\alpha_i$ is nilpotent, so $p\mid\tr(\alpha_1\alpha_i)$. Hence $p\mid D_K$ by definition of discriminant.
+
+\section{Cyclotomic fields}
+Let $p$ be an odd prime and consider $\Q(\zeta_p)$ where $\zeta_p$ is a primitive $p$th root of unity. Explicitly one can have $\zeta_p=e^{\frac{2\pi i}{p}}$. The minimal polynomial of $\zeta_p$ is $\Phi_p(x)=\frac{x^p-1}{x-1}=x^{p-1}+\cdots+x+1$, the cyclotomic polynomial. Recall that using Eisenstein's criteria and the shift $\Phi_p(x+1)$ we can show $\Phi_p$ is irreducible.
+
+\begin{prop}
+\label{prop:minpoliseisen}
+Let $K=\Q(\alpha)$ where $\alpha$ is an algebraic integer and suppose that $m_\alpha$ is Eisenstein at $p$. Then $p\nmid [\ri_K:\Z[\alpha]]$ and $p\ri_K=(p,\alpha)^{[K:\Q]}$.
+\end{prop}
+\begin{proof}
+Write $m_\alpha(x)=x^n+a_{n-1}x^{n-1}+\cdots+a_0$. For a contradiction, suppose $p\mid [\ri_K:\Z[\alpha]]$, then $\exists y\in\ri_K:y\notin\Z[\alpha],py\in\Z[\alpha]$. Write $py=c_0+c_1\alpha+\cdots+c_{n-1}\alpha^{n-1}$ and so $y=\frac{c_0}{p}+\frac{c_1}{p}\alpha+\cdots+\frac{c_{n-1}}{p}\alpha^{n-1}$. Let $i$ be the minimal such that $c_i\notin p\Z$. Then $\frac{c_i}{p}\alpha^i+\cdots+\frac{c_{n-1}}{p}\alpha^{n-1}\in\ri_K$. Multiplying by $\alpha^{n-1-i}$ gives
+\[
+\frac{c_i}{p}\alpha^{n-1}+\frac{\alpha^n}{p}\left(c_{i+1}+\cdots+c_{n-1}\alpha^{n-i-2}\right)\in\ri_K,
+\]
+but $\alpha^n=-(a_{n-1}\alpha^{n-1}+\cdots+a_0)\in p\ri_K$ since $m_\alpha$ is Eisenstein at $p$, so $\frac{c_i}{p}\alpha^{n-1}\in\ri_K$. But
+\[
+N_K\left(\frac{c_i}{p}\alpha^{n-1}\right)=\left(\frac{c_i}{p}\right)^n N_K(\alpha)^{n-1}=\left(\frac{c_i}{p}\right)^n ((-1)^na_0)^{n-1}=\pm\left(\frac{c_i}{p}\right)^n a_0^{n-1},
+\]
+but since $p^2\nmid a_0$ (again since $m_\alpha$ is Eisenstein at $p$), $p^n\nmid a_0^{n-1}$, so $N_K\left(\frac{c_i}{p}\alpha^{n-1}\right)\notin\Z$, a contradiction.
+
+To see the last part, use \ref{thm:DedekindKummer} on $\overline{m_\alpha}=x^n$.
+\end{proof}
+
+\begin{flushright}
+\textit{Week 8, lecture 1, 24th February: problem class (sheet 3)}
+\end{flushright}
+
+\begin{exe}
+\begin{enumerate}
+\setcounter{enumi}{4}
+\item Let $\alpha$ be a root of $x^3+x+1$ and let $K=\Q(\alpha)$. We've seen $\disc(\Z[\alpha])=-31$ which implies $\ri_K=\Z[\alpha]$. Use Dedekind's criteria to factor $2,3,5$ in $\ri_K$.
+
+\textit{Solution}. First observe that we can apply Dedekind to primes not dividing $[\ri_K:\Z[\alpha]]=1$, hence all primes can be factorised, in particular $2,3,5$. Since $x^3+x+1$ is irreducible it must be the minimal polynomial of $\alpha$
+\begin{itemize}
+\item Modulo 2 the polynomial looks the same has no roots over $\F_2$, so irreducible and 2 is thus prime.
+\item Modulo 3 the polynomial looks again the same but has root 1, and indeed can be factorised as $(x-1)(x^2+x-1)$, so $3\ri_K=(\alpha,\alpha-1)(\alpha,\alpha^2+\alpha-1)$.
+\item Modulo 5 the polynomial is again irreducible, so 5 is prime.
+\end{itemize}
+Bonus: what about $p=31$? It divides $\ri_K$, and we've seen \ref{thm:pramiffpdivdisc} which in this case says 31 ramifies. Hence we expect $\overline{m_\alpha}\Mod 31$ to have multiple roots, which are roots shared with $\overline{m_\alpha'}=3x^2+1$, which has root 14. We find that $\overline{m_\alpha}=(x-14)^2(x-3)$, and therefore $31\ri_K=(\alpha,\alpha-14)^2(\alpha,\alpha-3)$.
+
+\item We give an example of a number field $K$ such that $\ri_K\neq\Z[\alpha]\ \alpha\in\ri_K$.
+\begin{enumerate}
+\item Prove that if $[K:\Q]=3$ and $(2)=\ip_1\ip_2\ip_3$ where $\ip_i$'s are distinct, then $\ri_K\neq\Z[\alpha] \ \forall\alpha\in\ri_K$. In fact, $2\mid[\ri_K:\Z[\alpha]]$.
+\item Prove that $x^3-x^2-2x-8$ is irreducible. Let $\theta$ be a root of it and denote $K=\Q(\theta)$ and $\theta'=\frac{4}{\theta}$. Prove that $\theta'\in\ri_K$.
+\item By showing $\theta^2=\theta+2+2\theta'$ and $(\theta')^2=-\theta'-2+2\theta$, prove that $\Z+\Z\theta+\Z\theta'\subset\ri_K$ is a subring.
+\item Compute $\disc(1,\theta,\theta')$ and deduce $1,\theta,\theta'$ is an integral basis for $\ri_K$.
+\item Prove that as rings, $\ri_K/2\ri_K\cong\F_2\times\F_2\times\F_2$.
+\item Deduce that $\ri_K\neq\Z[\alpha] \ \forall\alpha\in\ri_K$.
+\end{enumerate}
+\textit{Solution}. \begin{enumerate}
+\item Since $\F_2$ has only two elements, a degree 3 polynomial cannot factor as three distinct linear polynomials. This doesn't contradict Dedekind only if $2\mid[\ri_K:\Z[\alpha]] \ \forall\alpha\in\ri_K$.
+\item Modulo 3 the polynomial has no roots, so irreducible. Note that $\theta^3-\theta^2-2\theta-8=0$ gives
+\[
+1-\frac{1}{\theta}-\frac{2}{\theta^2}-\frac{8}{\theta^3}=0\implies \frac{64}{\theta^3}+\frac{16}{\theta^2}+\frac{8}{\theta}+8=0\implies \frac{4}{\theta}\text{ is a root of }x^3+x^2+2x+8,
+\]
+hence $\theta'\in\ri_K$.
+\item The two desired equations can be obtained by multiplying $\theta^3-\theta^2-2\theta-8=0$ by $\theta^{-1}$ and $\theta'^3+\theta'^2-2\theta'+8$ by $2\theta^{-2}$.
+\item We find $\disc(1,\theta,\theta')=-503$ is squarefree.
+\item By (c) and (d), $\Z+\Z\theta+\Z\theta'\hookrightarrow\ri_K$ is in fact a ring isomorphism, so $\ri_K/2\ri_K\cong\F_2\times\F_2\theta\times\F_2\theta'$. Note that $1+\theta+\theta',\theta,\theta'$ is a full system of orthogonal idempotents; indeed by (c), $\theta\theta'=4\equiv 0\Mod 2,\ \theta+\theta^2+4=2\theta+2+2\theta'+4\equiv 0\Mod 2$ and $\theta'+\theta'^2+4=-2+2\theta+4\equiv 0\Mod 2$, with $\theta^2\equiv\theta\Mod 2,\ \theta'^2=\theta'\Mod 2$ and $(1+\theta+\theta')^2\equiv 1+\theta^2+\theta'^2\equiv 1+\theta+\theta'\Mod 2$.
+\item If $(2)$ ramifies then $\ri_K/2\ri_K$ has a nilpotent element, contradicting (e) since any product of fields doesn't have nilpotent elements. But if $(2)=\ip\iq$ where $\ip\neq\iq$ are distinct, then $e(\ip)f(\ip)+e(\iq)f(\iq)=f(\ip)+f(\iq)=3$, hence either $f(\ip)$ or $f(\iq)=2$, so $\ri/2\ri_K=\ri_K/\ip\times\ri_K/\iq=\F_4\times\F_2$, again contradicting (e).
+\end{enumerate}
+\end{enumerate}
+\end{exe}
+
+\begin{flushright}
+\textit{Week 8, lecture 2, 25th February}
+\end{flushright}
+
+\begin{example}
+Let $\alpha=\sqrt[3]2$ and $K=\Q(\alpha)$. We want to show $\ri_K=\Z[\alpha]$. Recall $\disc \Z[\alpha]=-3^2\cdot 2^2$. We claim it is enough to prove $2,3\nmid [\ri_K:\Z[\alpha]]$, since together with $\disc\Z[\alpha]=[\ri_K:\Z[\alpha]]^2 D_K$ it follows that $[\ri_K:\Z[\alpha]]=1$, i.e. $\ri_K=\Z[\alpha]$.  Now $m_\alpha(x)=x^3-2$ which ie Eisenstein at $p=2$, so by \ref{prop:minpoliseisen} $2\mid [\ri_K:\Z[\alpha]]$. For 3, we instead consider the minimal polynomial of $\alpha+\lambda$ where $\lambda\in\Z$. This is indeed valid since $\Z[\alpha]=\Z[\alpha+\lambda]$, and so $m_{\alpha+\lambda}$ Eisenstein at 3 would imply $3\nmid [\ri_K:\Z[\alpha]]$ again by \ref{prop:minpoliseisen}. We find that $\lambda=-2$ does the job since $m_{\alpha-2}(x)=m_\alpha(x+2)=(x+2)^3-2=x^3+6x^2+12x+6$.
+\end{example}
+
+\begin{exe}
+Now in general, let $d\neq\pm 1$ and squarefree, and $K=\Q\left(\sqrt[3]d\right)$. First show that $\disc \Z\left[\sqrt[3]d\right]=-27d^2$. Is $\ri_K=\Z\left[\sqrt[3]d\right]$? To show equality, again it's enough to show no prime dividing $-27d^2$ divides $\left[\ri_K:\Z\left[\sqrt[3]d\right]\right]$. Such prime is either 3 or not 3.
+
+If $p\neq 3$ then $p\mid d$ but then $m_{\sqrt[3]d}=x^3-d$ is Eisenstein at $p$ so by \ref{prop:minpoliseisen} the equality follows.
+
+If $p=3$ and $d\nequiv\pm 1\Mod 9$, then $m_{\sqrt[3]d-d}=(x+d)^3-d=x^3+3dx^2+3d^2x+d(d+1)(d-1)$ is Eisenstein at 3, and the equality follows similarly.
+
+But if $p=3$ and $d\equiv\pm 1\Mod 9$ then one can check $\frac{\left(\sqrt[3]d-d\right)^2}{3}\in\ri_K\backslash\Z\left[\sqrt[3]d\right]$.
+\end{exe}
+
+\begin{thm}
+\label{thm:ptotraminpthcycf}
+$\ri_{\Q(\zeta_p)}=\Z[\zeta_p]$ and $D_{\Q(\zeta_p)}=(-1)^{\frac{p-1}{2}}p^{p-2}$. Also, $p\ri_{\Q(\zeta_p)}=(\zeta_p-1)^{p-1}$ is principal and totally ramified.
+\end{thm}
+\begin{proof}
+We first compute $\Phi'_p(\zeta_p)$. Note that $(x-1)\Phi_p(x)=x^p-1$, so $\Phi_p(x)+(x-1)\Phi_p'(x)=px^{p-1}$, i.e.
+\[
+\Phi_p'(\zeta_p)=\frac{p\zeta_p^{p-1}}{\zeta_p-1}=\frac{p\zeta_p^{-1}}{\zeta_p-1},
+\]
+so
+\[
+N_{\Q(\zeta_p)}(\Phi_p'(\zeta_p))=\frac{N_{\Q(\zeta_p)}(p)}{N_{\Q(\zeta_p)}(\zeta_p)N_{\Q(\zeta_p)}(\zeta_p-1)}=\frac{p^{\left[\Q(\zeta_p):\Q\right]}}{1\cdot p}=\frac{p^{p-1}}{p}=p^{p-2}.
+\]
+Now since $p$ is odd, $(-1)^p=-1$ and $1^p=1$, hence $(-1)^{\frac{p(p-1)}{2}}=(-1)^{\frac{p-1}{2}}$, so by \ref{prop:discandnormofderi}, $\disc\Z[\zeta_p]=(-1)^{\frac{p-1}{2}}p^{p-2}$. Now again, to show $\ri_{\Q(\zeta_p)}=\Z[\zeta_p]$ and $D_{\Q(\zeta_p)}=(-1)^{\frac{p-1}{2}}p^{p-2}$, since $\disc\Z[\zeta_p]=\left[\ri_{\zeta_p}:\Z[\zeta_p]\right]^2D_{\Q(\zeta_p)}$, it suffices to show any prime dividing $\disc\Z[\zeta_p]=(-1)^{\frac{p-1}{2}}p^{p-2}$ (which would be $p$) does not divide $\left[\ri_{\zeta_p}:\Z[\zeta_p]\right]$, but this follows precisely from \ref{prop:minpoliseisen}, that $\Phi_P(x+1)$ is Eisenstein at $p$ and $\Z[\zeta_p]=\Z[\zeta_p-1]$. Now again by \ref{prop:minpoliseisen}, $p\ri_{\Q(\zeta_p)}=p\ri_{\Q(\zeta_p-1)}=(p,\zeta_p-1)^{p-1}$, but as calculated before, $N_{\Q(\zeta_p)}(\zeta_p-1)=p$, hence $p\in(\zeta_p-1)$ and $p\ri_{\Q(\zeta_p)}=(\zeta_p-1)^{p-1}$ as desired.
+\end{proof}
+
+We've now seen how $p$ ramifies in the $p$th cyclotomic field, now let's fix $p$ and see how a general prime $q$ behaves in the $p$th cyclotomic field.
+
+\begin{thm}
+Let $q\in\Z$ be prime and $q\neq p$. Let $f$ be the order of $[q]$ in $(\Z/p\Z)^\times$ and $r=\frac{p-1}{f}$. Then $q\ri_{\Q(\zeta_p)}=\iq_1\cdots\iq_r$ where $\iq_i$'s are distinct prime ideals with $f(\iq_i)=f$.
+\end{thm}
+\begin{proof}
+Write $h(x)=x^p-1$. Then $h'(x)=px^{p-1}$ and note that $-ph(x)+xh'(x)=-px^p+p-px^p=p$. This means $h$ and $h'$ cannot have common roots mod $q$. Otherwise, if $\alpha$ is a common root, then $0\equiv p\Mod q$ which contradicts our assumption for $q$. This means $h$ doesn't have multiple roots mod $q$, so $\Phi_p(x)=\frac{h(x)}{x-1}$ doesn't either, i.e. $\overline{\Phi_p(x)}=g_1\cdots g_r$ in $\F_q[x]$ for some $r$ where $g_i$'s are distinct irreducible polynomials.
+
+Now $\F_q[x]/(g_i)=F_i$ has cardinality $q^{\deg g_i}$, hence for any $a\in F_i^\times$, by Lagrange, $a^{q^{\deg g_i}-1}=1$. In particular, take $a=[x]\in F_i^\times$, and $[x]^p=1$ since $g_i(x)\mid x^p-1$. This means $p\mid q^{\deg g_i}-1$, i.e. $q^{\deg g_i}\equiv 1\Mod p$. By our construction of $f$, this implies $f\mid\deg g_i$. To prove the theorem, it now suffices to show $f=\deg g_i$, which would imply $\deg g_i$'s are the same and hence $p-1=\deg g_i r=fr$, thus $r$ is indeed the $r=\frac{p-1}{f}$ we constructed.
+
+Consider the subfield $\widetilde{F_i}=\{b\in F_i:b^{qf}=b\}$ of $F_i$. Then $\widetilde{F_i}$ contains $[x]$: indeed, $a\in\widetilde{F_i}\impliedby a(a^{qf-1}-1)=0\impliedby a^{qf-1}=1\impliedby a^{p\lambda}-1=0$ for some $\lambda\in\Z$ (since $qf=1\Mod p$ by construction), and we saw that $[x]^p=1$. Hence $\widetilde{F_i}=F_i$, so $q^{\deg g_i}=|F_i|=|\widetilde{F_i}|\leq q^f$, i.e. $\deg g_i\leq f$, but $f\mid \deg g_i$ in particular implies $f\leq \deg g_i$, hence $f=\deg g_i$ as desired.
+\end{proof}
+
+\begin{flushright}
+\textit{Week 8, lecture 3, 26th February}
+\end{flushright}
+
+\subsection{Quadratic reciprocity}
+If a quadratic field $K$ lives inside a cyclotomic field $\Q(\zeta_p)$, that we may be able to read information on splitting in $K$ from $\Q(\zeta_p)$. In fact one can always find such an embedding:
+
+\begin{lemma}
+$\Q\left(\sqrt{(-1)^{\frac{p-1}{2}}}p\right)\subset\Q(\zeta_p)$.
+\end{lemma}
+\begin{proof}
+The roots of $\Phi_p(x)$ are $\zeta_p,\zeta_p^2,\ldots,\zeta_p^{p-1}$, so the embeddings $\tau_1,\ldots,\tau_p:\Q(\zeta_p)\rightarrow\C$ are given by $\tau_i:\zeta_p\mapsto \zeta_p^i$. Also, by \ref{thm:ptotraminpthcycf}, $\left\{\zeta_p,\ldots,\zeta_p^{p-1}\right\}$ is an integral basis of $\ri_{\Q(\zeta_p)}=\Z[\zeta_p]$. Again according to \ref{thm:ptotraminpthcycf},
+\[
+D_{\Q(\zeta_p)}=(-1)^{\frac{p-1}{2}}p^{p-2}=\det (\tau_i(\zeta_p^j))_{ij}^2=\det \left({\zeta_p^{ij}}_{ij}\right)^2,
+\]
+and dividing both sides by $p^{p-3}$ gives $(-1)^{\frac{p-1}{2}}p=\left(\frac{\det \left({\zeta_p^{ij}}_{ij}\right)}{p^{\frac{p-3}{2}}}\right)^2$ where $\frac{\det \left({\zeta_p^{ij}}_{ij}\right)}{p^{\frac{p-3}{2}}}\in\Q(\zeta_p)$, hence $\sqrt{(-1)^{\frac{p-1}{2}}p}\in\Q(\zeta_p)$, so $\Q\left(\sqrt{(-1)^{\frac{p-1}{2}}}p\right)\subset\Q(\zeta_p)$ as desired.
+\end{proof}
+
+\begin{exe}
+Show that this is the only thing we can do: if $K\subset\Q(\zeta_p)$ is a quadratic field, then the only prime that can ramifies in $K$ is $p$ and $K=\Q\left(\sqrt{(-1)^{\frac{p-1}{2}}}p\right)$.
+\end{exe}
+From now on, for an odd prime $p$, we denote $p^\ast=\sqrt{(-1)^{\frac{p-1}{2}}}p$. Note that $p^\ast\equiv 1\Mod 4$: if $p\equiv 1\Mod 4$ then $\frac{p-1}{2}$ is even and $p^\ast=p$, and if $p\equiv 3\Mod 4$ then $\frac{p-1}{4}$ is odd and $p^\ast=-p$.
+
+\begin{lemma}
+\label{lemma:qsplitsthenriseven}
+Let $q\in\Z$ be prime and $q\neq p$. Let $f$ be the order of $[q]$ in $(\Z/p\Z)^\times$ and $r=\frac{p-1}{f}$, which we now know is the number of prime factors of $q\Z[\zeta_p]$. Then
+\begin{enumerate}
+\item If $q$ splits in $\Q\left(\sqrt{p^\ast}\right)$ then $r$ is even.
+\item If $p\equiv 3\Mod 4$ then the converse also holds.
+\end{enumerate}
+\end{lemma}
+
+\begin{remark}
+Since $p^\ast\equiv 1\Mod 4$, $D_{\Q\left(\sqrt{p^\ast}\right)}=p^\ast$, so if $q\neq p$ then $q\nmid D_{\Q\left(\sqrt{p^\ast}\right)}$, hence $q$ does not ramify in $D_{\Q\left(\sqrt{p^\ast}\right)}$. So this lemma does almost describe everything about behaviour of $q$ in the quadratic field (knowing about the ambient cyclotomic field).
+\end{remark}
+
+\begin{proof}
+\begin{enumerate}
+\item $q$ splits means $q\ri_{\Q\left(\sqrt{p^\ast}\right)}=\iq\overline{\iq}$, hence $q\Z[\zeta_p]=\left(\iq\Z[\zeta_p]\right)\left(\overline\iq\Z[\zeta_p]\right)$. We prove that $\iq\Z[\zeta_p]$ and $\overline\iq\Z[\zeta_p]$ have the same number of factors. Take $\tau_0:\Q\left(\sqrt{p^\ast}\right)\rightarrow\C:x\mapsto\overline x$. By \ref{lemma:genextembs}, there is an embedding $\tau:\Q(\zeta_p)\rightarrow\C$ that restricts to $\tau_0$. Note that $\tau$ is of the form $\zeta_p\mapsto\zeta_p^i$ for some $i$; $\tau(\Q(\zeta_p))=\Q(\zeta_p)$; and $\tau(\Z[\zeta_p])=\Z[\zeta_p]$. Then $\tau(\iq\Z[\zeta_p])=\tau(\iq)\Z[\zeta_p]$, but $\iq$ is an ideal of $\ri_{\Q\left(\sqrt{p^\ast}\right)}$, so this is $\tau_0(\iq)\Z[\zeta_p]=\overline\iq\Z[\zeta_p]$. Hence $\{\iq\Z[\zeta_p]\}$ and $\{\overline\iq\Z[\zeta_p]\}$ are in bijection, so in particular have the same number of factors.
+\item For a contradiction, suppose $q$ does not split. Recall \ref{remark:ramineinquadext} which says this means $f=f(q)=2$, in particular even. But $rf=p-1$ and since $p\equiv 3\Mod 4$, this implies $r$ is odd.
+\end{enumerate}
+\end{proof}
+
+\begin{lemma}
+\label{lemma:quadreci}
+Let $p$ be an odd prime. Then
+\begin{enumerate}
+\item $\forall a,b\in\Z,\ \left(\frac{ab}{p}\right)=\left(\frac{a}{p}\right)\left(\frac{b}{p}\right)$,
+\item $\left(\frac{a}{p}\right)=1\iff r=\frac{p-1}{f}$ is even where $f$ is the order of $[a]\in(\Z/p\Z)^\times$,
+\item $\left(\frac{-1}{p}\right)=(-1)^{\frac{p-1}{2}}$.
+\end{enumerate}
+\end{lemma}
+
+\begin{thm}[Gauss' reciprocity law]
+\label{thm:Gaussreciprocity}
+Let $p,q$ be distinct odd primes, then
+\[
+\left(\frac{p^\ast}{q}\right)=\left(\frac{q}{p}\right).
+\]
+Equivalently,
+\[
+\left(\frac{p}{q}\right)\left(\frac{q}{p}\right)=(-1)^{\frac{p-1}{2}\frac{q-1}{2}}.
+\]
+\end{thm}
+\begin{proof}
+If $\left(\frac{D_{\Q\left(\sqrt{p^\ast}\right)}}{q}\right)=\left(\frac{p^\ast}{q}\right)=1$, by \ref{thm:quadramoddp} $q$ splits, so by \ref{lemma:qsplitsthenriseven} $r$ is even, hence by \ref{lemma:quadreci} $\left(\frac{q}{p}\right)=1$.
+\end{proof}
+
+\begin{flushright}
+\textit{Week 9, lecture 1, 3rd March}
+\end{flushright}
+
+\section{Class groups, reprise}
+\subsection{Finiteness of class groups}
+\begin{thm}
+\label{thm:clgrpisfin}
+The class group $\Cl(\ri_K)$ of a number field $K$ is finite.
+\end{thm}
+
+\begin{lemma}
+\label{lemma:nofidswnmleqcisfin}
+For any $c\in\R_{>0}$, the number of ideals $I\subset\ri_K$ with $N_K(I)\leq c$ is finite.
+\end{lemma}
+\begin{proof}
+Let $I\subset\ri_K$ and write $I=\ip_1^{e_1}\cdots\ip_r^{e_r}$ where $\ip_i$'s are distinct prime ideals and $e_i\geq 1$. We prove the finiteness by first bounding $r$ and then bounding the number of primes $p\in\Z\cap I$.
+
+The only ideal with norm one is the whole ring $\ri_K$ since $[\ri_K:I]=1\iff I=\ri_K$, so assume $N_K(\ip_i)\geq 2$, hence $2^{e_1+\cdots+e_r}\leq N_K(I)\leq c$, i.e. $r\leq e_1+\cdots+e_r\leq\log_2(c)$.
+
+Now each $\ip_i$ lies above some $p\in\Z$, so $c\geq N_K(I)\geq N_K(\ip_i)=p^{f(\ip_i)}\geq p$, hence the number of possible such $p$'s is finite. But then by \ref{prop:lsprimeidslieabovep}, for each such $p$, the number of prime ideals lying above $p$ is also finite.
+\end{proof}
+
+\begin{lemma}
+\label{lemma:clgrpisgenby}
+Let $K$ be a number field and suppose there is a constant $c\in\R_{>0}$ such that $\forall$ nonzero ideal $I\subset\ri_K,\ \exists 0\neq\alpha\in I:|N_K(\alpha)|\leq cN_K(I)$, then $\forall [I]\in\Cl(\ri_K),\ \exists I'\subset\ri_K:[I]=[I']$ and $N_K(I')\leq c$.
+\end{lemma}
+If we can find such a constant for $K$ then together with \ref{lemma:nofidswnmleqcisfin}, the lemma implies the desired \ref{thm:clgrpisfin}.
+\begin{proof}
+Suppose $[I]^{-1}=[J]$. Then $\exists 0\neq\alpha\in J:|N_K(\alpha)|\leq cN_K(J)$, and by \ref{coro:uniquefactinDDlemma3} we have ideal $I'$ with $JI'=(\alpha)$. Now $[I']=[J]^{-1}=[I]$ by definition of class groups, and $N_K(J)N_K(I')=N_K(JI')=N_K((\alpha))=|N_K(\alpha)|\leq N_K(J)$ by \ref{remark:normofideal}, so $N_K(I')\leq c$.
+\end{proof}
+
+\begin{defn}
+An embedding $\tau:K\hookrightarrow\C$ of a number field $K$ is \textit{real} if $\tau(K)\subset\R$. Denote by $r$ the number of real embeddings. If $\tau:K\hookrightarrow\C$ is not real then it's \textit{complex}, and $\overline\tau:\alpha\mapsto\overline{\tau(\alpha)}$ is a different embedding, so complex embeddings always come in pairs. Denote by $s$ the number of pairs of complex embeddings. By \ref{lemma:genextembs}, one can write $n=[K:\Q]=\left|\sigma_K\right|=r+2s$.
+\end{defn}
+
+\begin{thm}[Minkowski's bound]
+\label{thm:Minkowskibound}
+For a number field $K$, the constant
+\[
+C_K=\frac{n!}{n^n}\left(\frac{4}{\pi}\right)^s\sqrt{|D_K|}
+\]
+satisfies the condition in previous lemma.
+\end{thm}
+
+\begin{example}
+\label{example:Minkowskibound}
+Before proving this let's see how useful it is. In the quadratic case $K=\Q\left(\sqrt d\right)$, if $d<0$ then $r=0,s=1$ and
+\[
+C_K=\frac{2!}{2^2}\frac{4}{\pi}\sqrt{|D_K|}=\frac{2}{\pi}\sqrt{|D_K|}=\left\{
+\begin{aligned}
+&\frac{2}{\pi}\sqrt{-4d}=\frac{4}{\pi}\sqrt{-d}\qquad &\text{if }d\nequiv 1\Mod 4 \\
+&\frac{2}{\pi}\sqrt{-d}\qquad &\text{if }d\equiv 1\Mod 4
+\end{aligned}
+\right.
+\]
+and if $d>0$ then $r=2,s=0$ and
+\[
+C_K=\frac{2!}{2^2}\sqrt{|D_K|}=\frac{1}{2}\sqrt{|D_K|}=\left\{
+\begin{aligned}
+&\frac{1}{2}\sqrt{4d}=\sqrt{d}\qquad &\text{if }d\nequiv 1\Mod 4 \\
+&\frac{1}{2}\sqrt{d}\qquad &\text{if }d\equiv 1\Mod 4
+\end{aligned}
+\right.
+\]
+For instance, take $K=\Q\left(\sqrt{-5}\right),\ \ri_K=\Z\left[\sqrt{-5}\right]$, then $C_K=\frac{4}{\pi}\sqrt{5}<3$, so $\Cl(\ri_K)=\{[I]:N_K(I)\leq 2\}$ by \ref{lemma:clgrpisgenby}. Since we've seen $(2)=\left(2,1+\sqrt{-5}\right)^2=\ip_2^2$, by \ref{prop:lsprimeidslieabovep} $\ip_2$ is the only ideal of norm 2, so $\Cl(\ri_K)=\{[\ri_K],[\ip_2]\}=\Z/2\Z$.
+\end{example}
+
+\begin{thm}
+$\ri_{-19},\ \ri_{-43},\ \ri_{-67},\ \ri_{-163}$ are PIDs.
+\end{thm}
+\begin{proof}
+By \ref{prop:DDUFDiffclgrptriv} it suffices to show $\Cl(\ri_K)=\{1\}$ in each case. Note that $-19,-43,-67,-163\equiv 1\Mod 4$, so the constants $C_K$ are approximately $2.8,\ 4.2,\ 5.2$ and $8.1$ respectively. Let's look at $\ri_{-163}$ in particular and the rest follows from a similar process.
+
+We need to check there is no non-principal ideal of norm $\leq 8$, which by the proof of \ref{lemma:nofidswnmleqcisfin} is generated by prime ideals lying above $2,3,5,7$.
+\begin{itemize}
+\item 2: by \ref{thm:quadrampis2} and the fact that $-163\equiv 5\Mod 8$, $(2)$ is prime and hence the only ideal lying above 2 is principal.
+\item 3: by \ref{thm:quadramoddp} and the fact that $3\nmid 163$ with $\nexists a:a^2\equiv 2\Mod 3$, $(3)$ is prime.
+\item 5: similarly, $5\nmid 163$ and $\nexists a:a^2\equiv 2\Mod 5$.
+\item 7: similarly, $7\nmid 163$ and $\nexists a:a^2\equiv 5\Mod 7$.
+\end{itemize}
+\end{proof}
+
+\subsection{Proof of Minkowski's bound using lattices}
+\begin{defn}
+A \textit{lattice} is a subgroup $\Lambda\subset\R^n$ with basis $v_1,\ldots,v_n$ as a $\Z$-module which is also a basis of $\R^n$ as an $R$-vector space.
+\end{defn}
+\begin{example}
+\label{example:lattices}
+\begin{itemize}
+\item $\Z^n\subset\R^n$ is a lattice (take the standard basis).
+\item $\ri_{\Q\left(\sqrt d\right)}\subset\C\xrightarrow{\sim}\R^2:z\mapsto(\Re(z),\Im(z))$ is a lattice if $d<0$ by taking $\left\{1,\sqrt d\right\}$ if $d\equiv 1\Mod 4$ and $\left\{1,\frac{1+\sqrt d}{2}\right\}$ if $d\nequiv 1\Mod 4$.
+\end{itemize}
+\end{example}
+
+\begin{defn}
+The \textit{fundamental parallelotope} of a lattice $\Lambda\subset\R^n$ with respect to basis $v_1,\ldots,v_n$ is the set
+\[
+P(v_1,\ldots,v_n)=\left\{\sum_{i=1}^n c_iv_i:0\leq c_i\leq 1\right\}.
+\]
+\end{defn}
+\begin{remark}
+\begin{itemize}
+\item It's clear that $P(v_1,\ldots,v_n)$ is a fundamental domain for the lattice, i.e.
+\[
+\R^n=\bigsqcup_{v\in\Lambda}(v+P(v_1,\ldots,v_n)).
+\]
+\item Recall that from linear algebra $\vol(P(v_1,\ldots,v_n))=|\!\det A|$ where $A=\begin{pmatrix}v_1 & \cdots & v_n\end{pmatrix}$
+\end{itemize}
+\end{remark}
+
+\begin{lemma}
+If $v_1,\ldots,v_n$ and $w_1,\ldots,w_n$ are two $\Z$-basis for a lattice $\Lambda\subset\R^n$, then $\vol(P(v_1,\ldots,v_n))=\vol(P(w_1,\ldots,w_n))$.
+\end{lemma}
+\begin{proof}
+Recall again from linear algebra that determinant of a matrix is invariant under change of basis.
+\end{proof}
+
+\begin{defn}
+Define the \textit{covolume} of a lattice $\Lambda\subset\R^n$ to be $\covol(\Lambda)=\vol(P(v_1,\ldots,v_n))$ where $v_i$'s can be any basis for $\Lambda$ by previous lemma. Then $\covol(\Lambda)=\vol(\R^n/\Lambda)$.
+\end{defn}
+
+\begin{flushright}
+\textit{Week 9, lecture 2, 4th March}
+\end{flushright}
+
+\begin{lemma}
+Let $\Lambda\in\R^n$ be a lattice and $S\subset\R^n$ a measurable set. If $\vol(S)>\covol(\Lambda)$, then $\exists x,y\in S:0\neq x-y\in\Lambda$.
+\end{lemma}
+\begin{proof}
+Fix a basis $v_1,\ldots,v_n$ for $\Lambda$ and let $P=P(v_1,\ldots,v_n)$. Write
+\[
+\R^n=\bigsqcup_{v\in\Lambda}(v+P)\quad\text{and hence}\quad S=\bigsqcup_{v\in\Lambda}(v+P)\cap S,
+\]
+so
+\[
+\vol(S)=\sum_{v\in\Lambda}\vol((v+P)\cap S)=\sum_{v\in\Lambda}\vol(P\cap(S-v)).
+\]
+If the sets $P\cap (S-v)$ are pairwise disjoint over $v\in\Lambda$ then by the equation above, $\vol(S)\leq\vol(P)=\covol(\Lambda)$, contradicting assumption. This means $(S-v)\cap (S-w)\neq\varnothing$ for some $v\neq w\in\Lambda$. Take $a\in (S-v)\cap (S-w)$, then $a+v,a+w\in S$, so $(a+v)-(a-w)=v-w\in\Lambda$.
+\end{proof}
+
+\begin{thm}[Minkowski]
+\label{thm:Minkowski}
+Let $\Lambda\subset\R^n$ be a lattice and $S\subset\R^n$ be measurable, convex, symmetric (i.e. $x\in S\implies -x\in S$) subset. If $\vol(S)>2^n\covol(\Lambda)$, then $\exists 0\neq x\in S\cap\Lambda$.
+\end{thm}
+\begin{proof}
+Apply the previous lemma to $\frac12 S=\left\{\frac{s}{2}:s\in S\right\}$. Since $S$ is symmetric, $\vol\left(\frac12 S\right)=\frac{1}{2^n}\vol(S)>\covol(\Lambda)$, so $\exists x,y\in\frac12 S:0\neq x-y\in\Lambda$. Hence $2x,2y\in S$ and $\frac12(2x)+\frac12(-2y)=x-y\in S$ by symmetry and convexity, so $x-y\in S\cap\Lambda$.
+\end{proof}
+
+\begin{lemma}
+\label{lemma:covolratioofsbgrp}
+Let $\Lambda\subset\R^n$ be a lattice and $\Lambda'\subset\Lambda$ a subgroup of finite index. Then $\Lambda'$ is also a lattice and $\covol(\Lambda')=[\Lambda:\Lambda']\covol(\Lambda)$.
+\end{lemma}
+\begin{proof}
+Omitted; similar to \ref{prop:discratioofsbgrp}.
+\end{proof}
+
+\begin{remark}
+If we can embed $\ri_K$ into $\R^n$ as a lattice $\Lambda$ via $\tau:\ri_K\xrightarrow{\sim}\Lambda$ where $n=[K:\Q]$ (we choose $n$ since $\ri_K$ is a free $\Z$-module of rank $n$; this was \ref{thm:ringofintisafreegrp}), then for an ideal $I\subset\ri_K$, $N_K(I)=|\ri_K/I|=|\Lambda/\tau(I)|$, so by \ref{lemma:covolratioofsbgrp} $\tau(I)$ is a lattice and $\covol(\tau(I))=N_K(I)\covol(\ri_K)$.
+\end{remark}
+
+\begin{thm}[Minkowski bound for imaginary quadratic case]
+Fix squarefree $d<0$ and let $K=\Q\left(\sqrt d\right)$. For any nonzero ideal $I\subset\ri_K$, $\exists 0\neq\alpha\in I$ such that
+\[
+|N_K(\alpha)|\leq\left(\frac{2}{\pi}\sqrt{|D_K|}\right)N_K(I),
+\]
+thus making the Minkowski bound $C_K=\frac{2}{\pi}\sqrt{|D_K|}$, agreeing with \ref{thm:Minkowskibound} and our calculation in \ref{example:Minkowskibound}.
+\end{thm}
+\begin{proof}
+Embed $\ri_K\hookrightarrow\R^2$ as lattice $\Lambda$ as mentioned in \ref{example:lattices}. Then if $d\nequiv 1\Mod 4$ then $\covol(\Lambda)=|1(\sqrt{-d})|=\sqrt{-d}=\frac{\sqrt{-4d}}{2}=\frac{\sqrt{|D_K|}}{2}$; and if $d\equiv 1\Mod 4$ then $\covol(\Lambda)=\left|-\frac{\sqrt{-d}}{2}\right|=\frac{\sqrt{-d}}{2}=\frac{\sqrt{|D_K|}}{2}$, so either case we have the same result with respect to the discriminant.
+
+Take $S_R=\{(x,y)\in\R^2:x^2+y^2\leq R\}$, a circle (hence convex and symmetric) with $\vol(S_R)=\pi R$. Take an ideal $I\subset\ri_D$, and hence a lattice with $\covol(I)=N_K(I)\frac{\sqrt{|D_K|}}{2}$ by \ref{lemma:covolratioofsbgrp}. If $\pi R>2^2N_K(I)\frac{\sqrt{|D_K|}}{2}=2\sqrt{|D_K|}N_K(I)$, i.e. $R>\frac{2}{\pi}\sqrt{|D_K|}N_K(I)$, then by \ref{thm:Minkowski} $\exists 0\neq\alpha\in I\cap S_R$, where $\alpha\in S_R\iff N_K(\alpha)=\Re(\alpha)^2+\Im(\alpha)^2\leq R$.
+\end{proof}
+
+\begin{remark}
+With the real case ($d>0$), we use another embedding $\iota:\ri_K\rightarrow\R^2:\alpha\mapsto(\tau_1(\alpha),\tau_2(\alpha))$ where $\tau_i$'s are the two real embeddings of $\Q\left(\sqrt d\right)\hookrightarrow\C$. Then
+\begin{enumerate}
+\item $\iota(\ri_K)\subset\R^2$ is a lattice with $\covol=\sqrt{|D_K|}$ (follows from \ref{prop:discinemb} and \ref{coro:diffbassamedisc}),
+\item $\forall I\subset\ri_K,\ \iota(I)\subset\R^2$ is a lattice with $\covol(\iota(I))=N_K(I)\sqrt{|D_K|}$ (follows from \ref{lemma:covolratioofsbgrp}).
+\end{enumerate}
+
+\begin{flushright}
+\textit{Week 9, lecture 3, 5th March}
+\end{flushright}
+
+If we were to play the same game with imaginary case, the natural choice for $S_R$ would be $\{(x,y)\in\R^2:|xy|\leq R\}$ since $N_K(\alpha)=\tau_1(\alpha)\tau_2(\alpha)$ for $\alpha\in\ri_K$ (\ref{thm:trissumofembandnmisprod}), but this is not convex. Instead we take a subset of it which still works for the norm argument: $S_R=\{(x,y)\subset\R^2:|x|+|y|\leq 2\sqrt{R}\}$, a square with side length $2\sqrt{2R}$ (hence convex and symmetric) with $\vol(S_R)=8R$. Indeed $(x,y)\in S_R\implies |xy|<R$ since $|xy|\leq\left(\frac{|x|+|y|}{2}\right)^2\leq R$.
+
+If $8R>2^2N_K(I)N_K(I)\sqrt{|D_K|}$, i.e. $R>\frac12 N_K(I)\sqrt{|D_K|}$, then by \ref{thm:Minkowski} $\exists 0\neq\alpha\in I\cap S_R$ where $\alpha\in S_R\implies N_K(\alpha)\leq R$. Hence similarly, the Minkowski bound in this case is $C_K=\frac12\sqrt{|D_K|}$, again agreeing with \ref{example:Minkowskibound}.
+\end{remark}
+
+\begin{remark}[Minkowski in general]
+Let $K$ be a number field with $[K:\Q]=n=r+2s$ and write
+\[
+\Sigma_K=\left\{\tau_1,\ldots,\tau_r,\sigma_1,\overline{\sigma_1},\ldots,\sigma_s,\overline{\sigma_s}\right\}.
+\]
+Embed the number field as a lattice using
+\[
+\iota:K\hookrightarrow\R^n:\alpha\mapsto\left(\tau_1(\alpha),\ldots\tau_r(\alpha),\Re(\sigma_1(\alpha)),\Im(\sigma_1(\alpha)),\ldots,\Re(\sigma_s(\alpha)),\Im(\sigma_s(\alpha))\right).
+\]
+We claim $\iota(\ri_K)$ is indeed a lattice with $\covol(\iota(\ri_K))=\frac{\sqrt{|D_K|}}{2^s}$. Indeed, fix an integral basis $\alpha_1,\ldots,\alpha_n$ of $\ri_K$. It suffices to calculate
+\[
+\det\begin{pmatrix}
+\tau_1(\alpha_1) & \cdots & \tau_1(\alpha_n) \\
+\vdots & \ddots & \vdots \\
+\tau_r(\alpha_1) & \cdots & \tau_r(\alpha_n) \\
+\Re(\sigma_1(\alpha_1)) & \cdots & \Re(\sigma_1(\alpha_n)) \\
+\vdots & \ddots & \vdots \\
+\Re(\sigma_s(\alpha_1)) & \cdots & \Re(\sigma_s(\alpha_n)) \\
+\end{pmatrix},
+\]
+since if it's nonzero then by definition $\iota(\ri_K)$ is a lattice, and its absolute value is the covolume. But by the identities $\Re(z)=\frac{z+\overline z}{2},\ \Im(z)=\frac{z-\overline z}{2i}$, we have that the above matrix is equal to
+\[
+\begin{pmatrix}
+1 & \\ & \ddots \\ & & 1 \\ & & & \frac 12 & \frac 12 \\ & & & \frac{1}{2i} & -\frac{1}{2i} \\ & & & & & \ddots \\ & & & & & &  \frac 12 & \frac 12 \\ & & & & & & \frac{1}{2i} & -\frac{1}{2i}
+\end{pmatrix}\begin{pmatrix}
+\tau_1(\alpha_1) & \cdots & \tau_1(\alpha_n) \\
+\vdots & \ddots & \vdots \\
+\tau_r(\alpha_1) & \cdots & \tau_r(\alpha_n) \\
+\sigma_1(\alpha_1) & \cdots & \sigma_1(\alpha_n) \\
+\overline{\sigma_1}(\alpha_1) & \cdots & \overline{\sigma_1}(\alpha_n) \\
+\vdots & \ddots & \vdots \\
+\sigma_s(\alpha_1) & \cdots & \sigma_s(\alpha_n) \\
+\overline{\sigma_s}(\alpha_1) & \cdots & \overline{\sigma_s}(\alpha_n) 
+\end{pmatrix}
+\]
+with determinant
+\[
+\left(\frac{1}{-4i}-\frac{1}{4i}\right)^s\sqrt{D_K}=\left(\frac{i}{2}\right)^2\sqrt{D_K}
+\]
+by \ref{prop:discinemb}, and hence $\covol(\iota(\ri_K))=\left|\left(\frac{i}{2}\right)^2\sqrt{D_K}\right|=\frac{\sqrt{|D_K|}}{2^s}$ as desired.
+
+Similarly we would want to work with
+\[
+M_R=\left\{(x_1,\ldots,x_r,y_1,z_1,\ldots,y_s,z_s)\in\R^n:\prod_{i=1}^r|x_i|\prod_{i=1}^s\left(y_i^2+z_i^2\right)\leq R\right\}
+\]
+but it's not generally convex, so we use
+\[
+S_R=\left\{(x_1,\ldots,x_r,y_1,z_1,\ldots,y_s,z_s)\in\R^n:\sum_{i=1}^r|x_i|+\sum_{i=1}^s 2\sqrt{y_i^2+z_i^2}\leq n R^{\frac{1}{n}}\right\}
+\]
+It's left as an multivariable calculus exercise to show $S_R\subset M_R$ and $\vol(S_R)=\frac{n^n}{n!}2^r\left(\frac{\pi}{2}\right)^sR$. Now if
+\[
+\frac{n^n}{n!}2^r\left(\frac{\pi}{2}\right)^sR>2^n \frac{\sqrt{|D_K|}}{2^s} N_K(I) \iff \frac{n^n}{n!} \pi^s R>2^{2s}\sqrt{|D_K|}N_K(I) \iff R>\frac{n!}{n^n}\left(\frac{4}{\pi}\right)^s\sqrt{|D_K|}N_K(I)
+\]
+then by \ref{thm:Minkowski} $\exists 0\neq\alpha\in I\cap S_R$ where $\alpha\in S_R\implies N_K(\alpha)\leq R$.
+\end{remark}
+
+\subsection{Computation of class groups}
+
+\begin{example}
+Let's use this to compute $\Cl(\ri_{-14})$. Since $-14\nequiv 1\Mod 4$, $\ri_{-14}=\Z\left[\sqrt{-14}\right]$. The Minkowski bound is $\frac{2}{\pi}\sqrt{4\times 14}=\frac{4}{\pi}\sqrt{14}\approx 4.76$. Hence $\Cl(\ri_{-14)}$ is generated by $[\ip]$ where $\ip$ is prime with $N_K(\ip)<5$. Now $(2)=\left(2,\sqrt{-14}\right)^2=\ip_2^2$ and $(3)=\left(3,1+\sqrt{-14}\right)\left(3,1-\sqrt{-14}\right)=\ip_3\overline{\ip_3}$. By the norm argument one can check $\ip_2,\ip_3,\overline{\ip_3}$ are all non-principal. This means $[\ip_2],[\ip_3],[\overline{\ip_3}]\neq 1\in\Cl(\ri_{-14})$. But are they three distinct classes?
+
+Suppose $[\ip_2]=[\ip_3]$, then $[\ip_3]^{-1}[\ip_3]=1$, but $[\ip_2]^2=1$, i.e. $[\ip]$ is its own inverse, so $[\ip_2][\ip_3]=1$, i.e. $\ip_2\ip_3$ is principal. But $N_K(\ip_2\ip_3)=6$ and again by the norm argument this is not possible. Similarly $[\ip_2]\neq[\overline{\ip_3}]$.
+
+Now suppose $[\ip_3]=[\overline{\ip_3}]$, then $[\ip_3]^2=1$; write $\ip^3=(\alpha)$, then $N_K(\alpha)=9$, so $\alpha=\pm 3$ and we have $\ip_3^2=(3)=\ip_3\overline{\ip_3}$, so by \ref{lemma:uniquefactinDDlemma2} $\ip_3=\overline{\ip_3}$, a contradiction.
+
+Hence we have one element of order 2 and two elements of order 4 in $\Cl(\ri_{-14})$; this can only be $\Z/4\Z$.
+\end{example}
+
+\begin{example}
+Let $K=\Q\left(\sqrt{33}\right)$ and write $\ri_K=\Z\left[\frac{1+\sqrt{33}}{2}\right]$. The Minkowski bound is $\frac{\sqrt{|D_K|}}{2}=\frac{33}{2}<3$, so it suffices to see how $(2)$ splits. By \ref{thm:quadrampis2}, $(2)=\left(2,\frac{1+\sqrt{33}}{2}\right)\left(2,\frac{1-\sqrt{33}}{2}\right)=\ip_2\overline{\ip_2}$. But $\ip_2$ is principal: note that
+\[
+N_K\left(a+b\left(\frac{1+\sqrt{33}}{2}\right)\right)=N_K\left(\frac{2a+b}{2}+\frac{b}{2}\sqrt{33}\right)=\frac{4a^2+4ab+b^2}{4}-33\frac{b^2}{4}=a^2+ab-8b^2,
+\]
+and $a^2+ab-8b^2=\pm 2$ does have solution $a=2,b=1$, with $2+\frac{1+\sqrt{33}}{2}\in\ip_2$, so $\ip_2=\left(2+\frac{1+\sqrt{33}}{2}\right)$. It follows that $[\overline{\ip_2}]\cdot 1=1$, i.e. $\overline{\ip_2}$ is principal as well, hence $\Cl(\ri_K)=\{1\}$ and in particular $\ri_K$ is a PID by \ref{prop:DDUFDiffclgrptriv}.
+\end{example}
+
+\begin{flushright}
+\textit{Week 10, lecture 1, 10th March: problem class (sheet 4)}
+\end{flushright}
+
+\begin{exe}
+\begin{enumerate}
+\item[5.] At the end of this problem we will have proved that if $\ri_d=\ri_{\Q\left(\sqrt{d}\right)}$ is a PID for $d<0$ then either $d=-1,-2,-7$, or $d\equiv 5\Mod 8$ and $-d$ is prime.
+\begin{enumerate}
+\item Suppose $\ri_d$ is a PID. Show that $\ri_d$ has elements of norm 2 iff $d=-1,-2,-7$, and deduce that if $\ri_d$ has no norm 2 elements, 2 must be inert in $\ri_d$ (and so $d\equiv 5\Mod 8$ by \ref{thm:quadrampis2}).
+\item It now remains to show that in the case that $\ri_d$ has no norm 2 elements, $-d$ is prime. We first show this: if $d\equiv 1\Mod 4$ and a prime $p$ is the norm of some element, then $p\geq \frac{1-d}{4}$. Deduce that any prime $p<\frac{1-d}{4}$ is inert in $\ri_d$.
+\item Deduce that if $d\equiv 5\Mod 8$ then $-d$ is prime.
+\item Prove that $n^2-n+41$ is prime for $1\leq n\leq 40$ by using $\ri_{-163}$ is a PID.
+\end{enumerate}
+
+\textit{Solution}. \begin{enumerate}
+\item If $d\nequiv 1\Mod 4$ then $\ri_d=\Z[\sqrt d]$ and $N\left(a+\sqrt{d}b\right)=a^2-db^2$, hence either $b=0$ and $N\left(a+\sqrt{d}b\right)$ is a square, or $b\neq 0$ and $N\left(a+\sqrt{d}b\right)\geq -d$. If $d\equiv 1\Mod$ then $\ri_d=\Z\left[\frac{1+\sqrt d}{2}\right]$ and $N\left(a+b\frac{1+\sqrt d}{2}\right)=a^2+ab+\left(\frac{1-d}{4}\right)b^2$, hence again either $b=0$ and $N\left(a+b\frac{1+\sqrt d}{2}\right)$ is a square, or $b\neq 0$ and $N\left(a+b\frac{1+\sqrt d}{2}\right)\geq \frac{1-d}{4}$.
+
+Hence we cannot exclude elements of norm 2 if $d\geq -2$ and $d\not\equiv 1\Mod 4$ or $d\geq -7$ and $d\equiv 1\Mod 4$, i.e. $d=-1,-2$ or $-3,-7$. Now indeed $1+i\in\ri_{-1},\sqrt{-2}\in\ri_{-2}$ and $1-\sqrt{-7}\in\ri_{-7}$ has norm 2, but we claim $a^2+ab+b^2=2$ has no integer solutions so $\ri_{-3}$ has no norm 2 elements after all, i.e. $\ri_d$ has no norm 2 elements unless $d=-1,-2,-7$ as desired.
+
+To prove that last claim, suppose per contra $a,b\in\Z$ satisfies $a^2+ab+b^2=(a+b)^2-ab=2$, then $(a+b)^2$ and $ab$ are either both even or both odd. If $ab$ is even then WLOG $a$ is even, but then $a^2+b^2$ being forces $b$ to be even, so $\frac{a}{2},\frac{b}{2}$ is another solution. Infinite descent gives a contradiction, so suppose $ab$ is odd. Then both $a$ and $b$ are odd, so $a^2$ and $b^2$ are odd, but then $a^2+b^2$ is even, another contradiction.
+
+Now assume $d\neq -1,-2,-7$ and suppose per contra 2 is not inert in $\ri_d$. If $2\ri_d=\ip_2^2$ (ramifies) or $2\ri_d=\ip_2\overline{\ip_2}$ (splits), then $N(\ip_2)=2$ so since $\ri_d$ has no norm 2 elements, $\ip_2$ is not principal, contradicting that $\ri_D$ is a PID. Hence 2 is inert.
+\item We already know if $d\equiv 1\Mod 4$ then $N(\alpha)$ is either a square or $\geq\frac{1-d}{4}$ for any $\alpha\in\ri_d$, and clearly a prime is never a square, so the first part is proved. $p$ cannot ramify or split by the same argument for 2 in the last paragraph of (a).
+\item Suppose per contra $-d$ is not prime. We claim it has a prime factor $p\leq\frac{-d}{5}$. Indeed, since $d\equiv 5\Mod 8$, $-d\equiv 3\Mod 8$, but $3,11,19$ are all prime, so $-d\geq 27$, in particular $-d>25$. If every prime factor $p$ satisfies $p>\frac{-d}{5}$, then in particular for distinct prime factors $p,q$ of $-d$, we have $pq>\frac{(-d)(-d)}{25}>-d$, an absurdity. Hence we have some $p\mid d$ (hence $p$ ramifies in $\ri_d$ by \ref{thm:quadramoddp} and \ref{thm:quadrampis2}) with $p\leq\frac{-d}{5}<\frac{1-d}{4}$ which is inert by (b), a contradiction.
+\item Note that $-163\equiv 1\Mod 4$ and
+\[
+N\left(n+\frac{-1+\sqrt{-163}}{2}\right)=n^2-n+41.
+\]
+Write the prime factorisation
+\[
+\left(n+\frac{-1+\sqrt{-163}}{2}\right)=\ip_1\cdots\ip_r.
+\]
+If there is some $i$ with $\ip_i=(p)$ then $p\mid n+\frac{-1+\sqrt{-163}}{2}$ which is clearly not possible, so each $\ip_i$'s lies above some prime that either splits or ramifies. By (b), these primes $\geq 41$, so $N(\ip_i)\geq 41 \ \forall i$. But since $1\leq n\leq 40$, $41\leq n^2-n+41<41^2$, so $\left(n+\frac{-1+\sqrt{-163}}{2}\right)$ is prime and since $n+\frac{-1+\sqrt{-163}}{2}\notin\Z$, we have $n^2-n+41$ is prime.
+\end{enumerate}
+
+\item[4.] Compute class group of $\ri_{-23}$.
+
+\textit{Solution}. Since $-23\equiv 1\Mod 4$, by our calculation in \ref{example:Minkowskibound} the Minkowski bound is $\frac{2}{\pi}\sqrt{23}<4$, so we need to investigate the primes 2 and 3. By \ref{thm:quadrampis2}, since $-23\equiv 1\Mod 8$, we have $(2)=\left(2,\frac{1+\sqrt{-23}}{2}\right)\left(2,\frac{1-\sqrt{-23}}{2}\right)=\ip_2\overline{\ip_2}$, so $N(\ip_2)=N(\overline{\ip_2})=2$, and by \ref{thm:quadramoddp}, since $-23\equiv 1\equiv 1^2\Mod 3$, we have $(3)=\left(3,1+\sqrt{-23}\right)\left(3,1-\sqrt{-23}\right)=\ip_3\overline{\ip_3}$ with $N(\ip_3)=N(\overline{\ip_3})=3$ similarly. We therefore have $\Cl(K)=\{1,[\ip_2],[\overline{\ip_2}],[\ip_3],[\overline{\ip_3}]\}$.
+
+Now $a^2+ab+\frac{1+23}{4}b^2=a^2+ab+6b^2=2,3$ doesn't have integer solutions, so $[\ip_2],[\overline{\ip_2}],[\ip_3],[\overline{\ip_3}]\neq 1$. But $N\left(\frac{1+\sqrt{-23}}{2}\right)=6$ and
+\[
+\frac{1+\sqrt{-23}}{2}\in\ip_2\ip_3=\left(6,2+2\sqrt{-23},\frac{3+3\sqrt{-23}}{2},-11+\sqrt{-23}\right)
+\]
+(since $\frac{1+\sqrt{-23}}{2}=\frac{4+4\sqrt{-23}}{2}-\frac{3+3\sqrt{-23}}{2}$)
+where $N(\ip_2\ip_3)=N(\ip_2)N(\ip_3)=6$, so we must have $\ip_2\ip_3=\left(\frac{1+\sqrt{-23}}{2}\right)$, in particular principal, so $[\ip_2]=[\ip_3]^{-1}=[\overline{\ip_2}]^{-1}$, in particular $[\overline{\ip_2}]=[\ip_3]$. Also, $N(\ip_2^2)=N(\overline{\ip_2}^2)=4$ but the only solutions to $a^2+ab+6b^2=4$ is $a=\pm 2,b=0$, and $\ip_2^2,\overline{\ip_2}^2\neq (2)$ since otherwise $\ip_2=\overline{\ip_2}$ which is false, so $[\ip_2]^2,[\overline{\ip_2}]^2\neq 1$ (which implies $[\ip_2]\neq [\ip_3]$), and similarly $[\overline{\ip_3}]^2\neq 1$. Hence in the group we have at least 3 ($1,[\ip_2],[\ip_3]$) and at most 4 (we don't know if $[\overline{\ip_3}]$ is any of the 3 before) distinct elements with no elements of order 2; the group must be $\Z/3\Z$.
+\end{enumerate}
+\end{exe}
+
+\begin{flushright}
+\textit{Week 10, lecture 2, 11th March}
+\end{flushright}
+
+\subsection{Class groups as machinery to solve Diophantine equations}
+\begin{thm}[Fermat]
+Let $p$ be a prime. Then
+\begin{enumerate}
+\item $p=x^2+y^2$ for $x,y\in\Z\iff p=2$ or $p=\equiv 1\Mod 4$,
+\item $p=x^2+2y^2$ for $x,y\in\Z\iff p=2$ or $p=\equiv 1,3\Mod 8$.
+\end{enumerate}
+\end{thm}
+\begin{proof}
+We've seen numerous times how to prove the first statement using Minkowski (in elementary number theory and in exercise for elliptic curves). But there's a quicker way. Note that $p=x^2+y^2=N(x+iy)=(x+iy)(x-iy)$ in the larger ring $\Z[i]$. Since $N(p)=p^2$ and $\Z[i]$ is a PID, this means $p$ cannot be inert, and by \ref{thm:quadrampis2} and \ref{thm:quadramoddp}, this means either $p=2$ or $\exists a\in\Z:a^2\equiv -1\Mod p$, i.e. $\left(\frac{-1}{p}\right)=1$, which by \ref{lemma:quadreci} is equivalent to $(-1)^{\frac{p-1}{2}}=1$, i.e. $\frac{p-1}{2}$ is even, i.e. $p\equiv 1\Mod 4$.
+
+The same argument with $\Z\left(\sqrt{-2}\right)$ implies the second statement.
+\end{proof}
+
+Let's now see how the class group helps us in the case that our ring is not a PID. We've seen in \ref{example:Minkowskibound} that $\Cl(\ri_{-5})=\Z/2\Z$.
+
+\begin{thm}
+Let $p$ be a prime.
+\begin{enumerate}
+\item If $p\equiv 1,9\Mod 20$, then $p\ri_{-5}=\ip\overline{\ip}$ splits where $\ip,\overline{\ip}$ are principal. In particular, $p=x^2+5y^2$ for some $x,y\in\Z$ by the same argument.
+\item If $p\equiv 3,7\Mod 20$, then $p\ri_{-5}=\ip\overline{\ip}$ where $[\ip]=[\overline{\ip}]=[\ip_2]$ where $\ip_2=\left(2,1+\sqrt{-5}\right)$ is non-principal. In particular, $2p=x^2+5y^2$.
+\item 2 and 5 ramify.
+\item In any other case $p$ is inert.
+\end{enumerate}
+\end{thm}
+\begin{proof}
+By \ref{thm:quadramoddp}, $p$ splits $\iff\left(\frac{-5}{p}\right)=1$. By \ref{thm:Gaussreciprocity}, $\left(\frac{-5}{p}\right)=\left(\frac{-1}{p}\right)\left(\frac{5}{p}\right)=(-1)^{\frac{p-1}{2}}\left(\frac{p}{5}\right)=1$ either if $p\equiv 1\Mod 4$ and $p\equiv \pm 1\Mod 5$ (hence $p\equiv 1,9\Mod 20$) or if $p\equiv 3\Mod 4$ and $p\equiv \pm 2\Mod 5$ (hence $p\equiv 3,7\Mod 20$). Hence together with statement 3 (follows immediately from \ref{thm:pramiffpdivdisc}), this already gives 4.
+
+Now the case $p\ri_{-5}=\ip\overline{\ip}$ remains. There are two possibilities:
+\begin{enumerate}
+\item $[\ip]=1$, then $[\overline{\ip}]=1\cdot 1^{-1}=1$ as well, so $\exists x,y\in\Z:N\left(x+\sqrt{-5}y\right)=x^2+5y^2=N(\ip)=p$. This cannot happen if $p$ is not a square modulo 5, so $p\equiv 1,9\Mod 20$. This proves statement 1.
+\item $[\ip]=[\ip_2]$, then $[\overline{\ip}]=[\ip_2]^{-1}=[\ip_2]$. But this also means $[\ip][\ip_2]=[\ip_2]^2=1$, i.e. $\ip\ip_2$ is principal, so $\exists x,y\in\Z:x^2+5y^2=N(\ip\ip_2)=N(\ip_2)N(\ip)=2p$, which cannot happen if $2p$ is not a square modulo 5, i.e. if $p$ is a square modulo 5, so $p\equiv 3,7\Mod 20$. This proves statement 2.
+\end{enumerate}
+\end{proof}
+
+\subsubsection{Mordell equations}
+Mordell equations are of the form $y^2=x^3+d$. The general strategy is to rewrite it as $x^3=y^2-d=\left(y+\sqrt{d}\right)\left(y-\sqrt{d}\right)$ in $\Z\left[\sqrt{d}\right]$.
+
+\begin{example}
+$y^2=x^3-1$. As above, rewrite it as $(y-i)(y+i)=x^3$. We solve it in the following steps.
+\begin{enumerate}
+\item Show that the ideals $(y-i),(y+i)\subset\ri_{-1}$ are coprime.
+
+If $\ip\mid(y-i),(y+i)$ then $\ip\mid (2i)$, so either $2\in\ip$ or $i\in\ip$. But $i\in\ri_{-1}^\times$ and $\ip$ is proper, so $2\in\ip$, i.e. $\ip$ lies above 2. Now $2=(1+i)(1-i)$, so $\ip$ is either $(1+i)$ or $(1-i)$. In either case, $N(\ip)=2\mid N((y-i)(y+i))=x^3$, so $8\mid x^3$ and $y^2\equiv -1\Mod 8$, which is impossible. 
+\item By unique ideal factorisation of $(x)^3=(y-i)(y+i)$ and step 1, $(y-i)=\iq^3$ and $(y+i)={\overline{\iq}}^3$ for some ideals $\iq,\overline{\iq}$.
+\item Since $\Cl(\ri_{-1})$ is trivial, $\iq=(a+ib)$ for some $a,b\in\Z$, in particular $y-i=u(a+ib)^3$ where $u\in\Z[i]^\times=\{\pm 1,\pm i\}$. Similar for $y+i$. Up to signs and relabelling $a$ and $b$ we can write $y-i=(a+ib)^3$.
+\item We now simply expand: $(a+ib)^3=a^3-3ab^2+i\left(b\left(3a^2-b^2\right)\right)$, and we have $y=a^3-3ab^2,\ 1=b\left(3a^2-b^2\right)$. Hence $b=3a^2-b^2=\pm 1$. If $b=1$ then $3a^2=0$ so $a=0$. If $b=-1$ then $3a^2=2$ which is impossible.
+\item Hence we have $y=0$ in any case ($b=1,a=0,\ b=-1,a=0,\ b=0,a=1,\ b=0,a=-1$), so the only solution is $x=1,y=0$.
+\end{enumerate}
+\end{example}
+
+\begin{example}
+$y^2=x^3-5$. Again rewrite it as $\left(y-\sqrt{-5}\right)\left(y+\sqrt{-5}\right)=x^3$.
+\begin{enumerate}
+\item Show that the ideals $\left(y-\sqrt{-5}\right),\left(y+\sqrt{-5}\right)\subset\ri_{-5}$ are coprime.
+
+Similarly, if $\left(y-\sqrt{-5}\right),\left(y+\sqrt{-5}\right)\subset\ip$ where $\ip$ is prime then $2\sqrt{-5}\in\ip$, so $N(\ip)\mid N\left(2\sqrt{-5}\right)=20$, so $\ip$ lies above 2 or 5. On the other hand, $x^3=\left(y-\sqrt{-5}\right)\left(y+\sqrt{-5}\right)\in\ip$, so $x\in\ip$. If $\ip$ lies above 2 then $x\in (2)$, so again $8\mid x^3$ hence $y^2\equiv 3\Mod 8$ which is impossible. If $\ip$ lies above 5 then $5\mid x\implies 5\mid x^3-5\implies 5\mid y$, but then $25\mid x^3-y^2=5$ which is also impossible.
+\item By unique ideal factorisation of $(x)^3=\left(y-\sqrt{-5}\right)\left(y+\sqrt{-5}\right)$ and step 1, $\left(y+\sqrt{-5}\right)=\iq^3$ and $\left(y-\sqrt{-5}\right)={\overline{\iq}}^3$ for some ideals $\iq,\overline{\iq}$.
+
+\begin{flushright}
+\textit{Week 10, lecture 3, 12th March}
+\end{flushright}
+
+\item We can't immediately conclude $\iq$ is principal since $\Cl(\ri_{-5})=\Z/2\Z$, but since $\iq^3$ is principal, its order divides 3, hence in $\Z/2\Z$ it must be the identity, i.e. $\iq$ (and similarly $\overline{\iq}$) is principal. Now $\left(y+\sqrt{-5}\right)=\left(a+b\sqrt{-5}\right)^3$ for some $a,b\in\Z$, so $y+\sqrt{-5}=u\left(a+b\sqrt{-5}\right)^3$ where $u\in\Z\left[\sqrt{-5}\right]^\times=\{\pm 1\}$, so up to signs $y+\sqrt{-5}=\left(a+b\sqrt{-5}\right)^3$.
+\item Again we expand: $\left(a+\sqrt{-5}\right)^3=a(a^2-15b^2)+\sqrt{-5}b(3a^2-5b^2)$, hence $b=3a^2-5b^2=\pm 1$. If $b=1$ then $3a^2=6$ which is impossible, if $b=-1$ then $3a^2=4$ which is again impossible.
+\item Hence $y^2=x^3-5$ has no integer solutions.
+\end{enumerate}
+\end{example}
+
+\textbf{In more generality}. Consider $d<0$ squarefree and $d\nequiv 1\Mod 4$. Then $\ri_{d}=\Z\left[\sqrt d\right]$. We solve $y^2=x^3+d$ following the same steps and see what can go wrong.
+\begin{enumerate}
+\item Suppose $\left(y+\sqrt{d}\right),\left(y-\sqrt{d}\right)\subset\ip$ for some prime ideal $\ip$. Then $2\sqrt{-d}\in\ip$. This tells us $\ip$ lies above either 2 or some $p$ that divides $d$.
+
+If $\ip$ lies above 2, note that $x^3=\left(y+\sqrt{d}\right)\left(y-\sqrt{d}\right)\in\ip\cap\Z=(2)$, so $8\mid x^3$, so $y^2\equiv d\Mod 8$, but only quadratic residues of 8 are $0,1,4$, and $d$ is squarefree and $d\nequiv 1\Mod 4$, so this case is excluded.
+
+Otherwise, similarly $p\mid x^3$, but also $p\mid d$, so $p\mid y$ and hence $p^2\mid x^3-y^2=-d$, but $d$ is squarefree, again impossible.
+
+We conclude that $\left(y+\sqrt{d}\right),\left(y-\sqrt{d}\right)$ are coprime.
+\item This allows to write $\left(y+\sqrt{d}\right)=\iq^3$ for some ideal $\iq\subset\ri_d$, similar for $\left(y-\sqrt{d}\right)$.
+\item If $3\nmid |\!\Cl(\ri_d)|$ then $\Cl(\ri_d)$ cannot have order 3 elements, so $\iq$ is principal.
+\item If $\iq$ is principal then $y+\sqrt d=u\left(a+b\sqrt{d}\right)^3$ for $u\in\Z\left[\sqrt d\right]=\left\{ \begin{aligned}
+\{\pm 1\}\text{ if }d< -1 \\ \{\pm 1,\pm i\}\text{ if }d=-1
+\end{aligned} \right.$, and again up to signs (and relabelling if $d=-1$) we can simply write $y+\sqrt d=\left(a+b\sqrt{d}\right)^3$.
+\item $\left(a+b\sqrt{d}\right)^3=a(a^2+3db^2)+\sqrt{d}b(3a^2-db^2)$, so in general ($d\neq -1$) one has $b=3a^2-db^2=\pm 1$. If this does have a solution $a=\pm a_0$, then $y=\pm a_0(a_0^2+3d)$, and $x^3=\left(y+\sqrt{d}\right)\left(y-\sqrt{d}\right)=\left(a_0+\sqrt{d}\right)^3\left(a_0-\sqrt{d}\right)^3=\left(a_0^2-d\right)^3$, so $x=a_0^2-d$, hence in this case we have solutions $\left(a_0^2-d,\pm a_0\left(a_0^2+3d\right)\right)$.
+\end{enumerate}
+
+\begin{thm}
+Suppose $d<0$ is squarefree and $d\nequiv 1\Mod 4$. If $\exists a\in\Z:3a^2+d=\pm 1$, then
+\[
+(x,y)=\left(a^2-d,\pm a\left(a^2+3d\right)\right)
+\]
+is a solution of the Diophantine equation $y^2=x^3+d$. Moreover, if $3\nmid|\!\Cl(\ri_d)|$, then these are the only solutions.
+\end{thm}
+
+\begin{example}
+\begin{itemize}
+\item $d=-13$: in this case $3a^2=12$ has solutions $a=\pm 2$, so $(x,y)=\left(4+13,\pm 2\left(4-3\times 13\right)\right)=(17,\pm 70)$ are solutions to $y^2=x^3-13$. Moreover, $\frac{2}{\pi}\sqrt{4\cdot 13}<5$, with the primes 2 ramifying (\ref{thm:quadrampis2}) and 3 inert (\ref{thm:quadramoddp} and 2 is not a square modulo 3), so $\Cl(\ri_{-13})=\Z/2\Z$ and so the above solutions are all.
+\item $d=-26$: $3a^2=27$ has solutions $a=\pm 3$, so $(x,y)=\left(9+26,\pm 3\left(9-3\times 26\right)\right)=(35,\pm 207)$ are solutions to $y^2=x^3-26$. But by staring, $(3,\pm 1)$ is another solution, so $3\mid\Cl(\ri_{-26})$ (i.e. we can also reverse the process to obtain information of the class group).
+\end{itemize}
+\end{example}
+
+\begin{thm}
+For $d\neq 0$, the Diophantine equation $y^2=x^3+d$ has finitely many integer solutions.
+\end{thm}
+
+\subsubsection{Units in real quadratic fields}
+In previous section we only considered $\Z\left[\sqrt d\right]$ with $d<0$, where there are a very limited set of units and hence makes step 4 in the general ``algorithm'' simpler. But it turns out in $\Z\left[\sqrt d\right]$ with $d>0$ we have infinite number of units, which can still be systematically described.
+
+\begin{example}
+Note that $1+\sqrt{2}\in\ri_2^\times$, since $N\left(1+\sqrt 2\right)=\left(1+\sqrt 2\right)\left(1-\sqrt{2}\right)=-1$. But this means $\left(1+\sqrt{2}\right)^n\in\ri_2^\times \ \forall n\in\Z$, and since $1+\sqrt 2>1$, this means they are all distinct and we have an infinite family of units. We will later see that these together with $\pm 1$ generate all units in $\ri_2$.
+\end{example}
+
+\begin{thm}
+Let $d>1$ be squarefree. Then $\exists!\varepsilon\in\ri_d^\times$ with $\varepsilon>1$ such that $\ri_d^\times=\{\pm\varepsilon^n:n\in\Z\}$. This $\varepsilon$ is called the \textit{fundamental unit}. In particular, $\ri_d^\times\cong\Z/2\Z\times\Z$.
+\end{thm}
+
+\begin{remark}
+When $d\nequiv 1\Mod $, the units give solutions to the Diophantine equations $x^2-dy^2=\pm 1$ (Pell). Indeed, $x+\sqrt dy\in\ri_d$ is a unit $\iff N\left(x+\sqrt{d}y\right)=\pm 1$.
+\end{remark}
+
+\begin{example}
+$1+\sqrt 2$ is the fundamental unit of $\ri_2^\times$, $2+\sqrt 3$ for $\ri_3^\times$, $\frac{1+\sqrt 5}{2}$ for $\ri_5^\times$, $170+39\sqrt{19}$ for $\ri_{19}^\times$, and $2143295+221064\sqrt{94}$ for $\ri_{94}^\times$.
+\end{example}
+
+\end{document}
