@@ -1,4 +1,5 @@
 \documentclass{article}
+\usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[british]{babel}
 \usepackage{amsthm}
@@ -15,10 +16,13 @@
 \usepackage{float}
 \usepackage{tikz}
 \usepackage{pst-plot}
-\usepackage{newpx}
+\usepackage[math]{iwona}
+\usepackage{cmbright}
 \usepackage{ytableau}
 \usepackage{microtype}
 \usepackage{listings}
+
+\renewcommand{\familydefault}{\sfdefault}
 
 \geometry{a4paper,left=2cm,right=2cm,top=2cm,bottom=2cm}
 
@@ -816,7 +820,7 @@ Let $K$ be a number field of degree $n=[K:\Q]$. Define the \textit{discriminant}
 \end{defn}
 
 \begin{example}
-Consider $K=\Q\left(\sqrt d\right)$ with $d\nequiv 1\Mod 4$. We calculate the discriminant of integral basis $\{1,\sqrt d\}$ of $\Z\left[\sqrt d\right]$:
+Consider $K=\Q\left(\sqrt d\right)$ with $d\not\equiv 1\Mod 4$. We calculate the discriminant of integral basis $\{1,\sqrt d\}$ of $\Z\left[\sqrt d\right]$:
 \[
 \disc\left(1,\sqrt d\right)=\begin{pmatrix}
 2 & 0 \\ 0 & 2d
@@ -874,7 +878,7 @@ Suppose $M\subset N$ are free abelian subgroups of $\ri_K$ of rank $n$. Then
 (Note that $[N:M]$ denotes the index of $M$ as a subgroup of $N$, and not degree of field extension).
 \end{prop}
 \begin{proof}
-Let $\alpha_1,\ldots,\alpha_n$ be a basis of $N$ and $d_1\alpha_1,\ldots,\d_n\alpha_n$ be a basis of $M$ where $d_1,\ldots,d_n\in\Z$. Then
+Let $\alpha_1,\ldots,\alpha_n$ be a basis of $N$ and $d_1\alpha_1,\ldots,d_n\alpha_n$ be a basis of $M$ where $d_1,\ldots,d_n\in\Z$. Then
 \[
 \disc(M)=\det (\tr_K(d_i\alpha_i d_j\alpha_j))_{ij}=(d_i\cdots d_n)^2\disc (N),
 \]
@@ -1086,14 +1090,14 @@ a contradiction.
 Lemma 1 in proof of \ref{thm:uniquefactinDD}.
 \end{lemma}
 \begin{proof}
-Suppose $I\nsubset\ip$, i.e. $\exists a\in I:a\notin\ip$. Then $ab\in IJ\subset\ip \ \forall b\in J$, so $b\in\ip \ \forall b\in J$ since $\ip$ is prime and $a\notin\ip$, i.e. $J\subset\ip$.
+Suppose $I\not\subset\ip$, i.e. $\exists a\in I:a\notin\ip$. Then $ab\in IJ\subset\ip \ \forall b\in J$, so $b\in\ip \ \forall b\in J$ since $\ip$ is prime and $a\notin\ip$, i.e. $J\subset\ip$.
 \end{proof}
 
 \begin{lemma}
 Let $I\subsetneq R$ be a nonzero proper ideal of a Dedekind domain $R$. Then $\exists x\in\Frac(R):x\notin R$ and $xI\subset R$.
 \end{lemma}
 \begin{proof}
-Let $0\neq\alpha\in I$. Then by \ref{lemma:almostfact}, one can write $\ip_1\cdots\ip_r\subset(\alpha)$ where $\ip_i$'s are nonzero and prime and $r$ is minimal (i.e. if we remove one $\ip_i$ then the inclusion fails). Let $\mathfrak m$ be a maximal ideal such that $(\alpha)\subset I\subset\mathfrak m$. Then by previous lemma, WLOG $\ip_1\subset\mathfrak m$, but $\ip_1$ is prime so it's maximal as well, hence $\ip_1=\mathfrak m$. Since $r$ is minimal, $\ip_2\cdots\ip_r\nsubset (\alpha)$, so let $b\in\ip_2\cdots\ip_r\backslash(\alpha)$, then $bI\subset b\mathfrak m=b\ip_1\subset\ip_1\cdots\ip_r\subset(\alpha)$, so $\frac{b}{\alpha}I\subset R$, where $\frac{b}{\alpha}$ is the desired $x$. Indeed $\frac{b}{\alpha}\notin R$ since $b\in(\alpha)$ by construction.
+Let $0\neq\alpha\in I$. Then by \ref{lemma:almostfact}, one can write $\ip_1\cdots\ip_r\subset(\alpha)$ where $\ip_i$'s are nonzero and prime and $r$ is minimal (i.e. if we remove one $\ip_i$ then the inclusion fails). Let $\mathfrak m$ be a maximal ideal such that $(\alpha)\subset I\subset\mathfrak m$. Then by previous lemma, WLOG $\ip_1\subset\mathfrak m$, but $\ip_1$ is prime so it's maximal as well, hence $\ip_1=\mathfrak m$. Since $r$ is minimal, $\ip_2\cdots\ip_r\not\subset (\alpha)$, so let $b\in\ip_2\cdots\ip_r\backslash(\alpha)$, then $bI\subset b\mathfrak m=b\ip_1\subset\ip_1\cdots\ip_r\subset(\alpha)$, so $\frac{b}{\alpha}I\subset R$, where $\frac{b}{\alpha}$ is the desired $x$. Indeed $\frac{b}{\alpha}\notin R$ since $b\in(\alpha)$ by construction.
 \end{proof}
 
 \begin{lemma}
@@ -1432,7 +1436,7 @@ since $p\mid a^2-d$. Now $p\left(a+\sqrt d\right)+p\left(a-\sqrt d\right)=2pa\in
 \label{thm:quadrampis2}
 If $p=2$, then
 \begin{enumerate}
-\item If $d\nequiv 1\Mod 4$ then 2 ramifies in $\ri_K$ as follows:
+\item If $d\not\equiv 1\Mod 4$ then 2 ramifies in $\ri_K$ as follows:
 \begin{enumerate}
 \item If $2\mid d$ then $(2)=\left(2,\sqrt{d}\right)^2$
 \item If $2\nmid d$, then $d\equiv 3\Mod 4$ and $(2)=\left(2,\sqrt{d}+1\right)^2$
@@ -1511,7 +1515,7 @@ $\ip_i$ indeed doesn't depend on choice of the lift: let $g_i,\widetilde{g_i}\in
 \end{remark}
 
 \begin{example}
-Let's convince ourselves that the theorem is true using the previous two theorems. Consider the quadratic case $K=\Q\left(\sqrt d\right)$ with $d\nequiv 1\Mod 4$ so $\ri_K=\Z\left[\sqrt d\right]$. Now $\overline{m_\alpha}(x)=x^2-\overline d\in\F_p[x]$. We have following possibilities:
+Let's convince ourselves that the theorem is true using the previous two theorems. Consider the quadratic case $K=\Q\left(\sqrt d\right)$ with $d\not\equiv 1\Mod 4$ so $\ri_K=\Z\left[\sqrt d\right]$. Now $\overline{m_\alpha}(x)=x^2-\overline d\in\F_p[x]$. We have following possibilities:
 \begin{enumerate}
 \item If $\overline{m_\alpha}(x)=(x-a)(x-b)$ for some $a,b\in\F_p$ and $a\neq b$, then $p\nmid d$ and $a$ is a root of $\overline{m_\alpha}$ so $d$ is a quadratic residue, so we are in case 2 of \ref{thm:quadramoddp}, hence $p\ri_K=\left(p,a-\sqrt d\right)\left(p,a+\sqrt d\right)$ which is indeed $\left(p,g_1\left(\sqrt d\right)\right)\left(p,g_2\left(\sqrt d\right)\right)$; we only need to see that $b=-a$, but this is forced by $(x-a)(x-b)=x^2-(a+b)x+ab=x^2-d$. Also note that
 \[
@@ -1661,7 +1665,7 @@ Now in general, let $d\neq\pm 1$ and squarefree, and $K=\Q\left(\sqrt[3]d\right)
 
 If $p\neq 3$ then $p\mid d$ but then $m_{\sqrt[3]d}=x^3-d$ is Eisenstein at $p$ so by \ref{prop:minpoliseisen} the equality follows.
 
-If $p=3$ and $d\nequiv\pm 1\Mod 9$, then $m_{\sqrt[3]d-d}=(x+d)^3-d=x^3+3dx^2+3d^2x+d(d+1)(d-1)$ is Eisenstein at 3, and the equality follows similarly.
+If $p=3$ and $d\not\equiv\pm 1\Mod 9$, then $m_{\sqrt[3]d-d}=(x+d)^3-d=x^3+3dx^2+3d^2x+d(d+1)(d-1)$ is Eisenstein at 3, and the equality follows similarly.
 
 But if $p=3$ and $d\equiv\pm 1\Mod 9$ then one can check $\frac{\left(\sqrt[3]d-d\right)^2}{3}\in\ri_K\backslash\Z\left[\sqrt[3]d\right]$.
 \end{exe}
@@ -1814,7 +1818,7 @@ Before proving this let's see how useful it is. In the quadratic case $K=\Q\left
 \[
 C_K=\frac{2!}{2^2}\frac{4}{\pi}\sqrt{|D_K|}=\frac{2}{\pi}\sqrt{|D_K|}=\left\{
 \begin{aligned}
-&\frac{2}{\pi}\sqrt{-4d}=\frac{4}{\pi}\sqrt{-d}\qquad &\text{if }d\nequiv 1\Mod 4 \\
+&\frac{2}{\pi}\sqrt{-4d}=\frac{4}{\pi}\sqrt{-d}\qquad &\text{if }d\not\equiv 1\Mod 4 \\
 &\frac{2}{\pi}\sqrt{-d}\qquad &\text{if }d\equiv 1\Mod 4
 \end{aligned}
 \right.
@@ -1823,7 +1827,7 @@ and if $d>0$ then $r=2,s=0$ and
 \[
 C_K=\frac{2!}{2^2}\sqrt{|D_K|}=\frac{1}{2}\sqrt{|D_K|}=\left\{
 \begin{aligned}
-&\frac{1}{2}\sqrt{4d}=\sqrt{d}\qquad &\text{if }d\nequiv 1\Mod 4 \\
+&\frac{1}{2}\sqrt{4d}=\sqrt{d}\qquad &\text{if }d\not\equiv 1\Mod 4 \\
 &\frac{1}{2}\sqrt{d}\qquad &\text{if }d\equiv 1\Mod 4
 \end{aligned}
 \right.
@@ -1854,7 +1858,7 @@ A \textit{lattice} is a subgroup $\Lambda\subset\R^n$ with basis $v_1,\ldots,v_n
 \label{example:lattices}
 \begin{itemize}
 \item $\Z^n\subset\R^n$ is a lattice (take the standard basis).
-\item $\ri_{\Q\left(\sqrt d\right)}\subset\C\xrightarrow{\sim}\R^2:z\mapsto(\Re(z),\Im(z))$ is a lattice if $d<0$ by taking $\left\{1,\sqrt d\right\}$ if $d\equiv 1\Mod 4$ and $\left\{1,\frac{1+\sqrt d}{2}\right\}$ if $d\nequiv 1\Mod 4$.
+\item $\ri_{\Q\left(\sqrt d\right)}\subset\C\xrightarrow{\sim}\R^2:z\mapsto(\Re(z),\Im(z))$ is a lattice if $d<0$ by taking $\left\{1,\sqrt d\right\}$ if $d\equiv 1\Mod 4$ and $\left\{1,\frac{1+\sqrt d}{2}\right\}$ if $d\not\equiv 1\Mod 4$.
 \end{itemize}
 \end{example}
 
@@ -1932,7 +1936,7 @@ Fix squarefree $d<0$ and let $K=\Q\left(\sqrt d\right)$. For any nonzero ideal $
 thus making the Minkowski bound $C_K=\frac{2}{\pi}\sqrt{|D_K|}$, agreeing with \ref{thm:Minkowskibound} and our calculation in \ref{example:Minkowskibound}.
 \end{thm}
 \begin{proof}
-Embed $\ri_K\hookrightarrow\R^2$ as lattice $\Lambda$ as mentioned in \ref{example:lattices}. Then if $d\nequiv 1\Mod 4$ then $\covol(\Lambda)=|1(\sqrt{-d})|=\sqrt{-d}=\frac{\sqrt{-4d}}{2}=\frac{\sqrt{|D_K|}}{2}$; and if $d\equiv 1\Mod 4$ then $\covol(\Lambda)=\left|-\frac{\sqrt{-d}}{2}\right|=\frac{\sqrt{-d}}{2}=\frac{\sqrt{|D_K|}}{2}$, so either case we have the same result with respect to the discriminant.
+Embed $\ri_K\hookrightarrow\R^2$ as lattice $\Lambda$ as mentioned in \ref{example:lattices}. Then if $d\not\equiv 1\Mod 4$ then $\covol(\Lambda)=|1(\sqrt{-d})|=\sqrt{-d}=\frac{\sqrt{-4d}}{2}=\frac{\sqrt{|D_K|}}{2}$; and if $d\equiv 1\Mod 4$ then $\covol(\Lambda)=\left|-\frac{\sqrt{-d}}{2}\right|=\frac{\sqrt{-d}}{2}=\frac{\sqrt{|D_K|}}{2}$, so either case we have the same result with respect to the discriminant.
 
 Take $S_R=\{(x,y)\in\R^2:x^2+y^2\leq R\}$, a circle (hence convex and symmetric) with $\vol(S_R)=\pi R$. Take an ideal $I\subset\ri_D$, and hence a lattice with $\covol(I)=N_K(I)\frac{\sqrt{|D_K|}}{2}$ by \ref{lemma:covolratioofsbgrp}. If $\pi R>2^2N_K(I)\frac{\sqrt{|D_K|}}{2}=2\sqrt{|D_K|}N_K(I)$, i.e. $R>\frac{2}{\pi}\sqrt{|D_K|}N_K(I)$, then by \ref{thm:Minkowski} $\exists 0\neq\alpha\in I\cap S_R$, where $\alpha\in S_R\iff N_K(\alpha)=\Re(\alpha)^2+\Im(\alpha)^2\leq R$.
 \end{proof}
@@ -2014,7 +2018,7 @@ then by \ref{thm:Minkowski} $\exists 0\neq\alpha\in I\cap S_R$ where $\alpha\in 
 
 \begin{example}
 \label{example:clgrpm14}
-Let's use this to compute $\Cl(\ri_{-14})$. Since $-14\nequiv 1\Mod 4$, $\ri_{-14}=\Z\left[\sqrt{-14}\right]$. The Minkowski bound is $\frac{2}{\pi}\sqrt{4\times 14}=\frac{4}{\pi}\sqrt{14}\approx 4.76$. Hence $\Cl(\ri_{-14)}$ is generated by $[\ip]$ where $\ip$ is prime with $N_K(\ip)<5$. Now $(2)=\left(2,\sqrt{-14}\right)^2=\ip_2^2$ and $(3)=\left(3,1+\sqrt{-14}\right)\left(3,1-\sqrt{-14}\right)=\ip_3\overline{\ip_3}$. By the norm argument one can check $\ip_2,\ip_3,\overline{\ip_3}$ are all non-principal. This means $[\ip_2],[\ip_3],[\overline{\ip_3}]\neq 1\in\Cl(\ri_{-14})$. But are they three distinct classes?
+Let's use this to compute $\Cl(\ri_{-14})$. Since $-14\not\equiv 1\Mod 4$, $\ri_{-14}=\Z\left[\sqrt{-14}\right]$. The Minkowski bound is $\frac{2}{\pi}\sqrt{4\times 14}=\frac{4}{\pi}\sqrt{14}\approx 4.76$. Hence $\Cl(\ri_{-14)}$ is generated by $[\ip]$ where $\ip$ is prime with $N_K(\ip)<5$. Now $(2)=\left(2,\sqrt{-14}\right)^2=\ip_2^2$ and $(3)=\left(3,1+\sqrt{-14}\right)\left(3,1-\sqrt{-14}\right)=\ip_3\overline{\ip_3}$. By the norm argument one can check $\ip_2,\ip_3,\overline{\ip_3}$ are all non-principal. This means $[\ip_2],[\ip_3],[\overline{\ip_3}]\neq 1\in\Cl(\ri_{-14})$. But are they three distinct classes?
 
 Suppose $[\ip_2]=[\ip_3]$, then $[\ip_3]^{-1}[\ip_3]=1$, but $[\ip_2]^2=1$, i.e. $[\ip]$ is its own inverse, so $[\ip_2][\ip_3]=1$, i.e. $\ip_2\ip_3$ is principal. But $N_K(\ip_2\ip_3)=6$ and again by the norm argument this is not possible. Similarly $[\ip_2]\neq[\overline{\ip_3}]$.
 
@@ -2046,7 +2050,7 @@ and $a^2+ab-8b^2=\pm 2$ does have solution $a=2,b=1$, with $2+\frac{1+\sqrt{33}}
 \end{enumerate}
 
 \textit{Solution}. \begin{enumerate}
-\item If $d\nequiv 1\Mod 4$ then $\ri_d=\Z[\sqrt d]$ and $N\left(a+\sqrt{d}b\right)=a^2-db^2$, hence either $b=0$ and $N\left(a+\sqrt{d}b\right)$ is a square, or $b\neq 0$ and $N\left(a+\sqrt{d}b\right)\geq -d$. If $d\equiv 1\Mod$ then $\ri_d=\Z\left[\frac{1+\sqrt d}{2}\right]$ and $N\left(a+b\frac{1+\sqrt d}{2}\right)=a^2+ab+\left(\frac{1-d}{4}\right)b^2$, hence again either $b=0$ and $N\left(a+b\frac{1+\sqrt d}{2}\right)$ is a square, or $b\neq 0$ and $N\left(a+b\frac{1+\sqrt d}{2}\right)\geq \frac{1-d}{4}$.
+\item If $d\not\equiv 1\Mod 4$ then $\ri_d=\Z[\sqrt d]$ and $N\left(a+\sqrt{d}b\right)=a^2-db^2$, hence either $b=0$ and $N\left(a+\sqrt{d}b\right)$ is a square, or $b\neq 0$ and $N\left(a+\sqrt{d}b\right)\geq -d$. If $d\equiv 1\Mod$ then $\ri_d=\Z\left[\frac{1+\sqrt d}{2}\right]$ and $N\left(a+b\frac{1+\sqrt d}{2}\right)=a^2+ab+\left(\frac{1-d}{4}\right)b^2$, hence again either $b=0$ and $N\left(a+b\frac{1+\sqrt d}{2}\right)$ is a square, or $b\neq 0$ and $N\left(a+b\frac{1+\sqrt d}{2}\right)\geq \frac{1-d}{4}$.
 
 Hence we cannot exclude elements of norm 2 if $d\geq -2$ and $d\not\equiv 1\Mod 4$ or $d\geq -7$ and $d\equiv 1\Mod 4$, i.e. $d=-1,-2$ or $-3,-7$. Now indeed $1+i\in\ri_{-1},\sqrt{-2}\in\ri_{-2}$ and $1-\sqrt{-7}\in\ri_{-7}$ has norm 2, but we claim $a^2+ab+b^2=2$ has no integer solutions so $\ri_{-3}$ has no norm 2 elements after all, i.e. $\ri_d$ has no norm 2 elements unless $d=-1,-2,-7$ as desired.
 
@@ -2152,11 +2156,11 @@ Similarly, if $\left(y-\sqrt{-5}\right),\left(y+\sqrt{-5}\right)\subset\ip$ wher
 \end{enumerate}
 \end{example}
 
-\textbf{In more generality.} Consider $d<0$ squarefree and $d\nequiv 1\Mod 4$. Then $\ri_{d}=\Z\left[\sqrt d\right]$. We solve $y^2=x^3+d$ following the same steps and see what can go wrong.
+\textbf{In more generality.} Consider $d<0$ squarefree and $d\not\equiv 1\Mod 4$. Then $\ri_{d}=\Z\left[\sqrt d\right]$. We solve $y^2=x^3+d$ following the same steps and see what can go wrong.
 \begin{enumerate}
 \item Suppose $\left(y+\sqrt{d}\right),\left(y-\sqrt{d}\right)\subset\ip$ for some prime ideal $\ip$. Then $2\sqrt{-d}\in\ip$. This tells us $\ip$ lies above either 2 or some $p$ that divides $d$.
 
-If $\ip$ lies above 2, note that $x^3=\left(y+\sqrt{d}\right)\left(y-\sqrt{d}\right)\in\ip\cap\Z=(2)$, so $8\mid x^3$, so $y^2\equiv d\Mod 8$, but only quadratic residues of 8 are $0,1,4$, and $d$ is squarefree and $d\nequiv 1\Mod 4$, so this case is excluded.
+If $\ip$ lies above 2, note that $x^3=\left(y+\sqrt{d}\right)\left(y-\sqrt{d}\right)\in\ip\cap\Z=(2)$, so $8\mid x^3$, so $y^2\equiv d\Mod 8$, but only quadratic residues of 8 are $0,1,4$, and $d$ is squarefree and $d\not\equiv 1\Mod 4$, so this case is excluded.
 
 Otherwise, similarly $p\mid x^3$, but also $p\mid d$, so $p\mid y$ and hence $p^2\mid x^3-y^2=-d$, but $d$ is squarefree, again impossible.
 
@@ -2170,7 +2174,7 @@ We conclude that $\left(y+\sqrt{d}\right),\left(y-\sqrt{d}\right)$ are coprime.
 \end{enumerate}
 
 \begin{thm}
-Suppose $d<0$ is squarefree and $d\nequiv 1\Mod 4$. If $\exists a\in\Z:3a^2+d=\pm 1$, then
+Suppose $d<0$ is squarefree and $d\not\equiv 1\Mod 4$. If $\exists a\in\Z:3a^2+d=\pm 1$, then
 \[
 (x,y)=\left(a^2-d,\pm a\left(a^2+3d\right)\right)
 \]
@@ -2202,7 +2206,7 @@ Let $d>1$ be squarefree. Then $\exists!\varepsilon\in\ri_d^\times$ with $\vareps
 \end{thm}
 
 \begin{remark}
-When $d\nequiv 1\Mod $, the units give solutions to the Diophantine equations $x^2-dy^2=\pm 1$ (Pell). Indeed, $x+\sqrt dy\in\ri_d$ is a unit $\iff N\left(x+\sqrt{d}y\right)=\pm 1$.
+When $d\not\equiv 1\Mod $, the units give solutions to the Diophantine equations $x^2-dy^2=\pm 1$ (Pell). Indeed, $x+\sqrt dy\in\ri_d$ is a unit $\iff N\left(x+\sqrt{d}y\right)=\pm 1$.
 \end{remark}
 
 \begin{example}
@@ -2244,11 +2248,11 @@ $\implies$: $u\in\ri_d^\times\implies N_K(u)=\pm 1=u\overline u$, so $u>1\implie
 \tag{\ast}
 u-u'=2\sqrt d(b-b')+\overline u-\overline{u'}.
 \]
-If $b\neq b'$, then if $d\nequiv 1\Mod 4$, we have $|b-b'|\geq 1$ and so $2\sqrt d|b-b'|\geq 2$, and if $d\equiv 1\Mod 4$ then $|b-b'|\geq\frac12$ so $2\sqrt d|b-b'|\geq\sqrt d\geq 2$ as well. Since again $|\overline u|,|\overline{u'}|<1$, we have $|\overline u-\overline{u'}|<2$, so
+If $b\neq b'$, then if $d\not\equiv 1\Mod 4$, we have $|b-b'|\geq 1$ and so $2\sqrt d|b-b'|\geq 2$, and if $d\equiv 1\Mod 4$ then $|b-b'|\geq\frac12$ so $2\sqrt d|b-b'|\geq\sqrt d\geq 2$ as well. Since again $|\overline u|,|\overline{u'}|<1$, we have $|\overline u-\overline{u'}|<2$, so
 \[
 b>b'\implies 2\sqrt d(b-b')+\overline u-\overline{u'}>0\implies u>u'
 \]
-by $(\ast)$, and similarly $b<b'\implies u<u'$. It remains to see what happens when $b=b'$. Then by $(\ast)$, $u\geq u'\iff \overline{u}\geq\overline{u'}$. Since $a,a'>0$, WLOG $a^2-db^2=1$ and $(a')^2-d(b')^2=-1$, so $a^2-(a')^2=2$. If $d\nequiv 1\Mod 4$, then $a,a'\in\Z$, so since $(n+1)^2-n^2=2n+1>2$, $a^2-(a')^2=2$ can never happen. If $d\equiv 1\Mod 4$, then $b\in\frac12+\Z$ and $a,a'\in\frac12\Z\backslash\Z$. Write $a'=\frac{2n+1}{2}$ and $a=\frac{2n+2k+1}{2}$. Then
+by $(\ast)$, and similarly $b<b'\implies u<u'$. It remains to see what happens when $b=b'$. Then by $(\ast)$, $u\geq u'\iff \overline{u}\geq\overline{u'}$. Since $a,a'>0$, WLOG $a^2-db^2=1$ and $(a')^2-d(b')^2=-1$, so $a^2-(a')^2=2$. If $d\not\equiv 1\Mod 4$, then $a,a'\in\Z$, so since $(n+1)^2-n^2=2n+1>2$, $a^2-(a')^2=2$ can never happen. If $d\equiv 1\Mod 4$, then $b\in\frac12+\Z$ and $a,a'\in\frac12\Z\backslash\Z$. Write $a'=\frac{2n+1}{2}$ and $a=\frac{2n+2k+1}{2}$. Then
 \[
 a^2-(a')^2=\frac{(2n+2k+1)^2-(2n+1)^2}{4}=2
 \]
