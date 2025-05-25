@@ -2072,7 +2072,15 @@ If there is some $i$ with $\ip_i=(p)$ then $p\mid n+\frac{-1+\sqrt{-163}}{2}$ wh
 
 \item[4.] Compute class group of $\ri_{-23}$.
 
-\textit{Solution}. Since $-23\equiv 1\Mod 4$, by our calculation in \ref{example:Minkowskibound} the Minkowski bound is $\frac{2}{\pi}\sqrt{23}<4$, so we need to investigate the primes 2 and 3. By \ref{thm:quadrampis2}, since $-23\equiv 1\Mod 8$, we have $(2)=\left(2,\frac{1+\sqrt{-23}}{2}\right)\left(2,\frac{1-\sqrt{-23}}{2}\right)=\ip_2\overline{\ip_2}$, so $N(\ip_2)=N(\overline{\ip_2})=2$, and by \ref{thm:quadramoddp}, since $-23\equiv 1\equiv 1^2\Mod 3$, we have $(3)=\left(3,1+\sqrt{-23}\right)\left(3,1-\sqrt{-23}\right)=\ip_3\overline{\ip_3}$ with $N(\ip_3)=N(\overline{\ip_3})=3$ similarly. We therefore have $\Cl(K)=\{1,[\ip_2],[\overline{\ip_2}],[\ip_3],[\overline{\ip_3}]\}$.
+\textit{Solution}. Since $-23\equiv 1\Mod 4$, by our calculation in \ref{example:Minkowskibound} the Minkowski bound is $\frac{2}{\pi}\sqrt{23}<4$, so we need to investigate the primes 2 and 3. By \ref{thm:quadrampis2}, since $-23\equiv 1\Mod 8$, we have
+\[
+(2)=\left(2,\frac{1+\sqrt{-23}}{2}\right)\left(2,\frac{1-\sqrt{-23}}{2}\right)=\ip_2\overline{\ip_2},
+\]
+so $N(\ip_2)=N(\overline{\ip_2})=2$, and by \ref{thm:quadramoddp}, since $-23\equiv 1\equiv 1^2\Mod 3$, we have
+\[
+(3)=\left(3,1+\sqrt{-23}\right)\left(3,1-\sqrt{-23}\right)=\ip_3\overline{\ip_3}
+\]
+with $N(\ip_3)=N(\overline{\ip_3})=3$ similarly. We therefore have $\Cl(K)=\{1,[\ip_2],[\overline{\ip_2}],[\ip_3],[\overline{\ip_3}]\}$.
 
 Now $a^2+ab+\frac{1+23}{4}b^2=a^2+ab+6b^2=2,3$ doesn't have integer solutions, so $[\ip_2],[\overline{\ip_2}],[\ip_3],[\overline{\ip_3}]\neq 1$. But $N\left(\frac{1+\sqrt{-23}}{2}\right)=6$ and
 \[
