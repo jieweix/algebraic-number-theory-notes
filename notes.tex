@@ -300,7 +300,7 @@ Continuing the last example, the three elements are indeed irreducible: if $2=\a
 
 \subsection{Euclidean domains}
 \begin{defn}
-A domain $R$ is an \textit{Euclidean domain} if there is a map $\phi:R\backslash\{0\}\rightarrow\Z_{>0}$ such that $\forall a,b\in R\backslash\{0\}$:
+A domain $R$ is an \textit{euclidean domain} if there is a map $\phi:R\backslash\{0\}\rightarrow\Z_{>0}$ such that $\forall a,b\in R\backslash\{0\}$:
 \begin{enumerate}
 \item $\phi(a)\leq\phi(ab)$
 \item $\exists q,r\in R$ such that $b=qa+r$ with either $r=0$ pr $\phi(r)<\phi(a)$.
@@ -309,15 +309,15 @@ A domain $R$ is an \textit{Euclidean domain} if there is a map $\phi:R\backslash
 
 \begin{remark}
 \begin{itemize}
-\item Sometimes in the definition of Euclidean domains, $\phi$ is allowed to have value 0, but given such a $\phi$, we have $\widetilde\phi=n^\phi$ for any $n>1$ satisfying our definition.
+\item Sometimes in the definition of euclidean domains, $\phi$ is allowed to have value 0, but given such a $\phi$, we have $\widetilde\phi=n^\phi$ for any $n>1$ satisfying our definition.
 \item Technically, the first condition was not necessary, since given $\phi$ satisfying the second, $\widetilde\phi$ given by $a\mapsto\min_{b\in R\backslash\{0\}}\phi(ab)$ satisfies the first by construction.
 \end{itemize}
 \end{remark}
 
 \begin{example}
 \begin{enumerate}
-\item $\Z$ is a Euclidean domain with $\phi$ given by the absolute value
-\item For any field $k$, the polynomial ring $k[x]$ is a Euclidean domain: fix $n>1$ and define $\phi=n^{\deg}$ where $\deg$ is the usual degree
+\item $\Z$ is a euclidean domain with $\phi$ given by the absolute value
+\item For any field $k$, the polynomial ring $k[x]$ is a euclidean domain: fix $n>1$ and define $\phi=n^{\deg}$ where $\deg$ is the usual degree
 \end{enumerate}
 \end{example}
 
@@ -327,21 +327,21 @@ The \textit{Gaussian integers} are $\Z[i]=\{a+ib:a,b\in\Z\}$ which is a subring 
 
 \begin{thm}
 \label{thm:ZiisED}
-The norm $N$ gives a $\phi$ satisfying the above definition, so $\Z[i]$ is a Euclidean domain.
+The norm $N$ gives a $\phi$ satisfying the above definition, so $\Z[i]$ is a euclidean domain.
 \end{thm}
 \begin{proof}
 For $a,b\in\Z[i]$, write $z=\frac{b}{a}$. Then $\exists q\in\Z[i]:|z-q|\leq\frac{\sqrt 2}{2}$. (Think of the lattice). Now let $r=b-qa$, then $N(r)=N(b-qa)=N(a)N(z-q)<N(a)$.
 \end{proof}
 
 \begin{thm}
-Every Euclidean domain is a PID (hence a UFD).
+Every euclidean domain is a PID (hence a UFD).
 \end{thm}
 \begin{proof}
-Let $I\subset R$ be an ideal of a Euclidean domain $R$. If $I=0$ then we're done. If $I\neq 0$, take $a\in I$ such that $\phi(a)$ is minimal. For a contradiction, suppose $\exists b\in I\backslash (a)$, then in particular $a\nmid b$, so $\exists q,r\in R:b=qa+r$ with $\phi(r)<\phi(a)$, but $r=b-qa\in I$.
+Let $I\subset R$ be an ideal of a euclidean domain $R$. If $I=0$ then we're done. If $I\neq 0$, take $a\in I$ such that $\phi(a)$ is minimal. For a contradiction, suppose $\exists b\in I\backslash (a)$, then in particular $a\nmid b$, so $\exists q,r\in R:b=qa+r$ with $\phi(r)<\phi(a)$, but $r=b-qa\in I$.
 \end{proof}
 
 \begin{remark}
-Note that the proof of \ref{thm:ZiisED} relies on the lattice of $\Z[i]$, which makes sure that any point in the ambient complex plane is close enough (to be precise, distance is less than 1) to a point on $\Z[i]$. The maximal such distance on the lattice $\Z\left[i\sqrt k\right]$ is $\sqrt{\left(\frac12\right)^2+\left(\frac{\sqrt k}{2}\right)^2}=\frac{\sqrt{1+k}}{2}$, hence by the same proof, $\Z\left[i\sqrt k\right]$ is a Euclidean domain for $k<3$.
+Note that the proof of \ref{thm:ZiisED} relies on the lattice of $\Z[i]$, which makes sure that any point in the ambient complex plane is close enough (to be precise, distance is less than 1) to a point on $\Z[i]$. The maximal such distance on the lattice $\Z\left[i\sqrt k\right]$ is $\sqrt{\left(\frac12\right)^2+\left(\frac{\sqrt k}{2}\right)^2}=\frac{\sqrt{1+k}}{2}$, hence by the same proof, $\Z\left[i\sqrt k\right]$ is a euclidean domain for $k<3$.
 \end{remark}
 
 \begin{defn}
@@ -365,10 +365,10 @@ so $b\mid a^n$, hence our assumption forces $b\in R^\times$, so $\frac{a}{b}\in 
 \end{proof}
 
 \begin{coro}
-$\Z\left[i\sqrt k\right]$ is not an Euclidean domain for $k>0$ with $k\equiv 3\Mod 4$.
+$\Z\left[i\sqrt k\right]$ is not a euclidean domain for $k>0$ with $k\equiv 3\Mod 4$.
 \end{coro}
 \begin{proof}
-We show that such $\Z\left[i\sqrt k\right]$ is not integrally closed, hence not a UFD, so not an Euclidean domain: take $\sqrt{1+i\sqrt k}{2}\notin\Z\left[i\sqrt k\right]$, which is a root of $x^2-x+\frac{1+k}{4}\in\Z\left[i\sqrt k\right][x]$.
+We show that such $\Z\left[i\sqrt k\right]$ is not integrally closed, hence not a UFD, so not a euclidean domain: take $\frac{1+i\sqrt k}{2}\notin\Z\left[i\sqrt k\right]$, which is a root of $x^2-x+\frac{1+k}{4}\in\Z\left[i\sqrt k\right][x]$.
 \end{proof}
 
 \begin{flushright}
@@ -501,8 +501,16 @@ Since $p$ is a ring morphism, we have $\lambda p(b)=p(\lambda b) \forall\lambda\
 \end{remark}
 \begin{proof}[Proof of \ref{thm:algintformring}]
 \begin{enumerate}
-\item Consider $\Z[\alpha,\beta]=\left\{\sum a_{ij}\alpha^i\beta^j:a_{ij}\in\Z\right\}$, which is generated as an abelian group by $\left\{\alpha^i,\beta^j:i,j\geq 0\right\}$. If $\alpha$ satisfies a monic polynomial with integer coefficients of degree $n$ and $\beta$ of $m$, then $\left\{\alpha^i\beta^j:0\leq i\leq n,0\leq j\leq m\right\}$ generates $\Z[\alpha,\beta]$ by the same argument in the proof of \ref{prop:intstab}. Now for any $\gamma\in\Z\left[\alpha,\beta\right]$, we have $\gamma\Z\left[\alpha,\beta\right]\subset\Z\left[\alpha,\beta\right]$, so $\gamma$ is an algebraic integer, so in particular $\alpha+\beta,\alpha-\beta,\alpha\beta\in\Z\left[\alpha,\beta\right]$ are algebraic integers.
-\item Let $\alpha\in\C$ such that $\exists a_{n-1},\ldots,a_0\in\C$ algebraic integers such that $\alpha^n+a_{n-1}\alpha^{n-1}+\cdots+a_0=0$. Consider $\Z[a_0,\ldots,a_{n-1},\alpha]$, which is again finitely generated by our familiar argument. Clearly $\alpha\Z[a_0,\ldots,a_{n-1},\alpha]\subset\Z[a_0,\ldots,a_{n-1},\alpha]$, so $\alpha$ is an algebraic integer.
+\item Consider
+\[
+\Z[\alpha,\beta]=\left\{\sum a_{ij}\alpha^i\beta^j:a_{ij}\in\Z\right\},
+\]
+which is generated as an abelian group by $\left\{\alpha^i,\beta^j:i,j\geq 0\right\}$. If $\alpha$ satisfies a monic polynomial with integer coefficients of degree $n$ and $\beta$ of $m$, then $\left\{\alpha^i\beta^j:0\leq i\leq n,0\leq j\leq m\right\}$ generates $\Z[\alpha,\beta]$ by the same argument in the proof of \ref{prop:intstab}. Now for any $\gamma\in\Z\left[\alpha,\beta\right]$, we have $\gamma\Z\left[\alpha,\beta\right]\subset\Z\left[\alpha,\beta\right]$, so $\gamma$ is an algebraic integer, so in particular $\alpha+\beta,\alpha-\beta,\alpha\beta\in\Z\left[\alpha,\beta\right]$ are algebraic integers.
+\item Let $\alpha\in\C$ such that $\exists a_{n-1},\ldots,a_0\in\C$ algebraic integers such that $\alpha^n+a_{n-1}\alpha^{n-1}+\cdots+a_0=0$. Consider $\Z[a_0,\ldots,a_{n-1},\alpha]$, which is again finitely generated by our familiar argument. Clearly
+\[
+\alpha\Z[a_0,\ldots,a_{n-1},\alpha]\subset\Z[a_0,\ldots,a_{n-1},\alpha],
+\]
+so $\alpha$ is an algebraic integer.
 \end{enumerate}
 \end{proof}
 
@@ -681,7 +689,7 @@ m_1 \\ \vdots \\ m_n
 \begin{enumerate}
 \item Find all irreducible elements of $\Z\left[i\sqrt 2\right]$. Characterise all integers $n$ of the form $n=a^2+2b^2$.
 
-\textit{Solution}. We know that $\Z\left[i\sqrt 2\right]$ is a Euclidean domain, so primes are precisely irreducibles. The main idea is to use the norm function $N:\Z\left[i\sqrt 2\right]\rightarrow\Z_{\geq 0}$.
+\textit{Solution}. We know that $\Z\left[i\sqrt 2\right]$ is a euclidean domain, so primes are precisely irreducibles. The main idea is to use the norm function $N:\Z\left[i\sqrt 2\right]\rightarrow\Z_{\geq 0}$.
 
 Recall that $\Z\left[i\sqrt 2\right]^\times=\left\{\alpha\in\Z\left[i\sqrt 2\right]:N(\alpha)=1\right\}=\left\{a+i\sqrt 2 b:a,b\in\Z,a^2+2b^2=1\right\}=\{\pm 1\}$, and that $N$ is multiplicative. We claim that (a) if $\alpha\in\Z\left[i\sqrt 2\right]$ has $N(\alpha)=p$ for some prime $p$, then $\alpha$ is irreducible, and (b) $p\in\Z$ prime is reducible in $\Z\left[i\sqrt 2\right]\iff\exists\alpha\in\Z\left[i\sqrt 2\right]:N(\alpha)=p$.
 
@@ -697,10 +705,10 @@ From the above we can make a list of irreducibles of $\Z\left[i\sqrt 2\right]$:
 \item $p$ is an odd prime and $p\equiv 5,7\Mod 8$, then $p$ is irreducible
 \item $p$ is an odd prime and $p\equiv 1,3\Mod 8$, then $\exists\alpha\in\Z\left[i\sqrt 2\right]:N(\alpha)=N(\overline\alpha)=p=\alpha\overline\alpha$, so $\alpha,\overline\alpha$ are irreducible
 \end{itemize}
-We just proved that an odd prime $p$ can be written as $p=a^2+2b^2$ iff $p=\equiv 1,3\Mod 8$, and if $p\equiv 5,7\Mod 8$ then $p^2$ can be written in the same form. But using that the norm is multiplicative, we conclude that $n$ can be written in the same form iff $\forall p\mid n$ with $p\equiv 5,7\Mod 8$, we have $p^2\mid n$.
-\item Show that $\ri=\Z\left[\frac{1+i\sqrt{19}}{2}\right]$ is not Euclidean by these steps:
+We just proved that an odd prime $p$ can be written as $p=a^2+2b^2$ iff $p\equiv 1,3\Mod 8$, and if $p\equiv 5,7\Mod 8$ then $p^2$ can be written in the same form. But using that the norm is multiplicative, we conclude that $n$ can be written in the same form iff $\forall p\mid n$ with $p\equiv 5,7\Mod 8$, we have $p^2\mid n$.
+\item Show that $\ri=\Z\left[\frac{1+i\sqrt{19}}{2}\right]$ is not euclidean by these steps:
 \begin{enumerate}
-\item Assume that a Euclidean norm $\lambda:\ri\backslash\{0\}\rightarrow\Z_{>0}$ such that $\lambda(a)\leq\lambda(ab) \ \forall a,b\in\ri$ exists. Describe the set of elements in $\ri\backslash\{0\}$ for which $\lambda$ is minimal.
+\item Assume that a euclidean norm $\lambda:\ri\backslash\{0\}\rightarrow\Z_{>0}$ such that $\lambda(a)\leq\lambda(ab) \ \forall a,b\in\ri$ exists. Describe the set of elements in $\ri\backslash\{0\}$ for which $\lambda$ is minimal.
 \item Compute $\ri^\times$.
 \item Show that 2 and 3 are irreducible.
 \item For $a\in\ri\backslash\{0\}$ such that $\lambda(a)$ is the second smallest value, describe $\ri/a\ri$.
@@ -715,8 +723,8 @@ We just proved that an odd prime $p$ can be written as $p=a^2+2b^2$ iff $p=\equi
 \ri^\times=\{\alpha\in\ri:N(\alpha)=1\}=\left\{\frac{a+bi\sqrt{19}}{2}:a,b\in\Z,\frac{a^2+19b^2}{4}=1\right\}=\{\pm 1\}.
 \]
 \item If 2 is not irreducible, then $\exists\alpha\in\ri :N(\alpha)=2$, but $a^2+19b^2=2$ has no integer solutions. Same for 3.
-\item Take $b\in\ri$ and write $b=aq+r$ with the condition: either $r=0$ or $\lambda(r)<\lambda(a)$ (possible by definition of Euclidean norm), but then by definition of $a$ we have $\lambda(r)=1$, so $\ri/a\ri=\{0,\pm 1\}$, hence $\ri/a\ri$ is either $\Z/2\Z$ or $\Z/3\Z$.
-\item If $\ri/a\ri=\Z/2\Z$, then $2\mid a$, and if $\ri/a\ri=\Z/3\Z$ then $3\mid a$. But we claim $\ri/2\ri$ has 4 elements, contradicting that $\ri/a\ri\twoheadrightarrow\ri/2\ri$ surjectively. Consider $\ri$ as $\Z[x]/(x^2-x-5)$. But then $\ri/2\ri=\Z[x]/(x^2-x-5,2)=\Z[x]/(x^2+x+1,2)=\{c+dx:c,d\in\Z/2\Z\}$, which has 4 elements as claimed. Same for $\ri/3\ri$.
+\item Take $b\in\ri$ and write $b=aq+r$ with the condition: either $r=0$ or $\lambda(r)<\lambda(a)$ (possible by definition of euclidean norm), but then by definition of $a$ we have $\lambda(r)=1$, so $\ri/a\ri=\{0,\pm 1\}$, hence $\ri/a\ri$ is either $\Z/2\Z$ or $\Z/3\Z$.
+\item If $\ri/a\ri=\Z/2\Z$, then $a\mid 2$, and if $\ri/a\ri=\Z/3\Z$ then $a\mid 3$. But we claim $\ri/2\ri$ has 4 elements, contradicting that $\ri/a\ri\twoheadrightarrow\ri/2\ri$ surjectively. Consider $\ri$ as $\Z[x]/(x^2-x-5)$. But then $\ri/2\ri=\Z[x]/(x^2-x-5,2)=\Z[x]/(x^2+x+1,2)=\{c+dx:c,d\in\Z/2\Z\}$, which has 4 elements as claimed. Same for $\ri/3\ri$.
 \end{enumerate}
 \end{enumerate}
 \end{exe}
@@ -1071,7 +1079,7 @@ Now the proof of theorem has two parts:
 Let $I\subset R$ be an ideal of a Dedekind domain $R$ and $\alpha\in\Frac(R)$. If $\alpha I\subset I$ then $\alpha\in R$.
 \end{lemma}
 \begin{proof}
-Since $R$ is Noetherian, write $I=(a_1,\ldots,a_n)$ where $a_i\in R$. Then $\alpha a_j=\sum_{i=1}^n c_{ij} a_i$ where $c_ij\in R$. Consider the matrix $A=(c_{ij})$ and its characteristic polynomial $\chi_A(t)\in R[t]$. Then $\chi_A(\alpha)I=\chi_A(A)I=0$, so $\chi_A(\alpha)=0$. Finally, since $\chi_A$ is monic and $R$ is integrally closed, we have $\alpha\in R$.
+Since $R$ is noetherian, write $I=(a_1,\ldots,a_n)$ where $a_i\in R$. Then $\alpha a_j=\sum_{i=1}^n c_{ij} a_i$ where $c_ij\in R$. Consider the matrix $A=(c_{ij})$ and its characteristic polynomial $\chi_A(t)\in R[t]$. Then $\chi_A(\alpha)I=\chi_A(A)I=0$, so $\chi_A(\alpha)=0$. Finally, since $\chi_A$ is monic and $R$ is integrally closed, we have $\alpha\in R$.
 \end{proof}
 
 \begin{lemma}
@@ -1239,7 +1247,7 @@ in particular $\beta\notin\ip_i^{a_i+1},\ \beta\in\ip_i^{a_i}$ and $\beta\notin\
 \begin{exe}
 \begin{enumerate}
 \setcounter{enumi}{2}
-\item Let $\ri_{-5}=\Z\left[\sqrt 5\right],\ \ip_2=\left(2,1+\sqrt{-5}\right),\ \ip_3=\left(3,1+\sqrt{-5}\right)$ and $\overline{\ip_3}=\left(3,1-\sqrt{-5}\right)$.
+\item Let $\ri_{-5}=\Z\left[\sqrt{-5}\right],\ \ip_2=\left(2,1+\sqrt{-5}\right),\ \ip_3=\left(3,1+\sqrt{-5}\right)$ and $\overline{\ip_3}=\left(3,1-\sqrt{-5}\right)$.
 \begin{enumerate}
 \item[(b)] Check $(2)=\ip_2^2,\ (3)=\ip_3\overline{\ip_3}$.
 \item[(c)] Show that $\ip_3^2$ is principal and find a generator. 
@@ -1257,11 +1265,11 @@ in particular $\beta\notin\ip_i^{a_i+1},\ \beta\in\ip_i^{a_i}$ and $\beta\notin\
 \item $21=\left(4+\sqrt{-5}\right)\left(4-\sqrt{-5}\right)\in (7)$ but $\left(4+\sqrt{-5}\right),\left(4-\sqrt{-5}\right)\notin (7)$. We can get these two elements by mapping $t-3,t+3$ back to $\ri_{-5}$.
 \end{enumerate}
 \end{enumerate}
-\item Give examples of a ring that has two of the following properties but not third one: Noetherian, integrally closed, and every nonzero prime ideal is maximal (i.e. definition of a Dedekind domain).
+\item Give examples of a ring that has two of the following properties but not third one: noetherian, integrally closed, and every nonzero prime ideal is maximal (i.e. definition of a Dedekind domain).
 
 \textit{Solution}. \begin{enumerate}
-\item $\Z[x]$ is Noetherian by Hilbert, it's a UFD by Gauss hence integrally closed by \ref{lemma:UFDisintclosed}, but $(x)$ is prime and not maximal ($(x)\subsetneq (x,2)$ for example).
-\item $\Z\left[\sqrt{-3}\right]$ is Noetherian since it's a quotient of $\Z[x]$. For the third property, the argument used in proof of \ref{prop:risarededekind} still applies. But it's not integrally closed since $\frac{1+\sqrt{-3}}{2}$ is a solution of $x^2-x+1$.
+\item $\Z[x]$ is noetherian by Hilbert, it's a UFD by Gauss hence integrally closed by \ref{lemma:UFDisintclosed}, but $(x)$ is prime and not maximal ($(x)\subsetneq (x,2)$ for example).
+\item $\Z\left[\sqrt{-3}\right]$ is noetherian since it's a quotient of $\Z[x]$. For the third property, the argument used in proof of \ref{prop:risarededekind} still applies. But it's not integrally closed since $\frac{1+\sqrt{-3}}{2}$ is a solution of $x^2-x+1$.
 \item $\overline\Z$, the set of all algebraic integers in $\C$, is clearly integrally closed. For the third property, we need the following lemma.
 \begin{lemma}
 \label{lemma:preimofprimeisprime}
@@ -1269,7 +1277,7 @@ Let $\phi:A\rightarrow B$ be a ring morphism. Then $\forall$ prime ideals $\ip\s
 \end{lemma}
 Now take $\ip\subset\overline\Z$ be a nonzero prime ideal and assume $\ip\subsetneq\iq$ for some other prime ideal $\iq\subset\overline\Z$. Then $\ip\cap\Z,\iq\cap\Z$ are both nonzero prime ideals, so $\ip\cap\Z,\iq\cap\Z$ are maximal hence equal to some $(p)$ with $p$ prime. Now take $\beta\in\iq\backslash\ip$, then $\exists b_{n-1},\ldots,b_0\in\Z:\beta^n+b_{n-1}\beta^{n-1}+\cdots+\beta_0=0$. Assume $j$ is the minimal integer such that $b_j\notin (p)$. Then $\beta^{n-j}(\beta^j+\cdots+b_j)=-\left(b_{j+1}\beta^{j+1}+\cdots+b_0\right)\in (p)$, so $\beta^j+\cdots+b_j\in (p)\subset\iq$, hence $\beta_j\in\iq$, a contradiction. Hence $\ip=\iq$ and $\ip$ is maximal.
 
-But $\overline\Z$ is not Noetherian: the chain
+But $\overline\Z$ is not noetherian: the chain
 \[
 (2)\subsetneq \left(\sqrt{2}\right)\subsetneq \left(\sqrt[4]{2}\right)\subsetneq\cdots\subsetneq \left(2^{\frac{1}{2n}}\right)\subsetneq\cdots
 \]
@@ -1314,7 +1322,7 @@ $(p)=\ip_1^{a_1}\cdots\ip_r^{a_r}\subset\ip_i \ \forall i$, so $p\in\ip_i \ \for
 \end{proof}
 
 \begin{example}
-$K=\Q(i),\ \ri_K=\Z[i]$. First note that $\Z[i]$ is a Euclidean domain, so every prime ideal $\ip$ is generated by a irreducible element.
+$K=\Q(i),\ \ri_K=\Z[i]$. First note that $\Z[i]$ is a euclidean domain, so every prime ideal $\ip$ is generated by a irreducible element.
 \begin{itemize}
 \item If $p\equiv 3\Mod 4$, then $p$ is irreducible, so $(p)$ is prime.
 \item If $p\equiv 1\Mod 4$ then $p=\pi_p\overline{\pi_p}$ for some irreducible $\pi_p$, and $N_{\Q(i)}(\pi_p)=N_{\Q(i)}\left(\overline{\pi_p}\right)=p.$ Hence $(p)=(\pi_p)\left(\overline{\pi_p}\right)=:\ip_1\ip_2$. Moreover, $\ip_1\neq\ip_2$; if $\ip_1=\ip_2$ then $\exists u\in\Z[i]^\times:\pi_p=u\overline{\pi_p}$. But we know $\Z[i]^\times=\{\pm 1,\pm i\}$, and if we write $\pi_p=x+iy$ with $N_{\Q(i)}(x+iy)=x^2+y^2=p$, we now that $x,y\neq 0$ and $x\neq y\Mod 2$. Now no $u$ satisfies these two conditions, so a contradiction.
@@ -1346,8 +1354,8 @@ Let $K$ be a number field fix $p\in\Z$ prime. Then
 \label{remark:ramineinquadext}
 What is the theorem saying above $K=\Q\left(\sqrt d\right)$? One of the following 3 possibilities happen:
 \begin{enumerate}
-\item There is just one prime $\ip\subset\ri_K$ lying above $p\in\Z$ with $e(p)=2$ and $f(p)=1$.
-\item There is just one prime $\ip\subset\ri_K$ lying above $p\in\Z$ with $e(p)=1$ and $f(p)=2$. 
+\item There is just one prime $\ip\subset\ri_K$ lying above $p\in\Z$ with $e(\ip)=2$ and $f(\ip)=1$.
+\item There is just one prime $\ip\subset\ri_K$ lying above $p\in\Z$ with $e(\ip)=1$ and $f(\ip)=2$. 
 \item There are two distinct prime $\ip_1\neq\ip_2$ with $e(\ip_1)=e(\ip_2)=1$ and $f(\ip_1)=f(\ip_2)=1$.
 \end{enumerate}
 \end{remark}
@@ -1408,11 +1416,11 @@ If $\alpha\in\ri_K$ and $N_K(\alpha)=p$, then $N_K(\alpha\ri_K)=p$ by above so $
 
 \begin{thm}
 \label{thm:quadramoddp}
-Let $d\neq 0,1$ be a squarefree integer and $p\in\Z$ an odd prime. Then $p\ri_K$ splits in $\ri_{\Q\left(\sqrt d\right)}=\ri_K$ as follows.
+Let $d\neq 0,1$ be a squarefree integer and $p\in\Z$ an odd prime. Then $p\ri_K$ factorises in $\ri_{\Q\left(\sqrt d\right)}=\ri_K$ as follows.
 \begin{enumerate}
 \item If $p\mid d$ then $p$ ramifies as $p\ri_K=\left(p,\sqrt d\right)^2$.
-\item If $p\nmid d$ and $\exists a\in\Z:a^2\equiv d\Mod p$, then $p\ri_K=\left(p,a+\sqrt d\right)\left(p,a-\sqrt d\right)$.
-\item If $p\nmid d$ and $\nexists a\in\Z:a^2\equiv d\Mod p$, then $p\ri_K$ is a prime ideal.
+\item If $p\nmid d$ and $\exists a\in\Z:a^2\equiv d\Mod p$, then $p\ri_K$ splits as $\left(p,a+\sqrt d\right)\left(p,a-\sqrt d\right)$.
+\item If $p\nmid d$ and $\nexists a\in\Z:a^2\equiv d\Mod p$, then $p\ri_K$ is inert, i.e. is a prime ideal.
 \end{enumerate}
 \end{thm}
 \begin{proof}
@@ -1623,12 +1631,12 @@ To see the last part, use \ref{thm:DedekindKummer} on $\overline{m_\alpha}=x^n$.
 \textit{Solution}. First observe that we can apply Dedekind to primes not dividing $[\ri_K:\Z[\alpha]]=1$, hence all primes can be factorised, in particular $2,3,5$. Since $x^3+x+1$ is irreducible it must be the minimal polynomial of $\alpha$
 \begin{itemize}
 \item Modulo 2 the polynomial looks the same has no roots over $\F_2$, so irreducible and 2 is thus prime.
-\item Modulo 3 the polynomial looks again the same but has root 1, and indeed can be factorised as $(x-1)(x^2+x-1)$, so $3\ri_K=(\alpha,\alpha-1)(\alpha,\alpha^2+\alpha-1)$.
+\item Modulo 3 the polynomial looks again the same but has root 1, and indeed can be factorised as $(x-1)(x^2+x-1)$, so $3\ri_K=(3,\alpha-1)(3,\alpha^2+\alpha-1)$.
 \item Modulo 5 the polynomial is again irreducible, so 5 is prime.
 \end{itemize}
-Bonus: what about $p=31$? It divides $\ri_K$, and we've seen \ref{thm:pramiffpdivdisc} which in this case says 31 ramifies. Hence we expect $\overline{m_\alpha}\Mod 31$ to have multiple roots, which are roots shared with $\overline{m_\alpha'}=3x^2+1$, which has root 14. We find that $\overline{m_\alpha}=(x-14)^2(x-3)$, and therefore $31\ri_K=(\alpha,\alpha-14)^2(\alpha,\alpha-3)$.
+Bonus: what about $p=31$? It divides $\ri_K$, and we've seen \ref{thm:pramiffpdivdisc} which in this case says 31 ramifies. Hence we expect $\overline{m_\alpha}\Mod 31$ to have multiple roots, which are roots shared with $\overline{m_\alpha'}=3x^2+1$, which has root 14. We find that $\overline{m_\alpha}=(x-14)^2(x-3)$, and therefore $31\ri_K=(31,\alpha-14)^2(31,\alpha-3)$.
 
-\item We give an example of a number field $K$ such that $\ri_K\neq\Z[\alpha]\ \alpha\in\ri_K$.
+\item We give an example of a number field $K$ such that $\ri_K\neq\Z[\alpha]\ \forall\alpha\in\ri_K$.
 \begin{enumerate}
 \item Prove that if $[K:\Q]=3$ and $(2)=\ip_1\ip_2\ip_3$ where $\ip_i$'s are distinct, then $\ri_K\neq\Z[\alpha] \ \forall\alpha\in\ri_K$. In fact, $2\mid[\ri_K:\Z[\alpha]]$.
 \item Prove that $x^3-x^2-2x-8$ is irreducible. Let $\theta$ be a root of it and denote $K=\Q(\theta)$ and $\theta'=\frac{4}{\theta}$. Prove that $\theta'\in\ri_K$.
@@ -1657,7 +1665,7 @@ hence $\theta'\in\ri_K$.
 \end{flushright}
 
 \begin{example}
-Let $\alpha=\sqrt[3]2$ and $K=\Q(\alpha)$. We want to show $\ri_K=\Z[\alpha]$. Recall $\disc \Z[\alpha]=-3^2\cdot 2^2$. We claim it is enough to prove $2,3\nmid [\ri_K:\Z[\alpha]]$, since together with $\disc\Z[\alpha]=[\ri_K:\Z[\alpha]]^2 D_K$ it follows that $[\ri_K:\Z[\alpha]]=1$, i.e. $\ri_K=\Z[\alpha]$.  Now $m_\alpha(x)=x^3-2$ which ie Eisenstein at $p=2$, so by \ref{prop:minpoliseisen} $2\mid [\ri_K:\Z[\alpha]]$. For 3, we instead consider the minimal polynomial of $\alpha+\lambda$ where $\lambda\in\Z$. This is indeed valid since $\Z[\alpha]=\Z[\alpha+\lambda]$, and so $m_{\alpha+\lambda}$ Eisenstein at 3 would imply $3\nmid [\ri_K:\Z[\alpha]]$ again by \ref{prop:minpoliseisen}. We find that $\lambda=-2$ does the job since $m_{\alpha-2}(x)=m_\alpha(x+2)=(x+2)^3-2=x^3+6x^2+12x+6$.
+Let $\alpha=\sqrt[3]2$ and $K=\Q(\alpha)$. We want to show $\ri_K=\Z[\alpha]$. Recall $\disc \Z[\alpha]=-3^2\cdot 2^2$. We claim it is enough to prove $2,3\nmid [\ri_K:\Z[\alpha]]$, since together with $\disc\Z[\alpha]=[\ri_K:\Z[\alpha]]^2 D_K$ it follows that $[\ri_K:\Z[\alpha]]=1$, i.e. $\ri_K=\Z[\alpha]$.  Now $m_\alpha(x)=x^3-2$ which is Eisenstein at $p=2$, so by \ref{prop:minpoliseisen} $2\mid [\ri_K:\Z[\alpha]]$. For 3, we instead consider the minimal polynomial of $\alpha+\lambda$ where $\lambda\in\Z$. This is indeed valid since $\Z[\alpha]=\Z[\alpha+\lambda]$, and so $m_{\alpha+\lambda}$ Eisenstein at 3 would imply $3\nmid [\ri_K:\Z[\alpha]]$ again by \ref{prop:minpoliseisen}. We find that $\lambda=-2$ does the job since $m_{\alpha-2}(x)=m_\alpha(x+2)=(x+2)^3-2=x^3+6x^2+12x+6$.
 \end{example}
 
 \begin{exe}
@@ -1704,23 +1712,23 @@ Consider the subfield $\widetilde{F_i}=\{b\in F_i:b^{qf}=b\}$ of $F_i$. Then $\w
 \end{flushright}
 
 \subsection{Quadratic reciprocity}
-If a quadratic field $K$ lives inside a cyclotomic field $\Q(\zeta_p)$, that we may be able to read information on splitting in $K$ from $\Q(\zeta_p)$. In fact one can always find such an embedding:
+If a quadratic field $K$ lives inside a cyclotomic field $\Q(\zeta_p)$, then we may be able to read information on splitting in $K$ from $\Q(\zeta_p)$. In fact one can always find such an embedding:
 
 \begin{lemma}
-$\Q\left(\sqrt{(-1)^{\frac{p-1}{2}}}p\right)\subset\Q(\zeta_p)$.
+$\Q\left(\sqrt{(-1)^{\frac{p-1}{2}}p}\right)\subset\Q(\zeta_p)$.
 \end{lemma}
 \begin{proof}
 The roots of $\Phi_p(x)$ are $\zeta_p,\zeta_p^2,\ldots,\zeta_p^{p-1}$, so the embeddings $\tau_1,\ldots,\tau_p:\Q(\zeta_p)\rightarrow\C$ are given by $\tau_i:\zeta_p\mapsto \zeta_p^i$. Also, by \ref{thm:ptotraminpthcycf}, $\left\{\zeta_p,\ldots,\zeta_p^{p-1}\right\}$ is an integral basis of $\ri_{\Q(\zeta_p)}=\Z[\zeta_p]$. Again according to \ref{thm:ptotraminpthcycf},
 \[
 D_{\Q(\zeta_p)}=(-1)^{\frac{p-1}{2}}p^{p-2}=\det (\tau_i(\zeta_p^j))_{ij}^2=\det \left({\zeta_p^{ij}}_{ij}\right)^2,
 \]
-and dividing both sides by $p^{p-3}$ gives $(-1)^{\frac{p-1}{2}}p=\left(\frac{\det \left({\zeta_p^{ij}}_{ij}\right)}{p^{\frac{p-3}{2}}}\right)^2$ where $\frac{\det \left({\zeta_p^{ij}}_{ij}\right)}{p^{\frac{p-3}{2}}}\in\Q(\zeta_p)$, hence $\sqrt{(-1)^{\frac{p-1}{2}}p}\in\Q(\zeta_p)$, so $\Q\left(\sqrt{(-1)^{\frac{p-1}{2}}}p\right)\subset\Q(\zeta_p)$ as desired.
+and dividing both sides by $p^{p-3}$ gives $(-1)^{\frac{p-1}{2}}p=\left(\frac{\det \left({\zeta_p^{ij}}_{ij}\right)}{p^{\frac{p-3}{2}}}\right)^2$ where $\frac{\det \left({\zeta_p^{ij}}_{ij}\right)}{p^{\frac{p-3}{2}}}\in\Q(\zeta_p)$, hence $\sqrt{(-1)^{\frac{p-1}{2}}p}\in\Q(\zeta_p)$, so $\Q\left(\sqrt{(-1)^{\frac{p-1}{2}}p}\right)\subset\Q(\zeta_p)$ as desired.
 \end{proof}
 
 \begin{exe}
-Show that this is the only thing we can do: if $K\subset\Q(\zeta_p)$ is a quadratic field, then the only prime that can ramifies in $K$ is $p$ and $K=\Q\left(\sqrt{(-1)^{\frac{p-1}{2}}}p\right)$.
+Show that this is the only thing we can do: if $K\subset\Q(\zeta_p)$ is a quadratic field, then the only prime that can ramifies in $K$ is $p$ and $K=\Q\left(\sqrt{(-1)^{\frac{p-1}{2}}p}\right)$.
 \end{exe}
-From now on, for an odd prime $p$, we denote $p^\ast=\sqrt{(-1)^{\frac{p-1}{2}}}p$. Note that $p^\ast\equiv 1\Mod 4$: if $p\equiv 1\Mod 4$ then $\frac{p-1}{2}$ is even and $p^\ast=p$, and if $p\equiv 3\Mod 4$ then $\frac{p-1}{4}$ is odd and $p^\ast=-p$.
+From now on, for an odd prime $p$, we denote $p^\ast=(-1)^{\frac{p-1}{2}}p$. Note that $p^\ast\equiv 1\Mod 4$: if $p\equiv 1\Mod 4$ then $\frac{p-1}{2}$ is even and $p^\ast=p$, and if $p\equiv 3\Mod 4$ then $\frac{p-1}{4}$ is odd and $p^\ast=-p$.
 
 \begin{lemma}
 \label{lemma:qsplitsthenriseven}
@@ -2050,7 +2058,7 @@ and $a^2+ab-8b^2=\pm 2$ does have solution $a=2,b=1$, with $2+\frac{1+\sqrt{33}}
 \end{enumerate}
 
 \textit{Solution}. \begin{enumerate}
-\item If $d\not\equiv 1\Mod 4$ then $\ri_d=\Z[\sqrt d]$ and $N\left(a+\sqrt{d}b\right)=a^2-db^2$, hence either $b=0$ and $N\left(a+\sqrt{d}b\right)$ is a square, or $b\neq 0$ and $N\left(a+\sqrt{d}b\right)\geq -d$. If $d\equiv 1\Mod$ then $\ri_d=\Z\left[\frac{1+\sqrt d}{2}\right]$ and $N\left(a+b\frac{1+\sqrt d}{2}\right)=a^2+ab+\left(\frac{1-d}{4}\right)b^2$, hence again either $b=0$ and $N\left(a+b\frac{1+\sqrt d}{2}\right)$ is a square, or $b\neq 0$ and $N\left(a+b\frac{1+\sqrt d}{2}\right)\geq \frac{1-d}{4}$.
+\item If $d\not\equiv 1\Mod 4$ then $\ri_d=\Z\left[\sqrt d\right]$ and $N\left(a+\sqrt{d}b\right)=a^2-db^2$, hence either $b=0$ and $N\left(a+\sqrt{d}b\right)$ is a square, or $b\neq 0$ and $N\left(a+\sqrt{d}b\right)\geq -d$. If $d\equiv 1\Mod$ then $\ri_d=\Z\left[\frac{1+\sqrt d}{2}\right]$ and $N\left(a+b\frac{1+\sqrt d}{2}\right)=a^2+ab+\left(\frac{1-d}{4}\right)b^2$, hence again either $b=0$ and $N\left(a+b\frac{1+\sqrt d}{2}\right)$ is a square, or $b\neq 0$ and $N\left(a+b\frac{1+\sqrt d}{2}\right)\geq \frac{1-d}{4}$.
 
 Hence we cannot exclude elements of norm 2 if $d\geq -2$ and $d\not\equiv 1\Mod 4$ or $d\geq -7$ and $d\equiv 1\Mod 4$, i.e. $d=-1,-2$ or $-3,-7$. Now indeed $1+i\in\ri_{-1},\sqrt{-2}\in\ri_{-2}$ and $1-\sqrt{-7}\in\ri_{-7}$ has norm 2, but we claim $a^2+ab+b^2=2$ has no integer solutions so $\ri_{-3}$ has no norm 2 elements after all, i.e. $\ri_d$ has no norm 2 elements unless $d=-1,-2,-7$ as desired.
 
@@ -2214,7 +2222,7 @@ Let $d>1$ be squarefree. Then $\exists!\varepsilon\in\ri_d^\times$ with $\vareps
 \end{thm}
 
 \begin{remark}
-When $d\not\equiv 1\Mod $, the units give solutions to the Diophantine equations $x^2-dy^2=\pm 1$ (Pell). Indeed, $x+\sqrt dy\in\ri_d$ is a unit $\iff N\left(x+\sqrt{d}y\right)=\pm 1$.
+When $d\not\equiv 1\Mod 4$, the units give solutions to the Diophantine equations $x^2-dy^2=\pm 1$ (Pell). Indeed, $x+\sqrt dy\in\ri_d$ is a unit $\iff N\left(x+\sqrt{d}y\right)=\pm 1$.
 \end{remark}
 
 \begin{example}
